@@ -274,6 +274,509 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/计算机网络总结(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/02/计算机网络总结(一)/" itemprop="url">计算机网络总结(一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-02T10:44:15+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="OSI模型"><a href="#OSI模型" class="headerlink" title="OSI模型"></a>OSI模型</h1><h2 id="A-Layered-Network-Model"><a href="#A-Layered-Network-Model" class="headerlink" title="A Layered Network Model"></a>A Layered Network Model</h2><ul>
+<li>使用分层架构，每一个模块只负责自己特定的功能</li>
+<li>不同模块之间定义标准化接口，实现每层的相互独立</li>
+<li>TCP/IP协议就是基于OSI的一个实现</li>
+</ul>
+<h2 id="Physical"><a href="#Physical" class="headerlink" title="Physical"></a>Physical</h2><h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>Binary Transmission</p>
+<ul>
+<li>Defines the electrical, mechanical, procedural, and functional specifications for activating, maintaining, and deactivating the physical link</li>
+</ul>
+<blockquote>
+<p>实现最基础的底层数据传输。定义底层传输的接口，传输的方式，传输的介质，传输的标准。数据怎么样通过介质传输，这些介质的定义，标准，全都由物理层决定。</p>
+</blockquote>
+<h3 id="Layer-1-Devices"><a href="#Layer-1-Devices" class="headerlink" title="Layer 1 Devices"></a>Layer 1 Devices</h3><ul>
+<li>Layer 1 provides the physical media and its encoding</li>
+<li>Examples<ul>
+<li>Ethernet</li>
+<li>Serial</li>
+<li>Repeater</li>
+<li>Physical interface of the NIC</li>
+</ul>
+</li>
+</ul>
+<h4 id="Network-Interface-Card"><a href="#Network-Interface-Card" class="headerlink" title="Network Interface Card"></a>Network Interface Card</h4><blockquote>
+<p>不同的网卡实现的layer不同</p>
+</blockquote>
+<h4 id="Ethernet-Media"><a href="#Ethernet-Media" class="headerlink" title="Ethernet Media"></a>Ethernet Media</h4><p>Comparing Ethernet Media Requirements<br><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/3.png" alt></p>
+<blockquote>
+<p>以太网传输介质分为有线和无线两种</p>
+<p>数字代表传输速度，base代表基带传输(通信术语)，后面的部分代表传输介质。T代表铜质双绞线，F代表光纤</p>
+<p>速度要求高，距离要求高时用光纤，一般的应用使用双绞线</p>
+</blockquote>
+<h4 id="Unshielded-Twisted-Pair-Cable"><a href="#Unshielded-Twisted-Pair-Cable" class="headerlink" title="Unshielded Twisted-Pair Cable"></a>Unshielded Twisted-Pair Cable</h4><ul>
+<li>Speed and throughput: 10 to 1000 Mb/s</li>
+<li>Another name: UTP</li>
+<li>UTP Implementation: Straight-Through Cable and Crossover Cable</li>
+</ul>
+<blockquote>
+<p>平行线连接不同的设备，交叉线连接相同的设备</p>
+</blockquote>
+<h4 id="Optical-Fiber"><a href="#Optical-Fiber" class="headerlink" title="Optical Fiber"></a>Optical Fiber</h4><ul>
+<li>Single-mode Fiber: long transmission distance</li>
+<li>Multi-mdoe Fiber: short transmission distance</li>
+</ul>
+<blockquote>
+<p>光纤均为成对连接，连接时两端需对调</p>
+<p>单模光纤：LX，多模光纤：SX</p>
+</blockquote>
+<h2 id="Data-Link"><a href="#Data-Link" class="headerlink" title="Data Link"></a>Data Link</h2><h3 id="Definition-1"><a href="#Definition-1" class="headerlink" title="Definition"></a>Definition</h3><p>Access to Media</p>
+<ul>
+<li>Defines how data is formatted for transmission and how access to the network is controlled</li>
+<li>Provides error detection</li>
+</ul>
+<blockquote>
+<p>定义数据的基本格式，数据如何在线缆上传输，怎么样进行标识，怎么样防止错误。控制如何去访问底层介质，以及差错检测。最主要的功能是MAC编址。</p>
+</blockquote>
+<h3 id="Layer-2-Devices"><a href="#Layer-2-Devices" class="headerlink" title="Layer 2 Devices"></a>Layer 2 Devices</h3><ul>
+<li>Layer 2 devices provide an interface with physical media</li>
+<li>Examples<ul>
+<li>NIC</li>
+<li>Bridge</li>
+<li>Switch</li>
+</ul>
+</li>
+</ul>
+<h3 id="Local-Area-Network-LAN"><a href="#Local-Area-Network-LAN" class="headerlink" title="Local Area Network(LAN)"></a>Local Area Network(LAN)</h3><p>LAN Standards<br><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/4.png" alt></p>
+<blockquote>
+<p>定义在 IEEE 802.2和802.3</p>
+<p>LLC：负责二层与三层的通信</p>
+<p>MAC：访问底层介质的控制</p>
+</blockquote>
+<h3 id="MAC-Address-Components"><a href="#MAC-Address-Components" class="headerlink" title="MAC Address Components"></a>MAC Address Components</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/5.png" alt></p>
+<blockquote>
+<p>OUI: 组织唯一标识符，标识生产厂商</p>
+<p>Vendor Assigned: 厂商标识符，标识设备</p>
+<p>前两位代表是广播地址还是组播地址，是本地还是全球</p>
+<p>MAC地址不能修改，是写在 ROM 中的</p>
+<p>在一个网段内，设备之间实际通过MAC地址通信</p>
+</blockquote>
+<h3 id="Ethernet-Frame-Structure"><a href="#Ethernet-Frame-Structure" class="headerlink" title="Ethernet Frame Structure"></a>Ethernet Frame Structure</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/6.png" alt></p>
+<h3 id="Communicating-Within-the-LAN"><a href="#Communicating-Within-the-LAN" class="headerlink" title="Communicating Within the LAN"></a>Communicating Within the LAN</h3><ul>
+<li>Unicast: one to one </li>
+<li>Broadcast: one to all</li>
+<li>Multicast: one to group</li>
+</ul>
+<blockquote>
+<p>广播地址全为 1 </p>
+<p>依靠 MAC 地址的格式区分类型</p>
+</blockquote>
+<h3 id="Collisions"><a href="#Collisions" class="headerlink" title="Collisions"></a>Collisions</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/7.png" alt></p>
+<blockquote>
+<p>在物理线缆上同时有两个电信号，引起冲突</p>
+</blockquote>
+<h3 id="CSMA-CD"><a href="#CSMA-CD" class="headerlink" title="CSMA/CD"></a>CSMA/CD</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/8.png" alt></p>
+<blockquote>
+<p>在发送数据之前会先监听线路上是否有载波信号，如果有就代表线路上有人在传输信号，之后会通过一个回退算法等待一段时间，然后再去检测，直到线路上没有载波信号再发送数据</p>
+<p>它是有线网络防止冲突的方式，它是被动监听</p>
+</blockquote>
+<h3 id="CSMA-CA"><a href="#CSMA-CA" class="headerlink" title="CSMA/CA"></a>CSMA/CA</h3><blockquote>
+<p>无线网络防止冲突的方式，它是主动检测</p>
+<p>WLAN由802.11定义</p>
+</blockquote>
+<h3 id="Ethernet-Implementation"><a href="#Ethernet-Implementation" class="headerlink" title="Ethernet Implementation"></a>Ethernet Implementation</h3><ul>
+<li>LAN</li>
+<li>WLAN</li>
+<li>…</li>
+</ul>
+<h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><h3 id="Definition-2"><a href="#Definition-2" class="headerlink" title="Definition"></a>Definition</h3><p>Data Delivery</p>
+<ul>
+<li>Routes data packets</li>
+<li>Selects best path to deliver data</li>
+<li>Provides logical addressing and path selection</li>
+</ul>
+<blockquote>
+<p>主要是IP编址和路由功能</p>
+</blockquote>
+<h3 id="Flat-Topology"><a href="#Flat-Topology" class="headerlink" title="Flat Topology"></a>Flat Topology</h3><p>Problems</p>
+<ul>
+<li>所有设备在同一个广播域</li>
+<li>设备定位查找困难</li>
+<li>难以对设备区分应用策略</li>
+</ul>
+<blockquote>
+<p>MAC地址是一个平面的编址方案，这样就会产生很多问题</p>
+</blockquote>
+<h3 id="Network-1"><a href="#Network-1" class="headerlink" title="Network"></a>Network</h3><ul>
+<li>Smaller networks are easier to manage.</li>
+<li>Overall traffic is reduced.</li>
+<li>You can more easily apply network security policies.</li>
+</ul>
+<h3 id="Internet-Protocol-IP-Characteristics"><a href="#Internet-Protocol-IP-Characteristics" class="headerlink" title="Internet Protocol(IP) Characteristics"></a>Internet Protocol(IP) Characteristics</h3><ul>
+<li>Hierarchical addressing</li>
+<li>Operates at network layer of OSI</li>
+<li>Connectionless protocol</li>
+<li>Packets treated independently</li>
+<li>Best-effort delivery</li>
+<li>No data-recovery features</li>
+</ul>
+<blockquote>
+<p>面向非连接协议，不论目标主机状态如何都可以发送数据进行通信</p>
+<p>三层编址，实现IPv4(32bit)，实现connectionless的数据传输</p>
+<p>允许对不同的数据包进行标记(QoS)</p>
+</blockquote>
+<h3 id="Routing-and-Router"><a href="#Routing-and-Router" class="headerlink" title="Routing and Router"></a>Routing and Router</h3><ul>
+<li>路由器一般拥有多个接口，每个接口连接到一个网段，并且拥有该网段的一个IP地址，这个地址就是这个网段的网关IP地址</li>
+<li>路由器通过不同方式维护一个路由表，路由器通过路由表的记录完成不同网段的数据转发(路由)功能</li>
+<li>路由器具有在不同网络路径之间选择最优路径的功能</li>
+<li>路由器具有隔离广播域的功能</li>
+</ul>
+<h3 id="IP-PDU-Header"><a href="#IP-PDU-Header" class="headerlink" title="IP PDU Header"></a>IP PDU Header</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/9.png" alt></p>
+<blockquote>
+<p>最大数据包长度65535</p>
+<p>MTU最大传输单元，这是物理限制，一个接口单次传输数据最大传输多大，一般以太网为1500</p>
+<p>Identification：标识是同一个数据包</p>
+<p>Flag.Offset：当前分片所处的位置距离第一个偏移的位置</p>
+<p>Time to Live：TTL，防止数据包在网络中无限传输，每经过一个三层设备，TTL-1</p>
+<p>Protocol：实现多路复用，区分上层协议，不同上层协议这个数值不同</p>
+<p>Header Checksum：检测在传输过程中是否被损坏</p>
+</blockquote>
+<h3 id="IP-Address-Classes"><a href="#IP-Address-Classes" class="headerlink" title="IP Address Classes"></a>IP Address Classes</h3><ul>
+<li>A：网络部分8位</li>
+<li>B：网络部分16位</li>
+<li>C：网络部分24位</li>
+<li>D：用于组播</li>
+<li>E：保留使用</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/10.png" alt></p>
+<blockquote>
+<p>主机部分全为 0 代表一个网络，为网络地址</p>
+<p>主机部分全为 1 代表一个广播，为广播地址</p>
+</blockquote>
+<h3 id="Private-IP-Addresses"><a href="#Private-IP-Addresses" class="headerlink" title="Private IP Addresses"></a>Private IP Addresses</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/11.png" alt></p>
+<blockquote>
+<p>私有地址不能出现在公网上</p>
+</blockquote>
+<h2 id="Transport"><a href="#Transport" class="headerlink" title="Transport"></a>Transport</h2><h3 id="Definition-3"><a href="#Definition-3" class="headerlink" title="Definition"></a>Definition</h3><p>End-to-End COnnections</p>
+<ul>
+<li>Handles transportation issues between hosts</li>
+<li>Ensures data transport reliability</li>
+<li>Establishes, maintains, and terminals virtual circuits</li>
+<li>Provides reliability through fault detection and recovery information flow control</li>
+</ul>
+<p>Transport Layer</p>
+<ul>
+<li>Session multiplexing</li>
+<li>Segmentation</li>
+<li>Flow control(when required)</li>
+<li>Connection-oriented(when required)</li>
+<li>Reliability(when required)</li>
+</ul>
+<blockquote>
+<p>端到端通信的基本功能，TCP和UDP</p>
+</blockquote>
+<h3 id="Multiplexing"><a href="#Multiplexing" class="headerlink" title="Multiplexing"></a>Multiplexing</h3><ul>
+<li>一个协议为多个上层协议提供统一服务</li>
+<li>在TCP层使用端口号来区分不同的上层应用程序，范围0-65535</li>
+</ul>
+<blockquote>
+<p>协议多路复用，不仅仅存在于传输层</p>
+<p>端口号实现多路复用</p>
+</blockquote>
+<h3 id="Reliable-vs-Best-Effort-Comparision"><a href="#Reliable-vs-Best-Effort-Comparision" class="headerlink" title="Reliable vs. Best-Effort Comparision"></a>Reliable vs. Best-Effort Comparision</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/12.png" alt></p>
+<h3 id="UDP-Characteristics"><a href="#UDP-Characteristics" class="headerlink" title="UDP Characteristics"></a>UDP Characteristics</h3><ul>
+<li>Operates at transport layer of OSI and TCP/IP models</li>
+<li>Provides applications with access to the network layer without the overhead of reliability mechanisms</li>
+<li>Is a connectionless protocol</li>
+<li>Provides limited error checking</li>
+<li>Provides best-effort delivery</li>
+<li>Has no data-recovery features</li>
+</ul>
+<h3 id="UDP-Header"><a href="#UDP-Header" class="headerlink" title="UDP Header"></a>UDP Header</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/13.png" alt></p>
+<blockquote>
+<p>所说的标准端口号，比如HTTP是80，FTP是20、21，这些端口号都是目标端口号，而源端口号是随机的</p>
+<p>UDP报头是固定长度的</p>
+</blockquote>
+<h3 id="TCP-Characteristics"><a href="#TCP-Characteristics" class="headerlink" title="TCP Characteristics"></a>TCP Characteristics</h3><ul>
+<li>Transport layer of the TCP/IP stack</li>
+<li>Access to the network layer for applications</li>
+<li>Connection-oriented protocol</li>
+<li>Full-duplex mode operation</li>
+<li>Error checking</li>
+<li>Sequencing of data packets</li>
+<li>Acknowledgement of recept</li>
+<li>Data-recovery features</li>
+</ul>
+<blockquote>
+<p>Full-duplex mode operation：TCP是双向连接，上行连接和下行连接</p>
+</blockquote>
+<h3 id="TCP-Header"><a href="#TCP-Header" class="headerlink" title="TCP Header"></a>TCP Header</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/14.png" alt></p>
+<blockquote>
+<p>状态标识：resv后面的内容</p>
+<p>紧急指针：用于流控</p>
+</blockquote>
+<h3 id="Three-Way-Handshake"><a href="#Three-Way-Handshake" class="headerlink" title="Three-Way Handshake"></a>Three-Way Handshake</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/15.png" alt></p>
+<ul>
+<li>A 发送的 TCP Header 中状态位 SYN 置 1，协商初始序列号 100</li>
+<li>B 发现序列号 100 已被使用，协商使用序列号 300，确认下一个想要收到的序列号 101</li>
+<li>A 认为没有问题，就会继续发送一个 ACK，确认 301</li>
+</ul>
+<h3 id="Flow-Control"><a href="#Flow-Control" class="headerlink" title="Flow Control"></a>Flow Control</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/16.png" alt></p>
+<blockquote>
+<p>接收者没有资源去处理发送来的数据了，就会发送一个停止位，等到有资源去处理时再发送数据</p>
+</blockquote>
+<h3 id="Fixed-Windowing"><a href="#Fixed-Windowing" class="headerlink" title="Fixed Windowing"></a>Fixed Windowing</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/17.png" alt></p>
+<blockquote>
+<p>窗口大小为 3，发送三个数据包返回一个确认，增加传输效率</p>
+<p>TCP sliding windowing，在通信过程中可以修改 window size 的大小</p>
+</blockquote>
+<h3 id="Mapping-Layer-3-to-Layer-4"><a href="#Mapping-Layer-3-to-Layer-4" class="headerlink" title="Mapping Layer 3 to Layer 4"></a>Mapping Layer 3 to Layer 4</h3><ul>
+<li>三层到四层的映射是通过 IP 数据包报头的 protocol 字段完成的</li>
+<li>UDP 和 TCP 对应的 protocol 字段的值不同</li>
+</ul>
+<h3 id="Mapping-Layer-4-to-Applications"><a href="#Mapping-Layer-4-to-Applications" class="headerlink" title="Mapping Layer 4 to Applications"></a>Mapping Layer 4 to Applications</h3><ul>
+<li>四层到上层的映射是通过端口号</li>
+</ul>
+<blockquote>
+<p>DNS 既可以使用 TCP 又可以使用 UDP</p>
+</blockquote>
+<h2 id="Session-Presentation-Application"><a href="#Session-Presentation-Application" class="headerlink" title="Session Presentation Application"></a>Session Presentation Application</h2><blockquote>
+<p>统一称为应用层，由应用控制</p>
+</blockquote>
+<h1 id="Data-Encapsulation"><a href="#Data-Encapsulation" class="headerlink" title="Data Encapsulation"></a>Data Encapsulation</h1><ul>
+<li>Data Encapsulation</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/1.jpg" alt></p>
+<ul>
+<li>Peer-to-Peer Communication</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/2.jpg" alt></p>
+<blockquote>
+<p>数据封装，解封装为其逆过程</p>
+<p>数据包在不同的分成有不同的名称。段，包，帧，比特流</p>
+</blockquote>
+<h1 id="Packet-Delivery"><a href="#Packet-Delivery" class="headerlink" title="Packet Delivery"></a>Packet Delivery</h1><h2 id="Host-to-Host-Packet-Delivery-同网段"><a href="#Host-to-Host-Packet-Delivery-同网段" class="headerlink" title="Host-to-Host Packet Delivery(同网段)"></a>Host-to-Host Packet Delivery(同网段)</h2><ul>
+<li>源目标主机属于同一网段</li>
+<li>源主机使用 IP 地址封装三层信息，并传递给二层</li>
+<li>二层查询本机 ARP 表，发现没有目标主机的 MAC 地址记录，则通过 ARP 协议查询目标主机 MAC 地址</li>
+<li>通过 ARP 协议获取到目标主机 MAC 地址后，通过 MAC 地址封装二层信息，并传递给物理层发送给目标</li>
+</ul>
+<h2 id="Host-to-Host-Packet-Delivery-不同网段"><a href="#Host-to-Host-Packet-Delivery-不同网段" class="headerlink" title="Host-to-Host Packet Delivery(不同网段)"></a>Host-to-Host Packet Delivery(不同网段)</h2><ul>
+<li>源目标主机属于不同网段，所以需要将数据发给本网网关进行转发</li>
+<li>源主机使用 IP 地址封装三层信息，并传递给二层</li>
+<li>二层查询本机 ARP 表，发现没有目标主机的 MAC 地址记录，则通过 ARP 协议查询网关 MAC 地址</li>
+<li>通过 ARP 协议获取到网关 MAC 地址后，通过 MAC 地址封装二层信息，并传递给物理层发送给网关</li>
+</ul>
+<h1 id="Network-Command"><a href="#Network-Command" class="headerlink" title="Network Command"></a>Network Command</h1><h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><ul>
+<li>-t  持续 ping 目标主机直到接收到停止信号</li>
+<li>-a  将目标主机解析成主机名</li>
+<li>-n  对目标主机 ping 的次数</li>
+<li>-l  ping 包的大小</li>
+<li>-f  设置 IP 包的 DF 值<blockquote>
+<p>使用 ICMP 协议</p>
+<p>DF：不进行分片</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="ipconfig"><a href="#ipconfig" class="headerlink" title="ipconfig"></a>ipconfig</h2><ul>
+<li>/all          显示所有适配器的TCP/IP配置</li>
+<li>/renew        更新适配器DHCP配置</li>
+<li>/release      更新DHCP租约期</li>
+<li>/displaydns   显示DNS缓存信息</li>
+</ul>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><ul>
+<li>-querytype    DNS 查询</li>
+</ul>
+<h2 id="arp"><a href="#arp" class="headerlink" title="arp"></a>arp</h2><ul>
+<li>-a   显示所有ARP信息</li>
+<li>-s   绑定静态ARP</li>
+<li>-d   删除ARP信息</li>
+</ul>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><ul>
+<li>-a   显示所有连接及监听端口</li>
+<li>-e   显示以太网信息</li>
+<li>-n   不进行IP到主机名的解析</li>
+<li>-p   只显示指定的协议</li>
+<li>-s   显示每个协议的状态</li>
+</ul>
+<h1 id="Understanding-VLSM"><a href="#Understanding-VLSM" class="headerlink" title="Understanding VLSM"></a>Understanding VLSM</h1><h2 id="Subnetting-Review"><a href="#Subnetting-Review" class="headerlink" title="Subnetting Review"></a>Subnetting Review</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/18.png" alt></p>
+<blockquote>
+<p>IP = network + subnets + host</p>
+</blockquote>
+<h2 id="What-a-Subnet-Mask-does"><a href="#What-a-Subnet-Mask-does" class="headerlink" title="What a Subnet Mask does"></a>What a Subnet Mask does</h2><ul>
+<li>Tells the router the number of bits to look at when routing</li>
+<li>Defines the number of bits that are significant</li>
+<li>Used as a measuring tool, not to hide anything</li>
+</ul>
+<blockquote>
+<p>比如，IP 172.16.55.87，如何确定它的网络号?</p>
+</blockquote>
+<h2 id="Subnetting-Review-Exercise"><a href="#Subnetting-Review-Exercise" class="headerlink" title="Subnetting Review Exercise"></a>Subnetting Review Exercise</h2><p>Subnet a network with a private network address of 172.16.0.0/16 so that it provides 100 subnets and maximizes the number of host addresses for each subnet.</p>
+<ul>
+<li>How many bits will need to be borrowed?</li>
+<li>What is the new subnet mask?</li>
+</ul>
+<ol>
+<li>2的7次方 = 128 &gt; 100，向后借7位</li>
+<li>172.16.0.0/23，把/16切成128个/23的</li>
+</ol>
+<h2 id="VLSM"><a href="#VLSM" class="headerlink" title="VLSM"></a>VLSM</h2><blockquote>
+<p>按需分配，划分的子网刚刚满足需求</p>
+</blockquote>
+<p><strong>Example1：</strong></p>
+<p>IP Address：192.168.221.37<br>Subnet Mask： /29</p>
+<p>192.168.221.00100 | 101</p>
+<p>后三位是主机位，属于192.168.221.32网段</p>
+<p><strong>Example2：</strong><br><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/19.png" alt></p>
+<ul>
+<li>左半边 IP 地址需求为 2，右半边为 50，把子网切成能满足需求的小的子网</li>
+<li>先满足较大的主机需求，50，那么主机部分留 6 位</li>
+<li>10101100.100010000.0010 | 0000.00 | 000000，前 20 位是不变的，主机部分留 6 位，剩下的 6 位就是子网部分，切出来 64 个子网，将 /20 切为 64 个 /26 的子网</li>
+<li>满足左边的主机需求只需要 2 个 IP 地址，主机位只要留2位即可</li>
+<li>找一个剩下的 /26 子网切成 16 个 /30 的子网，每个子网有 2 个 IP 地址</li>
+</ul>
+<h2 id="Route-Summarization"><a href="#Route-Summarization" class="headerlink" title="Route Summarization"></a>Route Summarization</h2><p>路由匹配的特点：</p>
+<ul>
+<li>路由器只会匹配子网掩码规定的位数，剩下的不管</li>
+<li>路由器进行的是最长匹配，永远优先匹配子网掩码最长的</li>
+</ul>
+<p>路由汇总： </p>
+<p>B：172.16.128.0/20<br>C：172.16.32.0/24<br>D：172.16.64.0/20<br>BCD汇总成 172.16.0.0/16 发送给 A 路由器，再由 A 路由器发送给上层路由器</p>
+<blockquote>
+<p>针对路由表，减少路由表条目数量</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/一些总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1340,138 +1843,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="peri0d">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="peri0d的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/01/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T01:25:27+08:00">
-                2019-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1542,7 +1913,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
