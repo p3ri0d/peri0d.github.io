@@ -114,9 +114,9 @@
       <category term="CTF wp" scheme="http://yoursite.com/categories/CTF-wp/"/>
     
     
-      <category term="whale CTF" scheme="http://yoursite.com/tags/whale-CTF/"/>
-    
       <category term="wp" scheme="http://yoursite.com/tags/wp/"/>
+    
+      <category term="whale CTF" scheme="http://yoursite.com/tags/whale-CTF/"/>
     
   </entry>
   
@@ -143,9 +143,9 @@
       <category term="CTF wp" scheme="http://yoursite.com/categories/CTF-wp/"/>
     
     
-      <category term="wp" scheme="http://yoursite.com/tags/wp/"/>
-    
       <category term="XCTF" scheme="http://yoursite.com/tags/XCTF/"/>
+    
+      <category term="wp" scheme="http://yoursite.com/tags/wp/"/>
     
   </entry>
   
@@ -171,9 +171,9 @@
       <category term="CTF wp" scheme="http://yoursite.com/categories/CTF-wp/"/>
     
     
-      <category term="wp" scheme="http://yoursite.com/tags/wp/"/>
-    
       <category term="XCTF" scheme="http://yoursite.com/tags/XCTF/"/>
+    
+      <category term="wp" scheme="http://yoursite.com/tags/wp/"/>
     
   </entry>
   
