@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Switch and LANHub 属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接 Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽 Hub 实现的共享型网络，很容易产生冲突，只用于小型网络 一台主机发出的信号其他主机都能收到  Bridges Operate at Layer 2 of the OSI model Forward, filter,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="peri0d的博客">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/计算机网络总结(二)/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="Switch and LANHub 属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接 Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽 Hub 实现的共享型网络，很容易产生冲突，只用于小型网络 一台主机发出的信号其他主机都能收到  Bridges Operate at Layer 2 of the OSI model Forward, filter,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/20.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/21.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/22.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/23.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/24.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/25.png">
+<meta property="og:updated_time" content="2019-06-02T15:21:50.201Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="peri0d的博客">
+<meta name="twitter:description" content="Switch and LANHub 属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接 Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽 Hub 实现的共享型网络，很容易产生冲突，只用于小型网络 一台主机发出的信号其他主机都能收到  Bridges Operate at Layer 2 of the OSI model Forward, filter,">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/20.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/02/计算机网络总结(二)/">
+
+
+
+
+
+  <title> | peri0d的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">peri0d</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/计算机网络总结(二)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-02T10:51:27+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Switch-and-LAN"><a href="#Switch-and-LAN" class="headerlink" title="Switch and LAN"></a>Switch and LAN</h1><h2 id="Hub"><a href="#Hub" class="headerlink" title="Hub"></a>Hub</h2><ul>
+<li>属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接</li>
+<li>Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽</li>
+<li>Hub 实现的共享型网络，很容易产生冲突，只用于小型网络</li>
+<li>一台主机发出的信号其他主机都能收到</li>
+</ul>
+<h2 id="Bridges"><a href="#Bridges" class="headerlink" title="Bridges"></a>Bridges</h2><ul>
+<li>Operate at Layer 2 of the OSI model</li>
+<li>Forward, filter, or flood frames</li>
+<li>Have few ports</li>
+<li>Are slow</li>
+</ul>
+<blockquote>
+<p>网桥具有二层的隔离性和过滤功能</p>
+<p>网桥可以互联多个网段，并具有过滤二层流量的能力(根据 MAC 信息)</p>
+</blockquote>
+<h2 id="Switches"><a href="#Switches" class="headerlink" title="Switches"></a>Switches</h2><ul>
+<li>Operate at Layer 2 of the OSI model</li>
+<li>Forward, filter, or flood frames</li>
+<li>Have many ports</li>
+<li>Are fast</li>
+</ul>
+<blockquote>
+<p>交换机是硬件处理，网桥是软件处理</p>
+</blockquote>
+<h2 id="Multiple-Collision-Domains"><a href="#Multiple-Collision-Domains" class="headerlink" title="Multiple Collision Domains"></a>Multiple Collision Domains</h2><ul>
+<li>交换机处理冲突的方式：Microsegmentation</li>
+<li>每个接口都是一个独立的冲突域，每个终端设备都是一个独立的冲突域</li>
+<li>基本上不会有冲突发生，也就不需要 CSMA/CD 技术</li>
+</ul>
+<h2 id="Switching-Frames"><a href="#Switching-Frames" class="headerlink" title="Switching Frames"></a>Switching Frames</h2><ul>
+<li>交换机一个主要的功能就是根据桥接表对数据帧进行智能转发</li>
+<li>桥接表中的每个接口都会有一个 MAC 地址，开机时为空</li>
+<li>源主机向交换机发送数据帧，交换机会查找帧中的源 MAC 地址，并记录在桥接表对应的接口</li>
+<li>交换机查找桥接表中目的 MAC 地址，如果没有就会进行一次泛洪( flooding )操作</li>
+<li>目标主机可能会有一个返回帧，交换机查找帧中的源 MAC 地址，并记录在桥接表对应的接口</li>
+</ul>
+<blockquote>
+<p>这里指的是单播，对于广播和组播会进行泛洪操作</p>
+<p>flooding : 交换机对除了源接口以外所有接口，进行转发</p>
+</blockquote>
+<h2 id="Transmitting-Frames"><a href="#Transmitting-Frames" class="headerlink" title="Transmitting Frames"></a>Transmitting Frames</h2><p><strong>Cut-Through</strong></p>
+<p>Switch checks destination address and immediately begins forwarding frame</p>
+<blockquote>
+<p>速度快，但是不可靠</p>
+</blockquote>
+<p><strong>Store and Forward</strong></p>
+<p>Complete frame is received and checked before forwarding</p>
+<blockquote>
+<p>速度慢，但是可靠</p>
+</blockquote>
+<p><strong>Feagment-Free</strong></p>
+<p>Switch checks the first 64 bytes, then immediately begins fowarding frame</p>
+<blockquote>
+<p>中等速度，中等可靠</p>
+</blockquote>
+<h1 id="VLAN-and-Trunks"><a href="#VLAN-and-Trunks" class="headerlink" title="VLAN and Trunks"></a>VLAN and Trunks</h1><h2 id="现代企业网络架构"><a href="#现代企业网络架构" class="headerlink" title="现代企业网络架构"></a>现代企业网络架构</h2><ul>
+<li>一层：Campus Backbone</li>
+<li>二层：Building Distribution</li>
+<li>三层：Building Access</li>
+</ul>
+<h2 id="VLAN-Overview"><a href="#VLAN-Overview" class="headerlink" title="VLAN Overview"></a>VLAN Overview</h2><ul>
+<li>Segmentation</li>
+<li>Flexibility</li>
+<li>Security</li>
+</ul>
+<p>VLAN = Broadcast Domain = Logical Network( Subnet )</p>
+<blockquote>
+<p>交换机是不隔离广播的，路由器隔离广播域</p>
+<p>不同的 VLAN 需要使用三层设备进行通信</p>
+<p>VLAN的划分是基于接口的</p>
+</blockquote>
+<h2 id="VLAN-Trunking"><a href="#VLAN-Trunking" class="headerlink" title="VLAN Trunking"></a>VLAN Trunking</h2><ul>
+<li>允许在一根线路上承载多个 VLAN 的流量</li>
+<li>Trunk的协议：802.1Q 和 ISL，任选一种对不同 VLAN 的流量进行标记</li>
+<li>通常交换机间的接口都是 Trunk 接口</li>
+</ul>
+<h2 id="Trunking-with-ISL"><a href="#Trunking-with-ISL" class="headerlink" title="Trunking with ISL"></a>Trunking with ISL</h2><ul>
+<li>Cisco proprietary protocol</li>
+<li>Uses an encapsulation process</li>
+<li>Does not modify the original frame</li>
+</ul>
+<blockquote>
+<p>在原始帧上增加 30 字节的 ISL 头部</p>
+</blockquote>
+<h2 id="Trunking-with-802-1Q"><a href="#Trunking-with-802-1Q" class="headerlink" title="Trunking with 802.1Q"></a>Trunking with 802.1Q</h2><ul>
+<li>IEEE standard</li>
+<li>Adds a 4-byte tag to the original frame</li>
+<li>Modify the original frame</li>
+</ul>
+<blockquote>
+<p>需要重新计算尾部的 CRC 校验</p>
+</blockquote>
+<h1 id="VTP"><a href="#VTP" class="headerlink" title="VTP"></a>VTP</h1><h2 id="VTP-Features"><a href="#VTP-Features" class="headerlink" title="VTP Features"></a>VTP Features</h2><ul>
+<li>简化大型 VLAN 的配置，实现了 VLAN 的集中化，动态的配置</li>
+<li>使用 C/S 架构，是一个二层协议，只在 Trunk接口发送信息</li>
+<li>定义一台 VTP 服务器，其他的交换机就是客户机，当 VLAN 信息修改时，VTP 服务器会自动在 Trunk接口发送通告，VTP 客户机也会跟着修改</li>
+<li>具有 VTP 域划分功能，每个域有一个域名标识，每个域信息可以不一样</li>
+</ul>
+<h2 id="VTP-Modes"><a href="#VTP-Modes" class="headerlink" title="VTP Modes"></a>VTP Modes</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/20.png" alt></p>
+<blockquote>
+<p>默认为 Server 模式，且域名为空</p>
+</blockquote>
+<h2 id="VTP-Operation"><a href="#VTP-Operation" class="headerlink" title="VTP Operation"></a>VTP Operation</h2><ul>
+<li>VTP advertisements are sent as multicast frames</li>
+<li>VTP servers and clients are synchronized to the latest revision number</li>
+<li>VTP advertisements are sent every 5 minutes or when there is a change</li>
+</ul>
+<blockquote>
+<p>每个通告都会有一个版本号标识，客户端的版本号和服务端相同，高版本信息会抵消掉低版本信息</p>
+</blockquote>
+<h1 id="STP"><a href="#STP" class="headerlink" title="STP"></a>STP</h1><h2 id="Redundant-Topology"><a href="#Redundant-Topology" class="headerlink" title="Redundant Topology"></a>Redundant Topology</h2><ul>
+<li>对于企业网，通常通过冗余线路提高网络可用性，使用冗余拓扑防止单点故障</li>
+<li>只要有冗余路径就会存在环路，从而带来不好的问题，比如广播风暴，多帧拷贝，MAC 表不稳定</li>
+</ul>
+<h2 id="Broadcast-Storms"><a href="#Broadcast-Storms" class="headerlink" title="Broadcast Storms"></a>Broadcast Storms</h2><ul>
+<li>泛洪的三种数据帧：未知的单播帧，广播帧，组播帧</li>
+<li>数据帧会一直在线路中打转，直到所有的带宽被占满</li>
+<li>由于广播风暴的存在，广播越少越好</li>
+</ul>
+<h2 id="Multiple-Frame-Copies"><a href="#Multiple-Frame-Copies" class="headerlink" title="Multiple Frame Copies"></a>Multiple Frame Copies</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/21.png" alt></p>
+<blockquote>
+<p>交换机刚启动时，MAC 表为空</p>
+</blockquote>
+<h2 id="MAC-Database-Instability"><a href="#MAC-Database-Instability" class="headerlink" title="MAC Database Instability"></a>MAC Database Instability</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/22.png" alt></p>
+<blockquote>
+<p>需要卡在一个刚好的时间点</p>
+</blockquote>
+<h2 id="Loop-Resolution-with-STP"><a href="#Loop-Resolution-with-STP" class="headerlink" title="Loop Resolution with STP"></a>Loop Resolution with STP</h2><ul>
+<li>IEEE 802.1D 标准协议</li>
+<li>从软件层检测环路，并禁用一个接口，当线路故障时再启用接口</li>
+</ul>
+<h2 id="Spanning-Tree-Operation"><a href="#Spanning-Tree-Operation" class="headerlink" title="Spanning-Tree Operation"></a>Spanning-Tree Operation</h2><ul>
+<li>One <strong>root bridge</strong> per broadcast domain</li>
+<li>One <strong>root port</strong> per nonroot bridge</li>
+<li>One <strong>designated port</strong> per segment</li>
+<li><strong>Nondesignated ports</strong> are unused</li>
+</ul>
+<blockquote>
+<p>root bridge：集中化转发数据，通常时核心交换机</p>
+<p>root port：到达根网桥最近的接口，带宽最高</p>
+<p>Nondesignated ports：最终阻断的是非指定接口</p>
+<p>先比较交换机的桥 ID，桥 ID 最小的成为根网桥，根网桥上的接口都是指定接口。然后根据带宽 和 cost 选取根端口，不一定直连就是根接口。最后桥 ID 最小的是指定接口，其余的是非指定接口</p>
+</blockquote>
+<h2 id="STP-Roor-Bridge-Selection"><a href="#STP-Roor-Bridge-Selection" class="headerlink" title="STP Roor Bridge Selection"></a>STP Roor Bridge Selection</h2><ul>
+<li>BPDU：桥接协议数据单元，描述生成树相关信息</li>
+<li>Bridge ID：唯一标识交换机，64位(=16+48)</li>
+<li>Bridge Priority：默认32768，最大65535</li>
+<li>Root bridge = bridge with the lowest bridge ID</li>
+<li>Bridge ID = Bridge Priority + MAC Address</li>
+</ul>
+<blockquote>
+<p>先比较交换机的桥 ID，再比较接口优先级，最后比较接口 ID</p>
+</blockquote>
+<h2 id="Bridge-Protocol-Data-Unit"><a href="#Bridge-Protocol-Data-Unit" class="headerlink" title="Bridge Protocol Data Unit"></a>Bridge Protocol Data Unit</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/23.png" alt></p>
+<ul>
+<li>Root ID : 根网桥 ID</li>
+<li>Cost of path : 路径开销，选举根接口</li>
+<li>Bridge ID : 本网桥 ID</li>
+<li>Port ID : 接口 ID</li>
+<li>Max age : 2个 BPDU 之间的时间间隔</li>
+</ul>
+<h2 id="Spanning-Tree-Path-Cost"><a href="#Spanning-Tree-Path-Cost" class="headerlink" title="Spanning-Tree Path Cost"></a>Spanning-Tree Path Cost</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/24.png" alt></p>
+<h2 id="Spanning-Tree-Path-States"><a href="#Spanning-Tree-Path-States" class="headerlink" title="Spanning-Tree Path States"></a>Spanning-Tree Path States</h2><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/25.png" alt></p>
+<blockquote>
+<p>Listening：进行角色重选取，默认15s</p>
+<p>Learning：只学习 MAC，不转发</p>
+<p>Blocking,Forwarding是终态，Listening,Learning是过渡状态</p>
+</blockquote>
+<h1 id="RSTP"><a href="#RSTP" class="headerlink" title="RSTP"></a>RSTP</h1><h2 id="RSTP-Features"><a href="#RSTP-Features" class="headerlink" title="RSTP Features"></a>RSTP Features</h2><ul>
+<li>降低网络故障时间</li>
+<li>协议编号 IEEE 802.1W</li>
+</ul>
+<h2 id="RSTP-Port-States"><a href="#RSTP-Port-States" class="headerlink" title="RSTP Port States"></a>RSTP Port States</h2><ul>
+<li>Discarding：不转发数据，不学习 MAC 地址</li>
+<li>Learning：不转发数据，学习 MAC 地址</li>
+<li>Forwarding：转发数据，学习 MAC 地址</li>
+</ul>
+<blockquote>
+<p>STP 中这些时间固定，但是 RSTP 中时间不固定</p>
+</blockquote>
+<h2 id="RSTP-Port-Roles"><a href="#RSTP-Port-Roles" class="headerlink" title="RSTP Port Roles"></a>RSTP Port Roles</h2><ul>
+<li>Root Ports</li>
+<li>Designated Ports</li>
+<li>Alternative Port：备份 Root Ports</li>
+<li>Backup Port：备份 Designated Ports</li>
+</ul>
+<blockquote>
+<p>如果指定接口发生故障，备份接口之间转为指定接口，减少重选举时间</p>
+</blockquote>
+<h2 id="Edge-Ports"><a href="#Edge-Ports" class="headerlink" title="Edge Ports"></a>Edge Ports</h2><ul>
+<li>这个接口直接接终端设备</li>
+<li>与 Access Port( port fast) 相同</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/计算机网络总结(一)/" rel="next" title="计算机网络总结(一)">
+                <i class="fa fa-chevron-left"></i> 计算机网络总结(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">待我尝尽世间甘苦，便喂你一勺甜。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Switch-and-LAN"><span class="nav-number">1.</span> <span class="nav-text">Switch and LAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hub"><span class="nav-number">1.1.</span> <span class="nav-text">Hub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridges"><span class="nav-number">1.2.</span> <span class="nav-text">Bridges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switches"><span class="nav-number">1.3.</span> <span class="nav-text">Switches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Collision-Domains"><span class="nav-number">1.4.</span> <span class="nav-text">Multiple Collision Domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switching-Frames"><span class="nav-number">1.5.</span> <span class="nav-text">Switching Frames</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transmitting-Frames"><span class="nav-number">1.6.</span> <span class="nav-text">Transmitting Frames</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VLAN-and-Trunks"><span class="nav-number">2.</span> <span class="nav-text">VLAN and Trunks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#现代企业网络架构"><span class="nav-number">2.1.</span> <span class="nav-text">现代企业网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Overview"><span class="nav-number">2.2.</span> <span class="nav-text">VLAN Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Trunking"><span class="nav-number">2.3.</span> <span class="nav-text">VLAN Trunking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-ISL"><span class="nav-number">2.4.</span> <span class="nav-text">Trunking with ISL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-802-1Q"><span class="nav-number">2.5.</span> <span class="nav-text">Trunking with 802.1Q</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VTP"><span class="nav-number">3.</span> <span class="nav-text">VTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Features"><span class="nav-number">3.1.</span> <span class="nav-text">VTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Modes"><span class="nav-number">3.2.</span> <span class="nav-text">VTP Modes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Operation"><span class="nav-number">3.3.</span> <span class="nav-text">VTP Operation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STP"><span class="nav-number">4.</span> <span class="nav-text">STP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redundant-Topology"><span class="nav-number">4.1.</span> <span class="nav-text">Redundant Topology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Broadcast-Storms"><span class="nav-number">4.2.</span> <span class="nav-text">Broadcast Storms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Frame-Copies"><span class="nav-number">4.3.</span> <span class="nav-text">Multiple Frame Copies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC-Database-Instability"><span class="nav-number">4.4.</span> <span class="nav-text">MAC Database Instability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loop-Resolution-with-STP"><span class="nav-number">4.5.</span> <span class="nav-text">Loop Resolution with STP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Operation"><span class="nav-number">4.6.</span> <span class="nav-text">Spanning-Tree Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STP-Roor-Bridge-Selection"><span class="nav-number">4.7.</span> <span class="nav-text">STP Roor Bridge Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridge-Protocol-Data-Unit"><span class="nav-number">4.8.</span> <span class="nav-text">Bridge Protocol Data Unit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-Cost"><span class="nav-number">4.9.</span> <span class="nav-text">Spanning-Tree Path Cost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-States"><span class="nav-number">4.10.</span> <span class="nav-text">Spanning-Tree Path States</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RSTP"><span class="nav-number">5.</span> <span class="nav-text">RSTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Features"><span class="nav-number">5.1.</span> <span class="nav-text">RSTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-States"><span class="nav-number">5.2.</span> <span class="nav-text">RSTP Port States</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-Roles"><span class="nav-number">5.3.</span> <span class="nav-text">RSTP Port Roles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edge-Ports"><span class="nav-number">5.4.</span> <span class="nav-text">Edge Ports</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
