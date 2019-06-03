@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="XCTF,wp,">
+  <meta name="keywords" content="总结,计算机网络,">
 
 
 
@@ -81,26 +81,18 @@
 
 
 
-<meta name="description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
-<meta name="keywords" content="XCTF,wp">
+<meta name="description" content="Static RoutingRouter Operations 负责在不同网段之间进行数据转发 通过路由表进行三层数据转发 维护路由表信息 在冗余路径中进行最优路径判断 在三层转发时应用特定转发策略   路由器默认只知道直连的路由信息，路由器永远是隔离网段的  Static Routes 用于小型网络 管理员手工配置路由器路由表实现数据转发  优点  占用路由器资源小 可以严格控制路由转发 支持广">
+<meta name="keywords" content="总结,计算机网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XCTF Web新手">
-<meta property="og:url" content="http://yoursite.com/2019/06/01/XCTF-Web新手/index.html">
+<meta property="og:title" content="计算机网络总结(三)">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/计算机网络总结(三)/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
+<meta property="og:description" content="Static RoutingRouter Operations 负责在不同网段之间进行数据转发 通过路由表进行三层数据转发 维护路由表信息 在冗余路径中进行最优路径判断 在三层转发时应用特定转发策略   路由器默认只知道直连的路由信息，路由器永远是隔离网段的  Static Routes 用于小型网络 管理员手工配置路由器路由表实现数据转发  优点  占用路由器资源小 可以严格控制路由转发 支持广">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG">
-<meta property="og:updated_time" content="2019-05-31T18:32:40.526Z">
+<meta property="og:updated_time" content="2019-06-03T10:58:32.277Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XCTF Web新手">
-<meta name="twitter:description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
-<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG">
+<meta name="twitter:title" content="计算机网络总结(三)">
+<meta name="twitter:description" content="Static RoutingRouter Operations 负责在不同网段之间进行数据转发 通过路由表进行三层数据转发 维护路由表信息 在冗余路径中进行最优路径判断 在三层转发时应用特定转发策略   路由器默认只知道直连的路由信息，路由器永远是隔离网段的  Static Routes 用于小型网络 管理员手工配置路由器路由表实现数据转发  优点  占用路由器资源小 可以严格控制路由转发 支持广">
 
 
 
@@ -130,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/01/XCTF-Web新手/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/计算机网络总结(三)/">
 
 
 
 
 
-  <title>XCTF Web新手 | peri0d的博客</title>
+  <title>计算机网络总结(三) | peri0d的博客</title>
   
 
 
@@ -283,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/XCTF-Web新手/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/计算机网络总结(三)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -300,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XCTF Web新手</h1>
+          <h1 class="post-title" itemprop="name headline">计算机网络总结(三)</h1>
         
 
         <div class="post-meta">
@@ -312,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T02:37:38+08:00">
-                2019-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T11:00:52+08:00">
+                2019-06-03
               </time>
             
 
@@ -335,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF-wp/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF wp</span>
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
                   </a>
                 </span>
 
@@ -372,48 +364,84 @@
       
 
       
-        <p>[TOC]</p>
-<h3 id="view-source"><a href="#view-source" class="headerlink" title="view source"></a>view source</h3><p>禁用右键，F12审查元素</p>
-<h3 id="get-post"><a href="#get-post" class="headerlink" title="get post"></a>get post</h3><p>hackbar进行post</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG" alt></p>
-<h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问</p>
-<h3 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h3><p>备份文件一般是在后缀名后加.swp，.bak</p>
-<p>本题尝试index.php.bak成功获取源码</p>
-<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>burp抓包，发现提示，查看cookie.php，在响应头发现flag</p>
-<p>火狐，F12，网络，cookie可以看到提示，访问之后再看响应头即可</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG" alt></p>
-<h3 id="disabled-button"><a href="#disabled-button" class="headerlink" title="disabled_button"></a>disabled_button</h3><p>F12审查元素，找到按钮对应的代码，发现<strong>disabled=””</strong>，具体属性可以查看w3school，删除这个属性即可。</p>
-<h3 id="simple-js"><a href="#simple-js" class="headerlink" title="simple_js"></a>simple_js</h3><p>拿到js源码，根据分析可以知道，函数dechiffre(pass_enc)的返回值与传入参数无关</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG" alt></p>
-<p>根据<code>\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30</code>，替换\x为%，再URLdecode一下，得到<code>55,56,54,79,115,69,114,116,107,49,50</code>，Firefox控制台运行一下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG" alt></p>
-<h3 id="xff-referer"><a href="#xff-referer" class="headerlink" title="xff_referer"></a>xff_referer</h3><p>burp改包</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG" alt></p>
-<h3 id="weak-auth"><a href="#weak-auth" class="headerlink" title="weak_auth"></a>weak_auth</h3><p>审查元素，发现submit的页面是check.php，直接访问，提示需要字典，burp爆破即可。但是这里我直接尝试admin，123456就登陆了，弱密码。</p>
-<h3 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h3><p>直接使用蚁剑</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG" alt></p>
-<h3 id="command-execution"><a href="#command-execution" class="headerlink" title="command_execution"></a>command_execution</h3><p>关于命令执行，windows或linux下: </p>
-<p>command1 &amp;&amp; command2 先执行command1后执行command2</p>
-<p>command1 | command2 只执行command2 </p>
-<p>command1 &amp; command2 先执行command2后执行command1</p>
-<p>本题先使用ls不断遍历目录，查找flag，最后再读取</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG" alt></p>
-<h3 id="simple-php"><a href="#simple-php" class="headerlink" title="simple_php"></a>simple_php</h3><p>看到源码，考察php弱类型</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">"config.php"</span>);</span><br><span class="line">$a=@$_GET[<span class="string">'a'</span>];</span><br><span class="line">$b=@$_GET[<span class="string">'b'</span>];</span><br><span class="line"><span class="keyword">if</span>($a==<span class="number">0</span> <span class="keyword">and</span> $a)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(is_numeric($b))&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($b&gt;<span class="number">1234</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>== 比较<br><strong>var_dump(‘a’ == 0)  //true</strong><br>a会被转化为数字0<br><strong>var_dump(‘1234a’ == 1234)  //true</strong><br>这里’1234a’会被转化为1234</p>
-<p>=== 在进行比较的时候，会先判断两种字符串的类型是否相等，再比较。<br>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。</p>
-<p>在$a==$b的比较中</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">' '</span>;$b=<span class="keyword">null</span>        <span class="comment">//true</span></span><br><span class="line">$a=<span class="keyword">null</span>;$b=<span class="keyword">true</span>      <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>;$b=<span class="string">'0'</span>       <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>;$b=<span class="string">'abcdef '</span>  <span class="comment">//true  而0===’abcdef '  false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>F12常开着</li>
-<li>burp常开着</li>
-<li>试试访问robots.txt</li>
-<li>备份文件一般是在后缀名后加.swp，.bak</li>
-<li>蚁剑是有两个部分的，一个是启动程序，一个是源码</li>
-<li>php的弱类型</li>
+        <h1 id="Static-Routing"><a href="#Static-Routing" class="headerlink" title="Static Routing"></a>Static Routing</h1><h2 id="Router-Operations"><a href="#Router-Operations" class="headerlink" title="Router Operations"></a>Router Operations</h2><ul>
+<li>负责在不同网段之间进行数据转发</li>
+<li>通过路由表进行三层数据转发</li>
+<li>维护路由表信息</li>
+<li>在冗余路径中进行最优路径判断</li>
+<li>在三层转发时应用特定转发策略</li>
+</ul>
+<blockquote>
+<p>路由器默认只知道直连的路由信息，路由器永远是隔离网段的</p>
+</blockquote>
+<h2 id="Static-Routes"><a href="#Static-Routes" class="headerlink" title="Static Routes"></a>Static Routes</h2><ul>
+<li>用于小型网络</li>
+<li>管理员手工配置路由器路由表实现数据转发</li>
+</ul>
+<p>优点</p>
+<ul>
+<li>占用路由器资源小</li>
+<li>可以严格控制路由转发</li>
+<li>支持广泛</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>网络拓扑变动时无法自动更新</li>
+<li>网络很大时配置维护复杂</li>
+</ul>
+<h2 id="路由器路由条目匹配方式"><a href="#路由器路由条目匹配方式" class="headerlink" title="路由器路由条目匹配方式"></a>路由器路由条目匹配方式</h2><ol>
+<li>对数据进行精确匹配</li>
+<li>只匹配子网掩码规定的位</li>
+<li>匹配最终必须找到一个出接口才能进行转发</li>
+<li>如果没有匹配路由，则丢弃数据包，并向源返回一个 ICMP 错误信息</li>
+<li>路由器递归查找路由表，直到找到一个出接口为止</li>
 </ol>
+<h2 id="Default-Routes"><a href="#Default-Routes" class="headerlink" title="Default Routes"></a>Default Routes</h2><ul>
+<li>缺省路由</li>
+<li>匹配不知道的路由条目</li>
+<li>最不精确，永远是最后匹配</li>
+</ul>
+<h2 id="Load-Balancing"><a href="#Load-Balancing" class="headerlink" title="Load Balancing"></a>Load Balancing</h2><ul>
+<li>负载均衡存在于很多地方，这里仅仅只讨论底层网络的负载均衡</li>
+<li>基于数据包的负载均衡</li>
+<li>基于数据流的负载均衡 (效率更高一些)</li>
+</ul>
+<p>基于数据包 : 以数据包为单位，将数据包分在每个路径上</p>
+<p>基于数据流 : 不同主机到目标主机采用不同的路径</p>
+<h1 id="Dynamic-Routing-Protocol"><a href="#Dynamic-Routing-Protocol" class="headerlink" title="Dynamic Routing Protocol"></a>Dynamic Routing Protocol</h1><h2 id="Routing-Protocol-amp-Routed-Protocol"><a href="#Routing-Protocol-amp-Routed-Protocol" class="headerlink" title="Routing Protocol &amp; Routed Protocol"></a>Routing Protocol &amp; Routed Protocol</h2><ul>
+<li>路由协议用在不同路由器之间，用来判断到远程网络的路径并维护路由器的路由表</li>
+<li>当路径决定之后，路由器会将被路由协议转发到目的网络</li>
+<li>被路由协议一般指三层协议，指的是 IP 协议</li>
+</ul>
+<blockquote>
+<p>被路由协议通过路由协议学习路由进行转发</p>
+</blockquote>
+<h2 id="Dynamic-Routing-Protocol-1"><a href="#Dynamic-Routing-Protocol-1" class="headerlink" title="Dynamic Routing Protocol"></a>Dynamic Routing Protocol</h2><ul>
+<li>动态路由协议是运行在路由器上的一个程序，通过路由器的网络，交换数据包来交换路由信息</li>
+<li>不同路由器之间通过运行的特定协议，相互交换路由信息</li>
+</ul>
+<h2 id="Classful-Routing-有类别路由协议"><a href="#Classful-Routing-有类别路由协议" class="headerlink" title="Classful Routing 有类别路由协议"></a>Classful Routing 有类别路由协议</h2><ul>
+<li>更新中不使用子网掩码</li>
+<li>在一个网络中，只是用相同的子网掩码</li>
+<li>在主类网边界进行自动汇总</li>
+<li>常见协议：RIPv1, IGRP</li>
+</ul>
+<h2 id="Classless-Routing-无类别路由协议"><a href="#Classless-Routing-无类别路由协议" class="headerlink" title="Classless Routing 无类别路由协议"></a>Classless Routing 无类别路由协议</h2><ul>
+<li>更新中携带子网掩码</li>
+<li>支持 VLSM，在同一网络中可以拥有不同子网掩码</li>
+<li>支持手工汇总</li>
+<li>常见协议：RIPv2, EIGRP, OSPF</li>
+</ul>
+<h2 id="最佳路由的判定"><a href="#最佳路由的判定" class="headerlink" title="最佳路由的判定"></a>最佳路由的判定</h2><ul>
+<li><p>Metric(度量值)</p>
+</li>
+<li><p>RIP：Hop Count</p>
+</li>
+<li><p>OSPF：COST(带宽)</p>
+</li>
+<li><p>EIGRP：Bandwidth, Delay</p>
+</li>
+</ul>
 
       
     </div>
@@ -431,9 +459,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/XCTF/" rel="tag"># XCTF</a>
+            <a href="/tags/总结/" rel="tag"># 总结</a>
           
-            <a href="/tags/wp/" rel="tag"># wp</a>
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
           
         </div>
       
@@ -446,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/01/XCTF-Web进阶(一)/" rel="next" title="XCTF-Web进阶(一)">
-                <i class="fa fa-chevron-left"></i> XCTF-Web进阶(一)
+              <a href="/2019/06/02/计算机网络总结(二)/" rel="next" title="计算机网络总结(二)">
+                <i class="fa fa-chevron-left"></i> 计算机网络总结(二)
               </a>
             
           </div>
@@ -456,8 +484,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/01/蓝鲸打卡Web分析/" rel="prev" title="蓝鲸安全打卡Web分析">
-                蓝鲸安全打卡Web分析 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/03/PHP代码审计(一)/" rel="prev" title="PHP代码审计(一)">
+                PHP代码审计(一) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -599,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#view-source"><span class="nav-number">1.</span> <span class="nav-text">view source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-post"><span class="nav-number">2.</span> <span class="nav-text">get post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#robots"><span class="nav-number">3.</span> <span class="nav-text">robots</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backup"><span class="nav-number">4.</span> <span class="nav-text">backup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-number">5.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disabled-button"><span class="nav-number">6.</span> <span class="nav-text">disabled_button</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-js"><span class="nav-number">7.</span> <span class="nav-text">simple_js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xff-referer"><span class="nav-number">8.</span> <span class="nav-text">xff_referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weak-auth"><span class="nav-number">9.</span> <span class="nav-text">weak_auth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webshell"><span class="nav-number">10.</span> <span class="nav-text">webshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-execution"><span class="nav-number">11.</span> <span class="nav-text">command_execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-php"><span class="nav-number">12.</span> <span class="nav-text">simple_php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Static-Routing"><span class="nav-number">1.</span> <span class="nav-text">Static Routing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-Operations"><span class="nav-number">1.1.</span> <span class="nav-text">Router Operations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Static-Routes"><span class="nav-number">1.2.</span> <span class="nav-text">Static Routes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由器路由条目匹配方式"><span class="nav-number">1.3.</span> <span class="nav-text">路由器路由条目匹配方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Default-Routes"><span class="nav-number">1.4.</span> <span class="nav-text">Default Routes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-Balancing"><span class="nav-number">1.5.</span> <span class="nav-text">Load Balancing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dynamic-Routing-Protocol"><span class="nav-number">2.</span> <span class="nav-text">Dynamic Routing Protocol</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Routing-Protocol-amp-Routed-Protocol"><span class="nav-number">2.1.</span> <span class="nav-text">Routing Protocol &amp; Routed Protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynamic-Routing-Protocol-1"><span class="nav-number">2.2.</span> <span class="nav-text">Dynamic Routing Protocol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Classful-Routing-有类别路由协议"><span class="nav-number">2.3.</span> <span class="nav-text">Classful Routing 有类别路由协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Classless-Routing-无类别路由协议"><span class="nav-number">2.4.</span> <span class="nav-text">Classless Routing 无类别路由协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳路由的判定"><span class="nav-number">2.5.</span> <span class="nav-text">最佳路由的判定</span></a></li></ol></li></ol></div>
             
 
           </div>

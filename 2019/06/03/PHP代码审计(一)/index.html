@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="XCTF,wp,">
+  <meta name="keywords" content="PHP,代码审计,">
 
 
 
@@ -81,26 +81,18 @@
 
 
 
-<meta name="description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
-<meta name="keywords" content="XCTF,wp">
+<meta name="description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
+<meta name="keywords" content="PHP,代码审计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XCTF Web新手">
-<meta property="og:url" content="http://yoursite.com/2019/06/01/XCTF-Web新手/index.html">
+<meta property="og:title" content="PHP代码审计(一)">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/PHP代码审计(一)/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
+<meta property="og:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG">
-<meta property="og:updated_time" content="2019-05-31T18:32:40.526Z">
+<meta property="og:updated_time" content="2019-06-03T12:21:42.397Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XCTF Web新手">
-<meta name="twitter:description" content="[TOC] view source禁用右键，F12审查元素 get posthackbar进行post  robots直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问 backup备份文件一般是在后缀名后加.swp，.bak 本题尝试index.php.bak成功获取源码 cookieburp抓包，发现提示，查看cookie.php，在响应头发现flag 火狐，F12">
-<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG">
+<meta name="twitter:title" content="PHP代码审计(一)">
+<meta name="twitter:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 
 
 
@@ -130,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/01/XCTF-Web新手/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/PHP代码审计(一)/">
 
 
 
 
 
-  <title>XCTF Web新手 | peri0d的博客</title>
+  <title>PHP代码审计(一) | peri0d的博客</title>
   
 
 
@@ -283,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/XCTF-Web新手/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/PHP代码审计(一)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -300,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XCTF Web新手</h1>
+          <h1 class="post-title" itemprop="name headline">PHP代码审计(一)</h1>
         
 
         <div class="post-meta">
@@ -312,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T02:37:38+08:00">
-                2019-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T18:58:57+08:00">
+                2019-06-03
               </time>
             
 
@@ -335,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CTF-wp/" itemprop="url" rel="index">
-                    <span itemprop="name">CTF wp</span>
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
                   </a>
                 </span>
 
@@ -372,48 +364,92 @@
       
 
       
-        <p>[TOC]</p>
-<h3 id="view-source"><a href="#view-source" class="headerlink" title="view source"></a>view source</h3><p>禁用右键，F12审查元素</p>
-<h3 id="get-post"><a href="#get-post" class="headerlink" title="get post"></a>get post</h3><p>hackbar进行post</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG" alt></p>
-<h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问</p>
-<h3 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h3><p>备份文件一般是在后缀名后加.swp，.bak</p>
-<p>本题尝试index.php.bak成功获取源码</p>
-<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>burp抓包，发现提示，查看cookie.php，在响应头发现flag</p>
-<p>火狐，F12，网络，cookie可以看到提示，访问之后再看响应头即可</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG" alt></p>
-<h3 id="disabled-button"><a href="#disabled-button" class="headerlink" title="disabled_button"></a>disabled_button</h3><p>F12审查元素，找到按钮对应的代码，发现<strong>disabled=””</strong>，具体属性可以查看w3school，删除这个属性即可。</p>
-<h3 id="simple-js"><a href="#simple-js" class="headerlink" title="simple_js"></a>simple_js</h3><p>拿到js源码，根据分析可以知道，函数dechiffre(pass_enc)的返回值与传入参数无关</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG" alt></p>
-<p>根据<code>\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30</code>，替换\x为%，再URLdecode一下，得到<code>55,56,54,79,115,69,114,116,107,49,50</code>，Firefox控制台运行一下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG" alt></p>
-<h3 id="xff-referer"><a href="#xff-referer" class="headerlink" title="xff_referer"></a>xff_referer</h3><p>burp改包</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG" alt></p>
-<h3 id="weak-auth"><a href="#weak-auth" class="headerlink" title="weak_auth"></a>weak_auth</h3><p>审查元素，发现submit的页面是check.php，直接访问，提示需要字典，burp爆破即可。但是这里我直接尝试admin，123456就登陆了，弱密码。</p>
-<h3 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h3><p>直接使用蚁剑</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG" alt></p>
-<h3 id="command-execution"><a href="#command-execution" class="headerlink" title="command_execution"></a>command_execution</h3><p>关于命令执行，windows或linux下: </p>
-<p>command1 &amp;&amp; command2 先执行command1后执行command2</p>
-<p>command1 | command2 只执行command2 </p>
-<p>command1 &amp; command2 先执行command2后执行command1</p>
-<p>本题先使用ls不断遍历目录，查找flag，最后再读取</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG" alt></p>
-<h3 id="simple-php"><a href="#simple-php" class="headerlink" title="simple_php"></a>simple_php</h3><p>看到源码，考察php弱类型</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">"config.php"</span>);</span><br><span class="line">$a=@$_GET[<span class="string">'a'</span>];</span><br><span class="line">$b=@$_GET[<span class="string">'b'</span>];</span><br><span class="line"><span class="keyword">if</span>($a==<span class="number">0</span> <span class="keyword">and</span> $a)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(is_numeric($b))&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($b&gt;<span class="number">1234</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>== 比较<br><strong>var_dump(‘a’ == 0)  //true</strong><br>a会被转化为数字0<br><strong>var_dump(‘1234a’ == 1234)  //true</strong><br>这里’1234a’会被转化为1234</p>
-<p>=== 在进行比较的时候，会先判断两种字符串的类型是否相等，再比较。<br>== 在进行比较的时候，会先将字符串类型转化成相同，再比较。</p>
-<p>在$a==$b的比较中</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">' '</span>;$b=<span class="keyword">null</span>        <span class="comment">//true</span></span><br><span class="line">$a=<span class="keyword">null</span>;$b=<span class="keyword">true</span>      <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>;$b=<span class="string">'0'</span>       <span class="comment">//true</span></span><br><span class="line">$a=<span class="number">0</span>;$b=<span class="string">'abcdef '</span>  <span class="comment">//true  而0===’abcdef '  false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>F12常开着</li>
-<li>burp常开着</li>
-<li>试试访问robots.txt</li>
-<li>备份文件一般是在后缀名后加.swp，.bak</li>
-<li>蚁剑是有两个部分的，一个是启动程序，一个是源码</li>
-<li>php的弱类型</li>
-</ol>
+        <h1 id="常见-PHP-框架"><a href="#常见-PHP-框架" class="headerlink" title="常见 PHP 框架"></a>常见 PHP 框架</h1><ul>
+<li>ThinkPHP</li>
+<li>Yaf</li>
+<li>Laravel</li>
+<li>Kohana</li>
+<li>Codelgniter</li>
+<li>Yii</li>
+<li>Smyfony</li>
+<li>doitphp</li>
+</ul>
+<blockquote>
+<p>先看用户手册</p>
+</blockquote>
+<h1 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h1><p>获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示</p>
+<h1 id="网站目录结构"><a href="#网站目录结构" class="headerlink" title="网站目录结构"></a>网站目录结构</h1><ul>
+<li><p>主目录</p>
+</li>
+<li><p>模块目录</p>
+</li>
+<li><p>插件目录</p>
+</li>
+<li><p>上层目录</p>
+</li>
+<li><p>模板目录</p>
+</li>
+<li><p>数据目录</p>
+</li>
+<li><p>配置目录</p>
+</li>
+<li><p>配置文件</p>
+</li>
+<li><p>公共函数文件</p>
+</li>
+<li><p>安全过滤文件</p>
+</li>
+<li><p>数据库结构</p>
+</li>
+<li><p>入口文件</p>
+</li>
+</ul>
+<h1 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h1><h2 id="通读原文"><a href="#通读原文" class="headerlink" title="通读原文"></a>通读原文</h2><ul>
+<li>函数集文件</li>
+<li>配置文件</li>
+<li>安全过滤文件</li>
+<li>index 文件</li>
+</ul>
+<blockquote>
+<p>适用于比较小的网站或者 CMS</p>
+</blockquote>
+<h2 id="敏感关键字回溯参数"><a href="#敏感关键字回溯参数" class="headerlink" title="敏感关键字回溯参数"></a>敏感关键字回溯参数</h2><p>这是常见方法，但是不能了解程序的基本框架，覆盖不了逻辑漏洞</p>
+<h2 id="查找可控变量"><a href="#查找可控变量" class="headerlink" title="查找可控变量"></a>查找可控变量</h2><ul>
+<li><p>可控变量</p>
+</li>
+<li><p>进入函数的变量</p>
+</li>
+</ul>
+<h2 id="功能点定向审计"><a href="#功能点定向审计" class="headerlink" title="功能点定向审计"></a>功能点定向审计</h2><ul>
+<li>程序安装</li>
+<li>文件上传</li>
+<li>文件管理</li>
+<li>登陆验证</li>
+<li>备份恢复</li>
+<li>找回密码</li>
+</ul>
+<h1 id="PHP核心配置"><a href="#PHP核心配置" class="headerlink" title="PHP核心配置"></a>PHP核心配置</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li>大小写敏感</li>
+<li>运算符：|, &amp;, ~, !</li>
+<li>空值：foo = ; 或者 foo = none;</li>
+</ul>
+<h2 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h2><ul>
+<li><p>安全模式</p>
+<p><code>safe_mode = off</code></p>
+<p>限制文档的存取，限制环境变量的存取，控制外部程序的执行</p>
+<p>在 PHP5.4.0 被移除</p>
+</li>
+<li><p>限制环境变量存取</p>
+<p><code>safe_mode_allowed_env_vars = string</code></p>
+<p>指定 PHP 程序可以改变的环境变量的前缀</p>
+</li>
+<li><p>外部程序执行目录</p>
+<p><code>safe_mode_exec_dir = &quot;path&quot;</code></p>
+</li>
+<li><p>禁用函数</p>
+<p><code>disable_functions =</code> </p>
+</li>
+</ul>
 
       
     </div>
@@ -431,9 +467,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/XCTF/" rel="tag"># XCTF</a>
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
           
-            <a href="/tags/wp/" rel="tag"># wp</a>
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
           
         </div>
       
@@ -446,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/01/XCTF-Web进阶(一)/" rel="next" title="XCTF-Web进阶(一)">
-                <i class="fa fa-chevron-left"></i> XCTF-Web进阶(一)
+              <a href="/2019/06/03/计算机网络总结(三)/" rel="next" title="计算机网络总结(三)">
+                <i class="fa fa-chevron-left"></i> 计算机网络总结(三)
               </a>
             
           </div>
@@ -455,10 +491,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/01/蓝鲸打卡Web分析/" rel="prev" title="蓝鲸安全打卡Web分析">
-                蓝鲸安全打卡Web分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -599,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#view-source"><span class="nav-number">1.</span> <span class="nav-text">view source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-post"><span class="nav-number">2.</span> <span class="nav-text">get post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#robots"><span class="nav-number">3.</span> <span class="nav-text">robots</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backup"><span class="nav-number">4.</span> <span class="nav-text">backup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-number">5.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disabled-button"><span class="nav-number">6.</span> <span class="nav-text">disabled_button</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-js"><span class="nav-number">7.</span> <span class="nav-text">simple_js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xff-referer"><span class="nav-number">8.</span> <span class="nav-text">xff_referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#weak-auth"><span class="nav-number">9.</span> <span class="nav-text">weak_auth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webshell"><span class="nav-number">10.</span> <span class="nav-text">webshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command-execution"><span class="nav-number">11.</span> <span class="nav-text">command_execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-php"><span class="nav-number">12.</span> <span class="nav-text">simple_php</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见-PHP-框架"><span class="nav-number">1.</span> <span class="nav-text">常见 PHP 框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#处理流程"><span class="nav-number">2.</span> <span class="nav-text">处理流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网站目录结构"><span class="nav-number">3.</span> <span class="nav-text">网站目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见方法"><span class="nav-number">4.</span> <span class="nav-text">常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通读原文"><span class="nav-number">4.1.</span> <span class="nav-text">通读原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敏感关键字回溯参数"><span class="nav-number">4.2.</span> <span class="nav-text">敏感关键字回溯参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找可控变量"><span class="nav-number">4.3.</span> <span class="nav-text">查找可控变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能点定向审计"><span class="nav-number">4.4.</span> <span class="nav-text">功能点定向审计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP核心配置"><span class="nav-number">5.</span> <span class="nav-text">PHP核心配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全模式"><span class="nav-number">5.2.</span> <span class="nav-text">安全模式</span></a></li></ol></li></ol></div>
             
 
           </div>

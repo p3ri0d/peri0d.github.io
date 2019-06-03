@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-06-02T15:26:16.685Z</updated>
+  <updated>2019-06-03T12:21:42.397Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP代码审计(一)</title>
+    <link href="http://yoursite.com/2019/06/03/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1(%E4%B8%80)/"/>
+    <id>http://yoursite.com/2019/06/03/PHP代码审计(一)/</id>
+    <published>2019-06-03T10:58:57.814Z</published>
+    <updated>2019-06-03T12:21:42.397Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="常见-PHP-框架"><a href="#常见-PHP-框架" class="headerlink" title="常见 PHP 框架"></a>常见 PHP 框架</h1><ul><li>ThinkPHP</li><li>Yaf</li><li>Laravel</li><li>Kohana</li><li>Codelgniter</li><li>Yii</li><li>Smyfony</li><li>doitphp</li></ul><blockquote><p>先看用户手册</p></blockquote><h1 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h1><p>获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示</p><h1 id="网站目录结构"><a href="#网站目录结构" class="headerlink" title="网站目录结构"></a>网站目录结构</h1><ul><li><p>主目录</p></li><li><p>模块目录</p></li><li><p>插件目录</p></li><li><p>上层目录</p></li><li><p>模板目录</p></li><li><p>数据目录</p></li><li><p>配置目录</p></li><li><p>配置文件</p></li><li><p>公共函数文件</p></li><li><p>安全过滤文件</p></li><li><p>数据库结构</p></li><li><p>入口文件</p></li></ul><h1 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h1><h2 id="通读原文"><a href="#通读原文" class="headerlink" title="通读原文"></a>通读原文</h2><ul><li>函数集文件</li><li>配置文件</li><li>安全过滤文件</li><li>index 文件</li></ul><blockquote><p>适用于比较小的网站或者 CMS</p></blockquote><h2 id="敏感关键字回溯参数"><a href="#敏感关键字回溯参数" class="headerlink" title="敏感关键字回溯参数"></a>敏感关键字回溯参数</h2><p>这是常见方法，但是不能了解程序的基本框架，覆盖不了逻辑漏洞</p><h2 id="查找可控变量"><a href="#查找可控变量" class="headerlink" title="查找可控变量"></a>查找可控变量</h2><ul><li><p>可控变量</p></li><li><p>进入函数的变量</p></li></ul><h2 id="功能点定向审计"><a href="#功能点定向审计" class="headerlink" title="功能点定向审计"></a>功能点定向审计</h2><ul><li>程序安装</li><li>文件上传</li><li>文件管理</li><li>登陆验证</li><li>备份恢复</li><li>找回密码</li></ul><h1 id="PHP核心配置"><a href="#PHP核心配置" class="headerlink" title="PHP核心配置"></a>PHP核心配置</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul><li>大小写敏感</li><li>运算符：|, &amp;, ~, !</li><li>空值：foo = ; 或者 foo = none;</li></ul><h2 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h2><ul><li><p>安全模式</p><p><code>safe_mode = off</code></p><p>限制文档的存取，限制环境变量的存取，控制外部程序的执行</p><p>在 PHP5.4.0 被移除</p></li><li><p>限制环境变量存取</p><p><code>safe_mode_allowed_env_vars = string</code></p><p>指定 PHP 程序可以改变的环境变量的前缀</p></li><li><p>外部程序执行目录</p><p><code>safe_mode_exec_dir = &quot;path&quot;</code></p></li><li><p>禁用函数</p><p><code>disable_functions =</code> </p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;常见-PHP-框架&quot;&gt;&lt;a href=&quot;#常见-PHP-框架&quot; class=&quot;headerlink&quot; title=&quot;常见 PHP 框架&quot;&gt;&lt;/a&gt;常见 PHP 框架&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;ThinkPHP&lt;/li&gt;
+&lt;li&gt;Yaf&lt;/li&gt;
+&lt;li&gt;Larav
+      
+    
+    </summary>
+    
+      <category term="代码审计" scheme="http://yoursite.com/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+    
+      <category term="PHP" scheme="http://yoursite.com/tags/PHP/"/>
+    
+      <category term="代码审计" scheme="http://yoursite.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络总结(三)</title>
+    <link href="http://yoursite.com/2019/06/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%80%BB%E7%BB%93(%E4%B8%89)/"/>
+    <id>http://yoursite.com/2019/06/03/计算机网络总结(三)/</id>
+    <published>2019-06-03T03:00:52.167Z</published>
+    <updated>2019-06-03T10:58:32.277Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Static-Routing"><a href="#Static-Routing" class="headerlink" title="Static Routing"></a>Static Routing</h1><h2 id="Router-Operations"><a href="#Router-Operations" class="headerlink" title="Router Operations"></a>Router Operations</h2><ul><li>负责在不同网段之间进行数据转发</li><li>通过路由表进行三层数据转发</li><li>维护路由表信息</li><li>在冗余路径中进行最优路径判断</li><li>在三层转发时应用特定转发策略</li></ul><blockquote><p>路由器默认只知道直连的路由信息，路由器永远是隔离网段的</p></blockquote><h2 id="Static-Routes"><a href="#Static-Routes" class="headerlink" title="Static Routes"></a>Static Routes</h2><ul><li>用于小型网络</li><li>管理员手工配置路由器路由表实现数据转发</li></ul><p>优点</p><ul><li>占用路由器资源小</li><li>可以严格控制路由转发</li><li>支持广泛</li></ul><p>缺点</p><ul><li>网络拓扑变动时无法自动更新</li><li>网络很大时配置维护复杂</li></ul><h2 id="路由器路由条目匹配方式"><a href="#路由器路由条目匹配方式" class="headerlink" title="路由器路由条目匹配方式"></a>路由器路由条目匹配方式</h2><ol><li>对数据进行精确匹配</li><li>只匹配子网掩码规定的位</li><li>匹配最终必须找到一个出接口才能进行转发</li><li>如果没有匹配路由，则丢弃数据包，并向源返回一个 ICMP 错误信息</li><li>路由器递归查找路由表，直到找到一个出接口为止</li></ol><h2 id="Default-Routes"><a href="#Default-Routes" class="headerlink" title="Default Routes"></a>Default Routes</h2><ul><li>缺省路由</li><li>匹配不知道的路由条目</li><li>最不精确，永远是最后匹配</li></ul><h2 id="Load-Balancing"><a href="#Load-Balancing" class="headerlink" title="Load Balancing"></a>Load Balancing</h2><ul><li>负载均衡存在于很多地方，这里仅仅只讨论底层网络的负载均衡</li><li>基于数据包的负载均衡</li><li>基于数据流的负载均衡 (效率更高一些)</li></ul><p>基于数据包 : 以数据包为单位，将数据包分在每个路径上</p><p>基于数据流 : 不同主机到目标主机采用不同的路径</p><h1 id="Dynamic-Routing-Protocol"><a href="#Dynamic-Routing-Protocol" class="headerlink" title="Dynamic Routing Protocol"></a>Dynamic Routing Protocol</h1><h2 id="Routing-Protocol-amp-Routed-Protocol"><a href="#Routing-Protocol-amp-Routed-Protocol" class="headerlink" title="Routing Protocol &amp; Routed Protocol"></a>Routing Protocol &amp; Routed Protocol</h2><ul><li>路由协议用在不同路由器之间，用来判断到远程网络的路径并维护路由器的路由表</li><li>当路径决定之后，路由器会将被路由协议转发到目的网络</li><li>被路由协议一般指三层协议，指的是 IP 协议</li></ul><blockquote><p>被路由协议通过路由协议学习路由进行转发</p></blockquote><h2 id="Dynamic-Routing-Protocol-1"><a href="#Dynamic-Routing-Protocol-1" class="headerlink" title="Dynamic Routing Protocol"></a>Dynamic Routing Protocol</h2><ul><li>动态路由协议是运行在路由器上的一个程序，通过路由器的网络，交换数据包来交换路由信息</li><li>不同路由器之间通过运行的特定协议，相互交换路由信息</li></ul><h2 id="Classful-Routing-有类别路由协议"><a href="#Classful-Routing-有类别路由协议" class="headerlink" title="Classful Routing 有类别路由协议"></a>Classful Routing 有类别路由协议</h2><ul><li>更新中不使用子网掩码</li><li>在一个网络中，只是用相同的子网掩码</li><li>在主类网边界进行自动汇总</li><li>常见协议：RIPv1, IGRP</li></ul><h2 id="Classless-Routing-无类别路由协议"><a href="#Classless-Routing-无类别路由协议" class="headerlink" title="Classless Routing 无类别路由协议"></a>Classless Routing 无类别路由协议</h2><ul><li>更新中携带子网掩码</li><li>支持 VLSM，在同一网络中可以拥有不同子网掩码</li><li>支持手工汇总</li><li>常见协议：RIPv2, EIGRP, OSPF</li></ul><h2 id="最佳路由的判定"><a href="#最佳路由的判定" class="headerlink" title="最佳路由的判定"></a>最佳路由的判定</h2><ul><li><p>Metric(度量值)</p></li><li><p>RIP：Hop Count</p></li><li><p>OSPF：COST(带宽)</p></li><li><p>EIGRP：Bandwidth, Delay</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Static-Routing&quot;&gt;&lt;a href=&quot;#Static-Routing&quot; class=&quot;headerlink&quot; title=&quot;Static Routing&quot;&gt;&lt;/a&gt;Static Routing&lt;/h1&gt;&lt;h2 id=&quot;Router-Operations
+      
+    
+    </summary>
+    
+      <category term="总结" scheme="http://yoursite.com/categories/%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="总结" scheme="http://yoursite.com/tags/%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="计算机网络" scheme="http://yoursite.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机网络总结(二)</title>
