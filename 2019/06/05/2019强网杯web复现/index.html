@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PHP,代码审计,">
+  <meta name="keywords" content="wp,QWB,">
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
-<meta name="keywords" content="PHP,代码审计">
+<meta name="description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
+<meta name="keywords" content="wp,QWB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP代码审计(一)">
-<meta property="og:url" content="http://yoursite.com/2019/06/03/PHP代码审计(一)/index.html">
+<meta property="og:title" content="强网杯web复现">
+<meta property="og:url" content="http://yoursite.com/2019/06/05/2019强网杯web复现/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
+<meta property="og:description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-03T12:33:53.212Z">
+<meta property="og:updated_time" content="2019-06-05T11:21:46.047Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP代码审计(一)">
-<meta name="twitter:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
+<meta name="twitter:title" content="强网杯web复现">
+<meta name="twitter:description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/03/PHP代码审计(一)/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/05/2019强网杯web复现/">
 
 
 
 
 
-  <title>PHP代码审计(一) | peri0d的博客</title>
+  <title>强网杯web复现 | peri0d的博客</title>
   
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/PHP代码审计(一)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/05/2019强网杯web复现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP代码审计(一)</h1>
+          <h1 class="post-title" itemprop="name headline">强网杯web复现</h1>
         
 
         <div class="post-meta">
@@ -304,8 +304,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T18:58:57+08:00">
-                2019-06-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-05T12:17:46+08:00">
+                2019-06-05
               </time>
             
 
@@ -327,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/代码审计/" itemprop="url" rel="index">
-                    <span itemprop="name">代码审计</span>
+                  <a href="/categories/CTF-wp/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF wp</span>
                   </a>
                 </span>
 
@@ -364,130 +364,12 @@
       
 
       
-        <h1 id="常见-PHP-框架"><a href="#常见-PHP-框架" class="headerlink" title="常见 PHP 框架"></a>常见 PHP 框架</h1><ul>
-<li>ThinkPHP</li>
-<li>Yaf</li>
-<li>Laravel</li>
-<li>Kohana</li>
-<li>Codelgniter</li>
-<li>Yii</li>
-<li>Smyfony</li>
-<li>doitphp</li>
-</ul>
-<blockquote>
-<p>先看用户手册</p>
-</blockquote>
-<h1 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h1><p>获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示</p>
-<h1 id="网站目录结构"><a href="#网站目录结构" class="headerlink" title="网站目录结构"></a>网站目录结构</h1><ul>
-<li><p>主目录</p>
-</li>
-<li><p>模块目录</p>
-</li>
-<li><p>插件目录</p>
-</li>
-<li><p>上层目录</p>
-</li>
-<li><p>模板目录</p>
-</li>
-<li><p>数据目录</p>
-</li>
-<li><p>配置目录</p>
-</li>
-<li><p>配置文件</p>
-</li>
-<li><p>公共函数文件</p>
-</li>
-<li><p>安全过滤文件</p>
-</li>
-<li><p>数据库结构</p>
-</li>
-<li><p>入口文件</p>
-</li>
-</ul>
-<h1 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h1><h2 id="通读原文"><a href="#通读原文" class="headerlink" title="通读原文"></a>通读原文</h2><ul>
-<li>函数集文件</li>
-<li>配置文件</li>
-<li>安全过滤文件</li>
-<li>index 文件</li>
-</ul>
-<blockquote>
-<p>适用于比较小的网站或者 CMS</p>
-</blockquote>
-<h2 id="敏感关键字回溯参数"><a href="#敏感关键字回溯参数" class="headerlink" title="敏感关键字回溯参数"></a>敏感关键字回溯参数</h2><p>这是常见方法，但是不能了解程序的基本框架，覆盖不了逻辑漏洞</p>
-<h2 id="查找可控变量"><a href="#查找可控变量" class="headerlink" title="查找可控变量"></a>查找可控变量</h2><ul>
-<li><p>可控变量</p>
-</li>
-<li><p>进入函数的变量</p>
-</li>
-</ul>
-<h2 id="功能点定向审计"><a href="#功能点定向审计" class="headerlink" title="功能点定向审计"></a>功能点定向审计</h2><ul>
-<li>程序安装</li>
-<li>文件上传</li>
-<li>文件管理</li>
-<li>登陆验证</li>
-<li>备份恢复</li>
-<li>找回密码</li>
-</ul>
-<h1 id="PHP核心配置"><a href="#PHP核心配置" class="headerlink" title="PHP核心配置"></a>PHP核心配置</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
-<li>大小写敏感</li>
-<li>运算符：|, &amp;, ~, !</li>
-<li>空值：foo = ; 或者 foo = none;</li>
-</ul>
-<h2 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h2><ul>
-<li><p>安全模式</p>
-<p><code>safe_mode = off</code></p>
-<p>限制文档的存取，限制环境变量的存取，控制外部程序的执行</p>
-<p>在 PHP5.4.0 被移除</p>
-</li>
-<li><p>限制环境变量存取</p>
-<p><code>safe_mode_allowed_env_vars = string</code></p>
-<p>指定 PHP 程序可以改变的环境变量的前缀</p>
-</li>
-<li><p>外部程序执行目录</p>
-<p><code>safe_mode_exec_dir = &quot;path&quot;</code></p>
-</li>
-<li><p>禁用函数</p>
-<p><code>disable_functions =</code> </p>
-</li>
-</ul>
-<h2 id="控制变量"><a href="#控制变量" class="headerlink" title="控制变量"></a>控制变量</h2><ul>
-<li><p>全局变量注册开关</p>
-<p><code>register_globals = off</code></p>
-<p>off 时服务端使用 $_GET[‘name’] 获取数据，on 时服务端通过 POST 或 GET 提交的数据将使用全局变量来接收</p>
-</li>
-<li><p>魔术引号自动过滤</p>
-<p><code>magic_quotes_gpc = on</code></p>
-<p>在 PHP5.4.0 被移除</p>
-</li>
-</ul>
-<h2 id="远程文件"><a href="#远程文件" class="headerlink" title="远程文件"></a>远程文件</h2><ul>
-<li><p>是否允许包含远程文件</p>
-<p><code>allow_url_include = off</code></p>
-</li>
-<li><p>是否允许打开远程文件</p>
-<p><code>allow_url_open = off</code></p>
-</li>
-</ul>
-<h2 id="目录权限"><a href="#目录权限" class="headerlink" title="目录权限"></a>目录权限</h2><ul>
-<li><p>HTTP 头部版本信息</p>
-<p><code>expose_http = off</code></p>
-</li>
-<li><p>文件上传临时目录</p>
-<p><code>upload_tmp_dir =</code> </p>
-</li>
-<li><p>用户可访问目录</p>
-<p><code>open_basedir = path</code></p>
-</li>
-</ul>
-<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><ul>
-<li><p>内部错误选项</p>
-<p><code>display_errors = on</code></p>
-</li>
-<li><p>错误报告级别</p>
-<p><code>error_reporting = E_ALL&amp;~E_NOTICE</code></p>
-</li>
-</ul>
-
+        <h1 id="UPLOAD"><a href="#UPLOAD" class="headerlink" title="UPLOAD"></a>UPLOAD</h1><ol>
+<li>打开靶机，有登陆和注册的页面</li>
+<li>注册登陆，进入到一个上传页面</li>
+<li>测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png</li>
+</ol>
+<h1 id="随便注"><a href="#随便注" class="headerlink" title="随便注"></a>随便注</h1>
       
     </div>
     
@@ -504,9 +386,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP/" rel="tag"># PHP</a>
+            <a href="/tags/wp/" rel="tag"># wp</a>
           
-            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+            <a href="/tags/QWB/" rel="tag"># QWB</a>
           
         </div>
       
@@ -519,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/03/计算机网络总结(三)/" rel="next" title="计算机网络总结(三)">
-                <i class="fa fa-chevron-left"></i> 计算机网络总结(三)
+              <a href="/2019/06/04/PHP代码审计(二)/" rel="next" title="PHP代码审计(二)">
+                <i class="fa fa-chevron-left"></i> PHP代码审计(二)
               </a>
             
           </div>
@@ -528,10 +410,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/04/计算机网络总结(四)/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -672,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见-PHP-框架"><span class="nav-number">1.</span> <span class="nav-text">常见 PHP 框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#处理流程"><span class="nav-number">2.</span> <span class="nav-text">处理流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网站目录结构"><span class="nav-number">3.</span> <span class="nav-text">网站目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见方法"><span class="nav-number">4.</span> <span class="nav-text">常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通读原文"><span class="nav-number">4.1.</span> <span class="nav-text">通读原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敏感关键字回溯参数"><span class="nav-number">4.2.</span> <span class="nav-text">敏感关键字回溯参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找可控变量"><span class="nav-number">4.3.</span> <span class="nav-text">查找可控变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能点定向审计"><span class="nav-number">4.4.</span> <span class="nav-text">功能点定向审计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP核心配置"><span class="nav-number">5.</span> <span class="nav-text">PHP核心配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全模式"><span class="nav-number">5.2.</span> <span class="nav-text">安全模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制变量"><span class="nav-number">5.3.</span> <span class="nav-text">控制变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程文件"><span class="nav-number">5.4.</span> <span class="nav-text">远程文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录权限"><span class="nav-number">5.5.</span> <span class="nav-text">目录权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误信息"><span class="nav-number">5.6.</span> <span class="nav-text">错误信息</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UPLOAD"><span class="nav-number">1.</span> <span class="nav-text">UPLOAD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随便注"><span class="nav-number">2.</span> <span class="nav-text">随便注</span></a></li></ol></div>
             
 
           </div>
