@@ -89,10 +89,17 @@
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-06T15:01:04.951Z">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/in_array.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/array_search.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png">
+<meta property="og:updated_time" content="2019-06-08T08:34:55.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP代码审计(二)">
 <meta name="twitter:description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 
 
 
@@ -417,7 +424,7 @@
 <h1 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="变量覆盖"></a>变量覆盖</h1><ul>
 <li>变量未初始化，我们自定义的参数值可以替换程序原有的变量值</li>
 </ul>
-<h2 id><a href="#" class="headerlink" title="$"></a>$</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$x = <span class="string">'123'</span>;</span><br><span class="line">$b = <span class="string">'456'</span>;</span><br><span class="line"></span><br><span class="line">$x = $_GET[<span class="string">'x'</span>];</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"var_dump($$x);"</span>);</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"var_dump($x);"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id><a href="#" class="headerlink" title="$$"></a>$$</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$x = <span class="string">'123'</span>;</span><br><span class="line">$b = <span class="string">'456'</span>;</span><br><span class="line"></span><br><span class="line">$x = $_GET[<span class="string">'x'</span>];</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"var_dump($$x);"</span>);</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"var_dump($x);"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>变量 x 初始化为 ‘123’</p>
 <p>传入参数 ?x=b，$$x 就相当于 $b，这时的输出为 string(3) “456”，string(1) “b”</p>
@@ -457,7 +464,109 @@
 
 <p>payload：?x=m[0]=admin</p>
 <p>parse_str($x) 即为 parse_str(m[0]=admin)，实现变量覆盖。</p>
-<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><h1 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h1><h1 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h1><h1 id="回话认证漏洞"><a href="#回话认证漏洞" class="headerlink" title="回话认证漏洞"></a>回话认证漏洞</h1>
+<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><h2 id="序列化和反序列化"><a href="#序列化和反序列化" class="headerlink" title="序列化和反序列化"></a>序列化和反序列化</h2><ul>
+<li>序列化：把一个复杂的数据类型压缩为一个字符串</li>
+<li>反序列化：把一个字符串恢复成复杂的数据类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$x = &quot;peri0d 2019&quot;;</span><br><span class="line">$y = array(&quot;peri0d&quot;,2019);</span><br><span class="line">echo serialize($x).&apos;&lt;br&gt;&apos;;</span><br><span class="line">echo serialize($y);</span><br><span class="line">//s:11:&quot;peri0d 2019&quot;;</span><br><span class="line">//a:2:&#123;i:0;s:6:&quot;peri0d&quot;;i:1;i:2019;&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><ul>
+<li>反序列化对象中存在魔术方法，而且魔术方法中的代码可以被控制，漏洞根据不同的代码可以导致各种攻击</li>
+<li>unserialize 函数的变量可控</li>
+<li>php 文件存在可利用的类，类中有魔术方法</li>
+</ul>
+<h2 id="序列化的不同结果"><a href="#序列化的不同结果" class="headerlink" title="序列化的不同结果"></a>序列化的不同结果</h2><ul>
+<li>public</li>
+<li>private</li>
+<li>protect</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $x = <span class="string">"peri0dx"</span>;</span><br><span class="line">    <span class="keyword">public</span>  $y = <span class="string">"peri0dy"</span>;</span><br><span class="line">    <span class="keyword">protected</span> $z = <span class="string">"peri0dz"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$t = <span class="keyword">new</span> test();</span><br><span class="line"><span class="keyword">echo</span> serialize($t);</span><br><span class="line"><span class="comment">//O:4:"test":3:&#123;s:7:"testx";s:7:"peri0dx";s:1:"y";s:7:"peri0dy";s:4:"*z";s:7:"peri0dz";&#125;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h2><ul>
+<li>construct() : 当一个类被创建时自动调用</li>
+<li>destruct() : 当一个类被销毁时自动调用</li>
+<li>invoke() : 当把一个类当作函数使用时自动调用</li>
+<li>toString() : 当把一个类当作字符串使用时自动调用</li>
+<li>wakeup() : 当调用unserialize()函数时自动调用</li>
+<li>sleep() : 当调用serialize()函数时自动调用</li>
+<li>call() : 当要调用的方法不存在或权限不足时自动调用</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png" alt></p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>CVE-2016-7124</p>
+<h1 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><ul>
+<li>标准类型：布尔，整型，浮点，字符</li>
+<li>复杂类型：数据，对象</li>
+<li>特殊类型：资源</li>
+</ul>
+<h2 id="操作之间的比较"><a href="#操作之间的比较" class="headerlink" title="操作之间的比较"></a>操作之间的比较</h2><ol>
+<li><p>字符串和数字</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(<span class="number">0</span> == <span class="string">"admin"</span>);    <span class="comment">//T</span></span><br><span class="line">var_dump(<span class="string">"1admin"</span> == <span class="number">1</span>);   <span class="comment">//T</span></span><br><span class="line">var_dump(<span class="string">"admin1"</span> == <span class="number">1</span>);   <span class="comment">//F</span></span><br><span class="line">var_dump(<span class="string">"admin1"</span> == <span class="number">0</span>);   <span class="comment">//T</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数字和数组</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$arr = <span class="keyword">array</span>();</span><br><span class="line">var_dump(<span class="number">0</span> == $arr);    <span class="comment">//F</span></span><br><span class="line">var_dump(<span class="number">123</span> == $arr);  <span class="comment">//F</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>字符串和数组</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$arr = <span class="keyword">array</span>();</span><br><span class="line">var_dump(<span class="string">'0'</span> == $arr);    <span class="comment">//F</span></span><br><span class="line">var_dump(<span class="string">'123'</span> == $arr);  <span class="comment">//F</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>“合法数字+e+合法数字” 类型的字符串</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(<span class="string">"0e1234"</span> == <span class="string">"0e56789"</span>);   <span class="comment">//T</span></span><br><span class="line">var_dump(<span class="string">"1e1123"</span> == <span class="string">"10"</span>);        <span class="comment">//F</span></span><br><span class="line">var_dump(<span class="string">"1e1"</span> == <span class="string">"10"</span>);           <span class="comment">//T</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>== 和 ===</p>
+<p>在PHP里面    ==   比较指比较值，不同类型会转换成同一类型比较。用   ===   比较时，必须值和类型都一样才为true</p>
+</li>
+</ol>
+<h2 id="empty-与-isset"><a href="#empty-与-isset" class="headerlink" title="empty 与 isset"></a>empty 与 isset</h2><ul>
+<li>变量为：0, “0”, null, false, array() 时，使用 empty 函数，返回值为 true</li>
+<li>变量未定义或为 null 时，isset 函数返回 false，其他都返回 true</li>
+</ul>
+<h2 id="md5-函数"><a href="#md5-函数" class="headerlink" title="md5 函数"></a>md5 函数</h2><p>传入数组进行比较时全为 true</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$arr1 = <span class="keyword">array</span>(<span class="string">'test1'</span>, <span class="string">'test2'</span>, <span class="string">'2019'</span>);</span><br><span class="line">$arr2 = <span class="keyword">array</span>(<span class="string">'test3'</span>, <span class="string">'test4'</span>, <span class="string">'2019'</span>);</span><br><span class="line">var_dump(md5($arr1) == md5($arr2));    <span class="comment">//T</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="strcmp-函数"><a href="#strcmp-函数" class="headerlink" title="strcmp 函数"></a>strcmp 函数</h2><blockquote>
+<p>strcmp(<em>string1</em>, <em>string2</em>)</p>
+</blockquote>
+<p>比较 string1 和 string2。如果相等返回 0；如果 string1 小于 string2，返回 &lt;0；如果 string1 大于 string2，返回 &gt;0</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$pass = <span class="string">'123456'</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'pwd'</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>(strcmp($_GET[<span class="string">'pwd'</span>], $pass) == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'success'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'fail'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>payload：?pwd[]=1</p>
+<h2 id="in-array-与-array-search"><a href="#in-array-与-array-search" class="headerlink" title="in_array() 与 array_search()"></a>in_array() 与 array_search()</h2><p><strong>in_array()</strong> 函数搜索数组中是否存在指定的值。如果在数组中找到值则返回 TRUE，否则返回 FALSE。</p>
+<blockquote>
+<p>bool in_array ( mixed $needle , array $haystack [, bool $strict = FALSE ] )</p>
+</blockquote>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/in_array.png" alt></p>
+<p><strong>array_search()</strong> 函数在数组中搜索某个键值，并返回对应的键名。如果在数组中找到指定的键值，则返回对应的键名，否则返回 FALSE。如果在数组中找到键值超过一次，则返回第一次找到的键值所匹配的键名。</p>
+<blockquote>
+<p>array_search(<em>value</em>, <em>array</em>, <em>strict</em>) </p>
+</blockquote>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/array_search.png" alt></p>
+<h2 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h2><p>如果 switch 是数字类型的 case 判断时，switch 会将参数转换为 int 类型</p>
+<h1 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h1><h2 id="file"><a href="#file" class="headerlink" title="file://"></a>file://</h2><ul>
+<li>用于访问本地系统文件，不受 <strong>allow_url_fopen</strong> 和 <strong>allow_url_include</strong> 影响</li>
+<li>常与文件包含结合在一起使用</li>
+</ul>
+<h2 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h2><ul>
+<li>读取源代码并以base-64编码形式输出，不受 <strong>allow_url_fopen</strong> 和 <strong>allow_url_include</strong> 影响</li>
+<li>常与文件包含结合在一起使用</li>
+<li>经典用法：?file=php://filter/read=convert.base64-encode/resource=./index.php</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png" alt></p>
+<h2 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h2><ul>
+<li>可以访问请求的原始数据的只读流，<strong>allow_url_include</strong> 为 on 时可以使用，不受 <strong>allow_url_fopen</strong> 影响</li>
+</ul>
+<h1 id="会话认证漏洞"><a href="#会话认证漏洞" class="headerlink" title="会话认证漏洞"></a>会话认证漏洞</h1><ul>
+<li>Session 固定攻击</li>
+<li>Session 劫持攻击</li>
+<li>通常出现在 cookie 验证上，通常不使用 session 认证</li>
+</ul>
+<h2 id="Session-劫持攻击"><a href="#Session-劫持攻击" class="headerlink" title="Session 劫持攻击"></a>Session 劫持攻击</h2><ul>
+<li>获取用户的 session id，然后修改数据</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png" alt></p>
+<h2 id="Session-固定攻击"><a href="#Session-固定攻击" class="headerlink" title="Session 固定攻击"></a>Session 固定攻击</h2><ul>
+<li>用户使用了黑客发送的 session id，网站就不会给用户发送 session id</li>
+</ul>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png" alt></p>
+
       
     </div>
     
@@ -489,8 +598,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/04/计算机网络总结(四)/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2019/06/04/计算机网络总结(四)/" rel="next" title="PHP代码审计(二)">
+                <i class="fa fa-chevron-left"></i> PHP代码审计(二)
               </a>
             
           </div>
@@ -642,7 +751,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#审计中涉及的超全局变量"><span class="nav-number">1.</span> <span class="nav-text">审计中涉及的超全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLOBALS"><span class="nav-number">1.1.</span> <span class="nav-text">$GLOBALS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-和-GET"><span class="nav-number">1.2.</span> <span class="nav-text">$_POST 和 $_GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REQUEST"><span class="nav-number">1.3.</span> <span class="nav-text">$_REQUEST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVER"><span class="nav-number">1.4.</span> <span class="nav-text">$_SERVER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FILE"><span class="nav-number">1.5.</span> <span class="nav-text">$_FILE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SESSION"><span class="nav-number">1.6.</span> <span class="nav-text">$_SESSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COOKIE"><span class="nav-number">1.7.</span> <span class="nav-text">$_COOKIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">1.8.</span> <span class="nav-text">$_ENV</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量覆盖"><span class="nav-number">2.</span> <span class="nav-text">变量覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.1.</span> <span class="nav-text">$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extract"><span class="nav-number">2.2.</span> <span class="nav-text">extract()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-str"><span class="nav-number">2.3.</span> <span class="nav-text">parse_str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反序列化漏洞"><span class="nav-number">3.</span> <span class="nav-text">反序列化漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弱类型"><span class="nav-number">4.</span> <span class="nav-text">弱类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪协议"><span class="nav-number">5.</span> <span class="nav-text">伪协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#回话认证漏洞"><span class="nav-number">6.</span> <span class="nav-text">回话认证漏洞</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#审计中涉及的超全局变量"><span class="nav-number">1.</span> <span class="nav-text">审计中涉及的超全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLOBALS"><span class="nav-number">1.1.</span> <span class="nav-text">$GLOBALS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-和-GET"><span class="nav-number">1.2.</span> <span class="nav-text">$_POST 和 $_GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REQUEST"><span class="nav-number">1.3.</span> <span class="nav-text">$_REQUEST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVER"><span class="nav-number">1.4.</span> <span class="nav-text">$_SERVER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FILE"><span class="nav-number">1.5.</span> <span class="nav-text">$_FILE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SESSION"><span class="nav-number">1.6.</span> <span class="nav-text">$_SESSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COOKIE"><span class="nav-number">1.7.</span> <span class="nav-text">$_COOKIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">1.8.</span> <span class="nav-text">$_ENV</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量覆盖"><span class="nav-number">2.</span> <span class="nav-text">变量覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.1.</span> <span class="nav-text">$$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extract"><span class="nav-number">2.2.</span> <span class="nav-text">extract()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-str"><span class="nav-number">2.3.</span> <span class="nav-text">parse_str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反序列化漏洞"><span class="nav-number">3.</span> <span class="nav-text">反序列化漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化和反序列化"><span class="nav-number">3.1.</span> <span class="nav-text">序列化和反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞成因"><span class="nav-number">3.2.</span> <span class="nav-text">漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化的不同结果"><span class="nav-number">3.3.</span> <span class="nav-text">序列化的不同结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法"><span class="nav-number">3.4.</span> <span class="nav-text">魔术方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">3.5.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弱类型"><span class="nav-number">4.</span> <span class="nav-text">弱类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量类型"><span class="nav-number">4.1.</span> <span class="nav-text">变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作之间的比较"><span class="nav-number">4.2.</span> <span class="nav-text">操作之间的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#empty-与-isset"><span class="nav-number">4.3.</span> <span class="nav-text">empty 与 isset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#md5-函数"><span class="nav-number">4.4.</span> <span class="nav-text">md5 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strcmp-函数"><span class="nav-number">4.5.</span> <span class="nav-text">strcmp 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-array-与-array-search"><span class="nav-number">4.6.</span> <span class="nav-text">in_array() 与 array_search()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch"><span class="nav-number">4.7.</span> <span class="nav-text">switch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪协议"><span class="nav-number">5.</span> <span class="nav-text">伪协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">5.1.</span> <span class="nav-text">file://</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-filter"><span class="nav-number">5.2.</span> <span class="nav-text">php://filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-input"><span class="nav-number">5.3.</span> <span class="nav-text">php://input</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#会话认证漏洞"><span class="nav-number">6.</span> <span class="nav-text">会话认证漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-劫持攻击"><span class="nav-number">6.1.</span> <span class="nav-text">Session 劫持攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-固定攻击"><span class="nav-number">6.2.</span> <span class="nav-text">Session 固定攻击</span></a></li></ol></li></ol></div>
             
 
           </div>
