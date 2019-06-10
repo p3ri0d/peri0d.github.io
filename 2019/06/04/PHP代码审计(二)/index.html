@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png">
-<meta property="og:updated_time" content="2019-06-08T08:34:55.221Z">
+<meta property="og:updated_time" content="2019-06-08T16:42:17.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP代码审计(二)">
 <meta name="twitter:description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
@@ -490,6 +490,7 @@
 <li>wakeup() : 当调用unserialize()函数时自动调用</li>
 <li>sleep() : 当调用serialize()函数时自动调用</li>
 <li>call() : 当要调用的方法不存在或权限不足时自动调用</li>
+<li>get() : 这个方法用来获取私有成员属性值的,有一个参数，参数传入你要获取的成员属性的名称，返回获取的属性值</li>
 </ul>
 <p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png" alt></p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>CVE-2016-7124</p>
@@ -689,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -711,7 +712,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
