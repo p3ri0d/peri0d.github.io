@@ -85,12 +85,12 @@
 <meta name="keywords" content="总结,计算机网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络总结(三)">
-<meta property="og:url" content="http://yoursite.com/2019/06/03/计算机网络总结(三)/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/路由基础/index.html">
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="Static RoutingRouter Operations 负责在不同网段之间进行数据转发 通过路由表进行三层数据转发 维护路由表信息 在冗余路径中进行最优路径判断 在三层转发时应用特定转发策略   路由器默认只知道直连的路由信息，路由器永远是隔离网段的  Static Routes 用于小型网络 管理员手工配置路由器路由表实现数据转发  优点  占用路由器资源小 可以严格控制路由转发 支持广">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/26.PNG">
-<meta property="og:updated_time" content="2019-06-06T12:10:15.405Z">
+<meta property="og:updated_time" content="2019-06-12T15:19:52.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络总结(三)">
 <meta name="twitter:description" content="Static RoutingRouter Operations 负责在不同网段之间进行数据转发 通过路由表进行三层数据转发 维护路由表信息 在冗余路径中进行最优路径判断 在三层转发时应用特定转发策略   路由器默认只知道直连的路由信息，路由器永远是隔离网段的  Static Routes 用于小型网络 管理员手工配置路由器路由表实现数据转发  优点  占用路由器资源小 可以严格控制路由转发 支持广">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/03/计算机网络总结(三)/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/路由基础/">
 
 
 
@@ -277,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/计算机网络总结(三)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/路由基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -435,23 +435,11 @@
 <li>常见协议：RIPv2, EIGRP, OSPF</li>
 </ul>
 <h2 id="最佳路由的判定"><a href="#最佳路由的判定" class="headerlink" title="最佳路由的判定"></a>最佳路由的判定</h2><ul>
-<li><p>Metric(度量值)</p>
-</li>
-<li><p>RIP：Hop Count</p>
-</li>
-<li><p>OSPF：COST(带宽)</p>
-</li>
-<li><p>EIGRP：Bandwidth, Delay</p>
-</li>
+<li>Metric(度量值)</li>
+<li>RIP：Hop Count</li>
+<li>OSPF：COST(带宽)</li>
+<li>EIGRP：Bandwidth, Delay</li>
 </ul>
-<hr>
-<p>title: 计算机网络总结(四)<br>categories:  </p>
-<ul>
-<li>总结<br>tags:</li>
-<li>总结</li>
-<li>计算机网络</li>
-</ul>
-<hr>
 <h1 id="RIP-Protocol"><a href="#RIP-Protocol" class="headerlink" title="RIP Protocol"></a>RIP Protocol</h1><h2 id="Distance-Vector-Routing-Protocol"><a href="#Distance-Vector-Routing-Protocol" class="headerlink" title="Distance Vector Routing Protocol"></a>Distance Vector Routing Protocol</h2><h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><ul>
 <li>距离矢量型路由信息协议，最根本特点是直接发送路由信息</li>
 <li>RIP 使用跳数( hop )作为度量值</li>
@@ -634,7 +622,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/02/计算机网络总结(二)/" rel="next" title="计算机网络总结(二)">
+              <a href="/2019/06/02/交换基础/" rel="next" title="计算机网络总结(二)">
                 <i class="fa fa-chevron-left"></i> 计算机网络总结(二)
               </a>
             
@@ -644,7 +632,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/03/PHP代码审计(一)/" rel="prev" title="PHP代码审计(一)">
+              <a href="/2019/06/03/PHP代码审计基础/" rel="prev" title="PHP代码审计(一)">
                 PHP代码审计(一) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -725,7 +713,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -736,7 +724,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -747,7 +735,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

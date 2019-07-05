@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
+<meta name="description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta name="keywords" content="PHP,代码审计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP代码审计(二)">
-<meta property="og:url" content="http://yoursite.com/2019/06/04/PHP代码审计(二)/index.html">
+<meta property="og:title" content="PHP代码审计(一)">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/PHP代码审计基础/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
+<meta property="og:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/in_array.png">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png">
-<meta property="og:updated_time" content="2019-06-08T16:42:17.010Z">
+<meta property="og:updated_time" content="2019-06-25T14:39:51.666Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP代码审计(二)">
-<meta name="twitter:description" content="审计中涉及的超全局变量 全局变量 在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global  超全局变量 作用域在所有脚本，比如$_GET，$_SERVER。除$_GET, $_POST, $_SERVER, $_COOKIE等之外的超全局变量保存在 $GLOBALS 数组中   $GLOBALS global 定义全局变量，只应用于当前网页而不是整个网站，可以视为参数的传递">
+<meta name="twitter:title" content="PHP代码审计(一)">
+<meta name="twitter:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/04/PHP代码审计(二)/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/PHP代码审计基础/">
 
 
 
 
 
-  <title>PHP代码审计(二) | peri0d的博客</title>
+  <title>PHP代码审计(一) | peri0d的博客</title>
   
 
 
@@ -282,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/04/PHP代码审计(二)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/PHP代码审计基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP代码审计(二)</h1>
+          <h1 class="post-title" itemprop="name headline">PHP代码审计(一)</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-04T17:06:08+08:00">
-                2019-06-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T18:58:57+08:00">
+                2019-06-03
               </time>
             
 
@@ -371,7 +371,130 @@
       
 
       
-        <h1 id="审计中涉及的超全局变量"><a href="#审计中涉及的超全局变量" class="headerlink" title="审计中涉及的超全局变量"></a>审计中涉及的超全局变量</h1><ul>
+        <h1 id="常见-PHP-框架"><a href="#常见-PHP-框架" class="headerlink" title="常见 PHP 框架"></a>常见 PHP 框架</h1><ul>
+<li>ThinkPHP</li>
+<li>Yaf</li>
+<li>Laravel</li>
+<li>Kohana</li>
+<li>Codelgniter</li>
+<li>Yii</li>
+<li>Smyfony</li>
+<li>doitphp</li>
+</ul>
+<blockquote>
+<p>先看用户手册</p>
+</blockquote>
+<h1 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h1><p>获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示</p>
+<h1 id="网站目录结构"><a href="#网站目录结构" class="headerlink" title="网站目录结构"></a>网站目录结构</h1><ul>
+<li><p>主目录</p>
+</li>
+<li><p>模块目录</p>
+</li>
+<li><p>插件目录</p>
+</li>
+<li><p>上层目录</p>
+</li>
+<li><p>模板目录</p>
+</li>
+<li><p>数据目录</p>
+</li>
+<li><p>配置目录</p>
+</li>
+<li><p>配置文件</p>
+</li>
+<li><p>公共函数文件</p>
+</li>
+<li><p>安全过滤文件</p>
+</li>
+<li><p>数据库结构</p>
+</li>
+<li><p>入口文件</p>
+</li>
+</ul>
+<h1 id="常见方法"><a href="#常见方法" class="headerlink" title="常见方法"></a>常见方法</h1><h2 id="通读原文"><a href="#通读原文" class="headerlink" title="通读原文"></a>通读原文</h2><ul>
+<li>函数集文件</li>
+<li>配置文件</li>
+<li>安全过滤文件</li>
+<li>index 文件</li>
+</ul>
+<blockquote>
+<p>适用于比较小的网站或者 CMS</p>
+</blockquote>
+<h2 id="敏感关键字回溯参数"><a href="#敏感关键字回溯参数" class="headerlink" title="敏感关键字回溯参数"></a>敏感关键字回溯参数</h2><p>这是常见方法，但是不能了解程序的基本框架，覆盖不了逻辑漏洞</p>
+<h2 id="查找可控变量"><a href="#查找可控变量" class="headerlink" title="查找可控变量"></a>查找可控变量</h2><ul>
+<li><p>可控变量</p>
+</li>
+<li><p>进入函数的变量</p>
+</li>
+</ul>
+<h2 id="功能点定向审计"><a href="#功能点定向审计" class="headerlink" title="功能点定向审计"></a>功能点定向审计</h2><ul>
+<li>程序安装</li>
+<li>文件上传</li>
+<li>文件管理</li>
+<li>登陆验证</li>
+<li>备份恢复</li>
+<li>找回密码</li>
+</ul>
+<h1 id="PHP核心配置"><a href="#PHP核心配置" class="headerlink" title="PHP核心配置"></a>PHP核心配置</h1><h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li>大小写敏感</li>
+<li>运算符：|, &amp;, ~, !</li>
+<li>空值：foo = ; 或者 foo = none;</li>
+</ul>
+<h2 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h2><ul>
+<li><p>安全模式</p>
+<p><code>safe_mode = off</code></p>
+<p>限制文档的存取，限制环境变量的存取，控制外部程序的执行</p>
+<p>在 PHP5.4.0 被移除</p>
+</li>
+<li><p>限制环境变量存取</p>
+<p><code>safe_mode_allowed_env_vars = string</code></p>
+<p>指定 PHP 程序可以改变的环境变量的前缀</p>
+</li>
+<li><p>外部程序执行目录</p>
+<p><code>safe_mode_exec_dir = &quot;path&quot;</code></p>
+</li>
+<li><p>禁用函数</p>
+<p><code>disable_functions =</code> </p>
+</li>
+</ul>
+<h2 id="控制变量"><a href="#控制变量" class="headerlink" title="控制变量"></a>控制变量</h2><ul>
+<li><p>全局变量注册开关</p>
+<p><code>register_globals = off</code></p>
+<p>off 时服务端使用 $_GET[‘name’] 获取数据，on 时服务端通过 POST 或 GET 提交的数据将使用全局变量来接收</p>
+</li>
+<li><p>魔术引号自动过滤</p>
+<p><code>magic_quotes_gpc = on</code></p>
+<p>在 PHP5.4.0 被移除</p>
+</li>
+</ul>
+<h2 id="远程文件"><a href="#远程文件" class="headerlink" title="远程文件"></a>远程文件</h2><ul>
+<li><p>是否允许包含远程文件</p>
+<p><code>allow_url_include = off</code></p>
+</li>
+<li><p>是否允许打开远程文件</p>
+<p><code>allow_url_open = off</code></p>
+</li>
+</ul>
+<h2 id="目录权限"><a href="#目录权限" class="headerlink" title="目录权限"></a>目录权限</h2><ul>
+<li><p>HTTP 头部版本信息</p>
+<p><code>expose_http = off</code></p>
+</li>
+<li><p>文件上传临时目录</p>
+<p><code>upload_tmp_dir =</code> </p>
+</li>
+<li><p>用户可访问目录</p>
+<p><code>open_basedir = path</code></p>
+</li>
+</ul>
+<h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><ul>
+<li><p>内部错误选项</p>
+<p><code>display_errors = on</code></p>
+</li>
+<li><p>错误报告级别</p>
+<p><code>error_reporting = E_ALL&amp;~E_NOTICE</code></p>
+</li>
+</ul>
+<h1 id="审计中涉及的超全局变量"><a href="#审计中涉及的超全局变量" class="headerlink" title="审计中涉及的超全局变量"></a>审计中涉及的超全局变量</h1><ul>
 <li><p>全局变量</p>
 <p>在函数外面定义的变量，不能在函数中直接使用。在函数中使用时加上global</p>
 </li>
@@ -599,8 +722,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/04/计算机网络总结(四)/" rel="next" title="计算机网络总结(四)">
-                <i class="fa fa-chevron-left"></i> 计算机网络总结(四)
+              <a href="/2019/06/03/路由基础/" rel="next" title="计算机网络总结(三)">
+                <i class="fa fa-chevron-left"></i> 计算机网络总结(三)
               </a>
             
           </div>
@@ -609,8 +732,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/05/2019强网杯web复现/" rel="prev" title="强网杯web复现">
-                强网杯web复现 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/04/策略及服务和广域网/" rel="prev" title="计算机网络总结(四)">
+                计算机网络总结(四) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -690,7 +813,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -701,7 +824,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -712,7 +835,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -752,7 +875,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#审计中涉及的超全局变量"><span class="nav-number">1.</span> <span class="nav-text">审计中涉及的超全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLOBALS"><span class="nav-number">1.1.</span> <span class="nav-text">$GLOBALS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-和-GET"><span class="nav-number">1.2.</span> <span class="nav-text">$_POST 和 $_GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REQUEST"><span class="nav-number">1.3.</span> <span class="nav-text">$_REQUEST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVER"><span class="nav-number">1.4.</span> <span class="nav-text">$_SERVER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FILE"><span class="nav-number">1.5.</span> <span class="nav-text">$_FILE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SESSION"><span class="nav-number">1.6.</span> <span class="nav-text">$_SESSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COOKIE"><span class="nav-number">1.7.</span> <span class="nav-text">$_COOKIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">1.8.</span> <span class="nav-text">$_ENV</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量覆盖"><span class="nav-number">2.</span> <span class="nav-text">变量覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">2.1.</span> <span class="nav-text">$$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extract"><span class="nav-number">2.2.</span> <span class="nav-text">extract()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-str"><span class="nav-number">2.3.</span> <span class="nav-text">parse_str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反序列化漏洞"><span class="nav-number">3.</span> <span class="nav-text">反序列化漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化和反序列化"><span class="nav-number">3.1.</span> <span class="nav-text">序列化和反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞成因"><span class="nav-number">3.2.</span> <span class="nav-text">漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化的不同结果"><span class="nav-number">3.3.</span> <span class="nav-text">序列化的不同结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法"><span class="nav-number">3.4.</span> <span class="nav-text">魔术方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">3.5.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弱类型"><span class="nav-number">4.</span> <span class="nav-text">弱类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量类型"><span class="nav-number">4.1.</span> <span class="nav-text">变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作之间的比较"><span class="nav-number">4.2.</span> <span class="nav-text">操作之间的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#empty-与-isset"><span class="nav-number">4.3.</span> <span class="nav-text">empty 与 isset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#md5-函数"><span class="nav-number">4.4.</span> <span class="nav-text">md5 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strcmp-函数"><span class="nav-number">4.5.</span> <span class="nav-text">strcmp 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-array-与-array-search"><span class="nav-number">4.6.</span> <span class="nav-text">in_array() 与 array_search()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch"><span class="nav-number">4.7.</span> <span class="nav-text">switch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪协议"><span class="nav-number">5.</span> <span class="nav-text">伪协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">5.1.</span> <span class="nav-text">file://</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-filter"><span class="nav-number">5.2.</span> <span class="nav-text">php://filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-input"><span class="nav-number">5.3.</span> <span class="nav-text">php://input</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#会话认证漏洞"><span class="nav-number">6.</span> <span class="nav-text">会话认证漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-劫持攻击"><span class="nav-number">6.1.</span> <span class="nav-text">Session 劫持攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-固定攻击"><span class="nav-number">6.2.</span> <span class="nav-text">Session 固定攻击</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见-PHP-框架"><span class="nav-number">1.</span> <span class="nav-text">常见 PHP 框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#处理流程"><span class="nav-number">2.</span> <span class="nav-text">处理流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网站目录结构"><span class="nav-number">3.</span> <span class="nav-text">网站目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见方法"><span class="nav-number">4.</span> <span class="nav-text">常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通读原文"><span class="nav-number">4.1.</span> <span class="nav-text">通读原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敏感关键字回溯参数"><span class="nav-number">4.2.</span> <span class="nav-text">敏感关键字回溯参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找可控变量"><span class="nav-number">4.3.</span> <span class="nav-text">查找可控变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能点定向审计"><span class="nav-number">4.4.</span> <span class="nav-text">功能点定向审计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP核心配置"><span class="nav-number">5.</span> <span class="nav-text">PHP核心配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全模式"><span class="nav-number">5.2.</span> <span class="nav-text">安全模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制变量"><span class="nav-number">5.3.</span> <span class="nav-text">控制变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程文件"><span class="nav-number">5.4.</span> <span class="nav-text">远程文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录权限"><span class="nav-number">5.5.</span> <span class="nav-text">目录权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误信息"><span class="nav-number">5.6.</span> <span class="nav-text">错误信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#审计中涉及的超全局变量"><span class="nav-number">6.</span> <span class="nav-text">审计中涉及的超全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLOBALS"><span class="nav-number">6.1.</span> <span class="nav-text">$GLOBALS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST-和-GET"><span class="nav-number">6.2.</span> <span class="nav-text">$_POST 和 $_GET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REQUEST"><span class="nav-number">6.3.</span> <span class="nav-text">$_REQUEST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVER"><span class="nav-number">6.4.</span> <span class="nav-text">$_SERVER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FILE"><span class="nav-number">6.5.</span> <span class="nav-text">$_FILE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SESSION"><span class="nav-number">6.6.</span> <span class="nav-text">$_SESSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COOKIE"><span class="nav-number">6.7.</span> <span class="nav-text">$_COOKIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">6.8.</span> <span class="nav-text">$_ENV</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量覆盖"><span class="nav-number">7.</span> <span class="nav-text">变量覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">7.1.</span> <span class="nav-text">$$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extract"><span class="nav-number">7.2.</span> <span class="nav-text">extract()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-str"><span class="nav-number">7.3.</span> <span class="nav-text">parse_str()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反序列化漏洞"><span class="nav-number">8.</span> <span class="nav-text">反序列化漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化和反序列化"><span class="nav-number">8.1.</span> <span class="nav-text">序列化和反序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞成因"><span class="nav-number">8.2.</span> <span class="nav-text">漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化的不同结果"><span class="nav-number">8.3.</span> <span class="nav-text">序列化的不同结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#魔术方法"><span class="nav-number">8.4.</span> <span class="nav-text">魔术方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">8.5.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弱类型"><span class="nav-number">9.</span> <span class="nav-text">弱类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量类型"><span class="nav-number">9.1.</span> <span class="nav-text">变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作之间的比较"><span class="nav-number">9.2.</span> <span class="nav-text">操作之间的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#empty-与-isset"><span class="nav-number">9.3.</span> <span class="nav-text">empty 与 isset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#md5-函数"><span class="nav-number">9.4.</span> <span class="nav-text">md5 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strcmp-函数"><span class="nav-number">9.5.</span> <span class="nav-text">strcmp 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-array-与-array-search"><span class="nav-number">9.6.</span> <span class="nav-text">in_array() 与 array_search()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch"><span class="nav-number">9.7.</span> <span class="nav-text">switch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪协议"><span class="nav-number">10.</span> <span class="nav-text">伪协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#file"><span class="nav-number">10.1.</span> <span class="nav-text">file://</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-filter"><span class="nav-number">10.2.</span> <span class="nav-text">php://filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#php-input"><span class="nav-number">10.3.</span> <span class="nav-text">php://input</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#会话认证漏洞"><span class="nav-number">11.</span> <span class="nav-text">会话认证漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-劫持攻击"><span class="nav-number">11.1.</span> <span class="nav-text">Session 劫持攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-固定攻击"><span class="nav-number">11.2.</span> <span class="nav-text">Session 固定攻击</span></a></li></ol></li></ol></div>
             
 
           </div>

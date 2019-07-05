@@ -85,7 +85,7 @@
 <meta name="keywords" content="总结,计算机网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络总结(二)">
-<meta property="og:url" content="http://yoursite.com/2019/06/02/计算机网络总结(二)/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/交换基础/index.html">
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="Switch and LANHub 属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接 Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽 Hub 实现的共享型网络，很容易产生冲突，只用于小型网络 一台主机发出的信号其他主机都能收到  Bridges Operate at Layer 2 of the OSI model Forward, filter,">
 <meta property="og:locale" content="zh-Hans">
@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/23.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/24.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/25.png">
-<meta property="og:updated_time" content="2019-06-02T15:26:16.685Z">
+<meta property="og:updated_time" content="2019-06-25T12:24:19.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络总结(二)">
 <meta name="twitter:description" content="Switch and LANHub 属于同一个网段的计算机需要用二层设备连接起来，早期是使用 Hub 连接 Hub 实现的是一种共享型的连接，就是多个网络设备接在一根网线上，平分带宽 Hub 实现的共享型网络，很容易产生冲突，只用于小型网络 一台主机发出的信号其他主机都能收到  Bridges Operate at Layer 2 of the OSI model Forward, filter,">
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/02/计算机网络总结(二)/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/02/交换基础/">
 
 
 
@@ -282,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/计算机网络总结(二)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/交换基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="peri0d">
@@ -515,7 +515,7 @@
 <p>Nondesignated ports：最终阻断的是非指定接口</p>
 <p>先比较交换机的桥 ID，桥 ID 最小的成为根网桥，根网桥上的接口都是指定接口。然后根据带宽 和 cost 选取根端口，不一定直连就是根接口。最后桥 ID 最小的是指定接口，其余的是非指定接口</p>
 </blockquote>
-<h2 id="STP-Roor-Bridge-Selection"><a href="#STP-Roor-Bridge-Selection" class="headerlink" title="STP Roor Bridge Selection"></a>STP Roor Bridge Selection</h2><ul>
+<h2 id="STP-Root-Bridge-Selection"><a href="#STP-Root-Bridge-Selection" class="headerlink" title="STP Root Bridge Selection"></a>STP Root Bridge Selection</h2><ul>
 <li>BPDU：桥接协议数据单元，描述生成树相关信息</li>
 <li>Bridge ID：唯一标识交换机，64位(=16+48)</li>
 <li>Bridge Priority：默认32768，最大65535</li>
@@ -597,7 +597,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/02/计算机网络总结(一)/" rel="next" title="计算机网络总结(一)">
+              <a href="/2019/06/02/OSI 模型与常见网络模型和概念/" rel="next" title="计算机网络总结(一)">
                 <i class="fa fa-chevron-left"></i> 计算机网络总结(一)
               </a>
             
@@ -607,7 +607,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/03/计算机网络总结(三)/" rel="prev" title="计算机网络总结(三)">
+              <a href="/2019/06/03/路由基础/" rel="prev" title="计算机网络总结(三)">
                 计算机网络总结(三) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -688,7 +688,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -699,7 +699,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -710,7 +710,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -750,7 +750,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Switch-and-LAN"><span class="nav-number">1.</span> <span class="nav-text">Switch and LAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hub"><span class="nav-number">1.1.</span> <span class="nav-text">Hub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridges"><span class="nav-number">1.2.</span> <span class="nav-text">Bridges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switches"><span class="nav-number">1.3.</span> <span class="nav-text">Switches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Collision-Domains"><span class="nav-number">1.4.</span> <span class="nav-text">Multiple Collision Domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switching-Frames"><span class="nav-number">1.5.</span> <span class="nav-text">Switching Frames</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transmitting-Frames"><span class="nav-number">1.6.</span> <span class="nav-text">Transmitting Frames</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VLAN-and-Trunks"><span class="nav-number">2.</span> <span class="nav-text">VLAN and Trunks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#现代企业网络架构"><span class="nav-number">2.1.</span> <span class="nav-text">现代企业网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Overview"><span class="nav-number">2.2.</span> <span class="nav-text">VLAN Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Trunking"><span class="nav-number">2.3.</span> <span class="nav-text">VLAN Trunking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-ISL"><span class="nav-number">2.4.</span> <span class="nav-text">Trunking with ISL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-802-1Q"><span class="nav-number">2.5.</span> <span class="nav-text">Trunking with 802.1Q</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VTP"><span class="nav-number">3.</span> <span class="nav-text">VTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Features"><span class="nav-number">3.1.</span> <span class="nav-text">VTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Modes"><span class="nav-number">3.2.</span> <span class="nav-text">VTP Modes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Operation"><span class="nav-number">3.3.</span> <span class="nav-text">VTP Operation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STP"><span class="nav-number">4.</span> <span class="nav-text">STP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redundant-Topology"><span class="nav-number">4.1.</span> <span class="nav-text">Redundant Topology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Broadcast-Storms"><span class="nav-number">4.2.</span> <span class="nav-text">Broadcast Storms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Frame-Copies"><span class="nav-number">4.3.</span> <span class="nav-text">Multiple Frame Copies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC-Database-Instability"><span class="nav-number">4.4.</span> <span class="nav-text">MAC Database Instability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loop-Resolution-with-STP"><span class="nav-number">4.5.</span> <span class="nav-text">Loop Resolution with STP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Operation"><span class="nav-number">4.6.</span> <span class="nav-text">Spanning-Tree Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STP-Roor-Bridge-Selection"><span class="nav-number">4.7.</span> <span class="nav-text">STP Roor Bridge Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridge-Protocol-Data-Unit"><span class="nav-number">4.8.</span> <span class="nav-text">Bridge Protocol Data Unit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-Cost"><span class="nav-number">4.9.</span> <span class="nav-text">Spanning-Tree Path Cost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-States"><span class="nav-number">4.10.</span> <span class="nav-text">Spanning-Tree Path States</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RSTP"><span class="nav-number">5.</span> <span class="nav-text">RSTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Features"><span class="nav-number">5.1.</span> <span class="nav-text">RSTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-States"><span class="nav-number">5.2.</span> <span class="nav-text">RSTP Port States</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-Roles"><span class="nav-number">5.3.</span> <span class="nav-text">RSTP Port Roles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edge-Ports"><span class="nav-number">5.4.</span> <span class="nav-text">Edge Ports</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Switch-and-LAN"><span class="nav-number">1.</span> <span class="nav-text">Switch and LAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hub"><span class="nav-number">1.1.</span> <span class="nav-text">Hub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridges"><span class="nav-number">1.2.</span> <span class="nav-text">Bridges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switches"><span class="nav-number">1.3.</span> <span class="nav-text">Switches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Collision-Domains"><span class="nav-number">1.4.</span> <span class="nav-text">Multiple Collision Domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switching-Frames"><span class="nav-number">1.5.</span> <span class="nav-text">Switching Frames</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transmitting-Frames"><span class="nav-number">1.6.</span> <span class="nav-text">Transmitting Frames</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VLAN-and-Trunks"><span class="nav-number">2.</span> <span class="nav-text">VLAN and Trunks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#现代企业网络架构"><span class="nav-number">2.1.</span> <span class="nav-text">现代企业网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Overview"><span class="nav-number">2.2.</span> <span class="nav-text">VLAN Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-Trunking"><span class="nav-number">2.3.</span> <span class="nav-text">VLAN Trunking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-ISL"><span class="nav-number">2.4.</span> <span class="nav-text">Trunking with ISL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trunking-with-802-1Q"><span class="nav-number">2.5.</span> <span class="nav-text">Trunking with 802.1Q</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VTP"><span class="nav-number">3.</span> <span class="nav-text">VTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Features"><span class="nav-number">3.1.</span> <span class="nav-text">VTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Modes"><span class="nav-number">3.2.</span> <span class="nav-text">VTP Modes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VTP-Operation"><span class="nav-number">3.3.</span> <span class="nav-text">VTP Operation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STP"><span class="nav-number">4.</span> <span class="nav-text">STP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redundant-Topology"><span class="nav-number">4.1.</span> <span class="nav-text">Redundant Topology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Broadcast-Storms"><span class="nav-number">4.2.</span> <span class="nav-text">Broadcast Storms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Frame-Copies"><span class="nav-number">4.3.</span> <span class="nav-text">Multiple Frame Copies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC-Database-Instability"><span class="nav-number">4.4.</span> <span class="nav-text">MAC Database Instability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loop-Resolution-with-STP"><span class="nav-number">4.5.</span> <span class="nav-text">Loop Resolution with STP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Operation"><span class="nav-number">4.6.</span> <span class="nav-text">Spanning-Tree Operation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STP-Root-Bridge-Selection"><span class="nav-number">4.7.</span> <span class="nav-text">STP Root Bridge Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridge-Protocol-Data-Unit"><span class="nav-number">4.8.</span> <span class="nav-text">Bridge Protocol Data Unit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-Cost"><span class="nav-number">4.9.</span> <span class="nav-text">Spanning-Tree Path Cost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spanning-Tree-Path-States"><span class="nav-number">4.10.</span> <span class="nav-text">Spanning-Tree Path States</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RSTP"><span class="nav-number">5.</span> <span class="nav-text">RSTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Features"><span class="nav-number">5.1.</span> <span class="nav-text">RSTP Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-States"><span class="nav-number">5.2.</span> <span class="nav-text">RSTP Port States</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RSTP-Port-Roles"><span class="nav-number">5.3.</span> <span class="nav-text">RSTP Port Roles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Edge-Ports"><span class="nav-number">5.4.</span> <span class="nav-text">Edge Ports</span></a></li></ol></li></ol></div>
             
 
           </div>

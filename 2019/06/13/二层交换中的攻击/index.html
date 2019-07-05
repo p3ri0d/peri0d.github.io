@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="总结,计算机网络,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前导篇以太网和以太网帧OSI 模型 其核心思想为分层，每一个模块只负责自己特定的功能 不同模块之间定义标准化接口，实现每层的相互独立 下层将收到的数据格式化成上层所能识别的格式，同时也能通过变换，将数据传给下层  以太网 在局域网中应用最广泛的网络技术 使用 CSMA/CD 解决冲突问题  以太网帧  前导码(7 字节)：唤醒接收适配器(例如网卡)，并将他们的时钟与发送方同步 帧首定界符(1 字节">
+<meta name="keywords" content="总结,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二层交换中的攻击">
+<meta property="og:url" content="http://yoursite.com/2019/06/13/二层交换中的攻击/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="前导篇以太网和以太网帧OSI 模型 其核心思想为分层，每一个模块只负责自己特定的功能 不同模块之间定义标准化接口，实现每层的相互独立 下层将收到的数据格式化成上层所能识别的格式，同时也能通过变换，将数据传给下层  以太网 在局域网中应用最广泛的网络技术 使用 CSMA/CD 解决冲突问题  以太网帧  前导码(7 字节)：唤醒接收适配器(例如网卡)，并将他们的时钟与发送方同步 帧首定界符(1 字节">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/6.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/35.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/36.jpg">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/29.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/37.jpg">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/38.jpg">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/39.jpg">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/40.jpg">
+<meta property="og:updated_time" content="2019-06-14T07:20:12.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二层交换中的攻击">
+<meta name="twitter:description" content="前导篇以太网和以太网帧OSI 模型 其核心思想为分层，每一个模块只负责自己特定的功能 不同模块之间定义标准化接口，实现每层的相互独立 下层将收到的数据格式化成上层所能识别的格式，同时也能通过变换，将数据传给下层  以太网 在局域网中应用最广泛的网络技术 使用 CSMA/CD 解决冲突问题  以太网帧  前导码(7 字节)：唤醒接收适配器(例如网卡)，并将他们的时钟与发送方同步 帧首定界符(1 字节">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/6.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/13/二层交换中的攻击/">
+
+
+
+
+
+  <title>二层交换中的攻击 | peri0d的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">peri0d</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/13/二层交换中的攻击/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二层交换中的攻击</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T00:23:24+08:00">
+                2019-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前导篇"><a href="#前导篇" class="headerlink" title="前导篇"></a>前导篇</h1><h2 id="以太网和以太网帧"><a href="#以太网和以太网帧" class="headerlink" title="以太网和以太网帧"></a>以太网和以太网帧</h2><h3 id="OSI-模型"><a href="#OSI-模型" class="headerlink" title="OSI 模型"></a>OSI 模型</h3><ul>
+<li>其核心思想为<strong>分层</strong>，每一个模块只负责自己特定的功能</li>
+<li>不同模块之间定义标准化接口，实现每层的相互独立</li>
+<li>下层将收到的数据格式化成上层所能识别的格式，同时也能通过变换，将数据传给下层</li>
+</ul>
+<h3 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h3><ul>
+<li>在局域网中应用最广泛的网络技术</li>
+<li>使用 CSMA/CD 解决冲突问题</li>
+</ul>
+<h3 id="以太网帧"><a href="#以太网帧" class="headerlink" title="以太网帧"></a>以太网帧</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/6.png" alt></p>
+<ul>
+<li>前导码(7 字节)：唤醒接收适配器(例如网卡)，并将他们的时钟与发送方同步</li>
+<li>帧首定界符(1 字节)：注明下一字节为目的 MAC 地址</li>
+<li>目的 MAC 地址(6 字节)：目的适配器的 MAC 地址</li>
+<li>源 MAC 地址(6 字节)：发送方目的地址</li>
+<li>协议类型(2 字节：实现协议的多路复用，用于标识协议类型，例如 IP 协议 (0x0800)，ARP 协议 (0x0808)，更多协议 <a href="https://www.cnblogs.com/code1992/p/9829198.html" target="_blank" rel="noopener">点击此处</a></li>
+<li>数据：承载 IP 数据报</li>
+<li>数据帧检验序列(4 字节)：差错检测机制</li>
+</ul>
+<h2 id="二层交换机转发原理"><a href="#二层交换机转发原理" class="headerlink" title="二层交换机转发原理"></a>二层交换机转发原理</h2><h3 id="转发原理"><a href="#转发原理" class="headerlink" title="转发原理"></a>转发原理</h3><ul>
+<li>交换机接收到数据帧之后将它们转发出去，这个过程可以分为过滤和转发两个部分。</li>
+<li>过滤功能就是交换机判断一个数据帧应转发到某个端口还是丢弃。</li>
+<li>转发功能就是交换机进行帧过滤后，决定一个数据帧应该到哪一个交换机端口。</li>
+<li>交换机按照数据帧中的目的 MAC 地址作为索引，通过对交换机内部的 CAM 表进行查询来实现转发。</li>
+</ul>
+<h3 id="CAM-表"><a href="#CAM-表" class="headerlink" title="CAM 表"></a>CAM 表</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/35.png" alt></p>
+<ul>
+<li>交换机通过对收到的数据帧中的源 MAC 地址进行学习构造 CAM 表</li>
+<li>转发与自学习算法<ol>
+<li>交换机从端口接收数据帧，暂存到缓存中</li>
+<li>自学习：截取数据帧中的源 MAC 地址，与 CAM 表中的 MAC 地址匹配<ul>
+<li>找到匹配地址，对应端口号相同，更新时间戳</li>
+<li>找到匹配地址，对应端口号不同，更改对应端口号并更新时间戳</li>
+<li>未找到匹配地址，将数据帧中的源 MAC 地址，来自交换机的端口，以及时间戳添加到 CAM 表中</li>
+<li>如果某个 MAC 地址在周期时间内未更新，则删除</li>
+</ul>
+</li>
+<li>转发：截取数据帧中的目的 MAC 地址，与 CAM 表中的 MAC 地址匹配<ul>
+<li>找到匹配地址，则获取对应端口号，然后将数据帧转发到对应端口号</li>
+<li>未找到匹配地址，则将数据帧进行广播处理，转发到交换机的所有端口</li>
+</ul>
+</li>
+<li>结束</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>MAC 表和 CAM 表所其作用的环境不同，MAC 表是全局表，一般通过全局 CPU 进程转发需要查看 MAC 表，但是，现在基本都是硬件快速转发，那么这个时候就生成了CAM表，它其实是从MAC表衍生出来的，每个接口都可以有CAM以便快速转发。简而言之，CAM 从 MAC 转变而来，并用于基于硬件的快速转发 </p>
+</blockquote>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><ol>
+<li>若 CAM 表被恶意快速填满，则会导致以后转发的数据帧变为广播帧，从而被嗅探监听</li>
+<li>若 CAM 表被恶意快速填满，可能导致某些主机转发数据帧被误导，则导致中间人攻击而不能通信</li>
+</ol>
+<h2 id="生成树协议"><a href="#生成树协议" class="headerlink" title="生成树协议"></a>生成树协议</h2><h3 id="生成树协议的产生"><a href="#生成树协议的产生" class="headerlink" title="生成树协议的产生"></a>生成树协议的产生</h3><ul>
+<li>为了使某一个网络链路出了故障而不影响整个网络，人们引入冗余链路技术</li>
+<li>只要有冗余链路的地方，就会出现环路问题，生成树协议在一定程度上解决了这个问题</li>
+</ul>
+<h3 id="生成树协议的过程"><a href="#生成树协议的过程" class="headerlink" title="生成树协议的过程"></a>生成树协议的过程</h3><ol>
+<li>局域网交换机间互相发送 BPDU 消息进行根网桥的选举，根网桥上的接口都是指定端口</li>
+<li>然后在不是根网桥的交换机上选出一个根端口</li>
+<li>在交换机和交换机相连的链路上，要选举出一个端口作为指定端口，负责将数据帧转发到根网桥上</li>
+<li>有了根端口和指定端口后，其他的端口就是非指定端口，也是最终被阻断的端口，这样就防止了环路</li>
+</ol>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/36.jpg" alt></p>
+<h3 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><ol>
+<li>生成树协议完全依赖 BPDU 数据帧信息，缺少认证机制，如果攻击者伪造优先级为 0 的 BPDU 消息，就会使局域网中的交换机将所有分组转发到攻击者的交换机。</li>
+<li>在局域网中发送大量伪造的 BPDU 导致交换机忙于处理 BPDU 消息，从而使交换机处于拒绝服务状态，最终通信中断</li>
+</ol>
+<h2 id="DHCP-协议"><a href="#DHCP-协议" class="headerlink" title="DHCP 协议"></a>DHCP 协议</h2><h3 id="DHCP-工作过程"><a href="#DHCP-工作过程" class="headerlink" title="DHCP 工作过程"></a>DHCP 工作过程</h3><p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/29.png" alt></p>
+<ol>
+<li><p>DHCP Discover：新机器刚刚接入网络，什么都没有。新来的机器使用 IP 地址 0.0.0.0 发送一个广播包，广播包封装了 UDP，UDP 封装了 BOOTP。如果网络中存在 DHCP Server，它在收到广播包之后就知道来了个新人，需要 IP 地址，就会返回一个租用信息</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/37.jpg" alt></p>
+</li>
+<li><p>DHCP Offer：通过单播返回的租用信息，包含已分配的 IP 地址</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/38.jpg" alt></p>
+</li>
+<li><p>DHCP Request：广播包，向 DHCP Server 确认 IP 地址没有问题，并告诉其他的 DHCP Server 自己使用的是哪个 DHCP Server 的租约，请求它们撤销提供的 IP。一般使用最先到达的 DHCP Offer</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/39.jpg" alt></p>
+</li>
+<li><p>DHCP ACK：通过广播表明接收客户机的选择，并将租约信息放在广播包中</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/network/40.jpg" alt></p>
+</li>
+</ol>
+<blockquote>
+<p>DHCP 服务器的 offer 与 ack 阶段既可以使用单播的方式又可以使用广播的方式，这主要取决于服务器在 offer 阶段对 BROADCAST 位的置位情况,如果置位为 1，则 DHCP 服务器使用广播的方式回应，否则使用单播的方式回应</p>
+</blockquote>
+<h3 id="漏洞分析-2"><a href="#漏洞分析-2" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>在客户端上伪造大量源 MAC 地址，然后将含有这些伪造的源 MAC 地址的 DHCP 发现包发送出去，由于 DHCP Server 没有识别能力，就会处理这些 Discover，直至资源被耗尽。此时，攻击者伪造一个 DHCP Server，给局域网的机器发送伪造的配置信息，从而向客户端发起其他攻击</p>
+<h1 id="针对二层交换的攻击"><a href="#针对二层交换的攻击" class="headerlink" title="针对二层交换的攻击"></a>针对二层交换的攻击</h1><h2 id="交换机毒化"><a href="#交换机毒化" class="headerlink" title="交换机毒化"></a>交换机毒化</h2><ul>
+<li>到达交换机的数据帧交给交换机，通过查询 CAM 表进行地址端口核对，如果找到数据帧中的目的 MAC 地址对应的端口则转发，否则交换机就会将数据帧以广播帧形式转发到所有端口</li>
+<li>攻击者使用大量的无效源 MAC 地址、目的 MAC 地址构造虚假的数据帧，向局域网发送，交换机的 CAM 表会被迅速填满。交换机无法处理更多的帧，这时攻击者可以进行嗅探监听</li>
+</ul>
+<h2 id="MAC-地址欺骗"><a href="#MAC-地址欺骗" class="headerlink" title="MAC 地址欺骗"></a>MAC 地址欺骗</h2><ul>
+<li>利用虚假的或攻击者指定的 MAC 地址伪装成网络中其他主机或设备</li>
+<li>交换机发现两个端口对应同一个 MAC 地址而导致混乱，攻击者通过这种方式强制交换机将发送给合法主机的数据帧发送给攻击者</li>
+</ul>
+<h2 id="ARP-欺骗"><a href="#ARP-欺骗" class="headerlink" title="ARP 欺骗"></a>ARP 欺骗</h2><ul>
+<li>攻击者将源 MAC 地址伪装成网络上其他主机的攻击方式。攻击者通过对 ARP 表毒化而进行欺骗</li>
+<li>例如某一 IP 地址是 192.168.0.254，其 MAC 地址为 00-11-22-33-44-55，交换机 ARP 表会有这一条 ARP 记录。攻击者发动攻击时，会大量发出已将 192.168.0.254 的 MAC 地址篡改为 00-55-44-33-22-11 的 ARP 数据包。那么交换机若将此伪造的 ARP 写入自身的 ARP 表后，其他计算机与 192.168.0.254 通信时，数据包将被导到 00-55-44-33-22-11 这个MAC地址，因此攻击者可从此MAC地址截收到数据包，可篡改后再转送(中间人攻击)，也可转送到真正的网关(数据包嗅探监听)</li>
+</ul>
+<h2 id="VLAN-跳转攻击"><a href="#VLAN-跳转攻击" class="headerlink" title="VLAN 跳转攻击"></a>VLAN 跳转攻击</h2><ul>
+<li>在正常情况下，不同 VLAN 间的通信，需要利用一个三层设备在不同 VLAN 间进行数据传输</li>
+<li>VLAN 跳转攻击是指攻击者企图绕过三层设备，直接从一个 VLAN 向另一个 VLAN 建立通信，并对另一个 VLAN 的设备进行入侵</li>
+</ul>
+<h2 id="STP-协议攻击"><a href="#STP-协议攻击" class="headerlink" title="STP 协议攻击"></a>STP 协议攻击</h2><ul>
+<li>攻击者通过广播伪造的 BPDU 来夺取根网桥的身份</li>
+</ul>
+<h2 id="DHCP-欺骗与耗尽"><a href="#DHCP-欺骗与耗尽" class="headerlink" title="DHCP 欺骗与耗尽"></a>DHCP 欺骗与耗尽</h2><ul>
+<li>攻击者通过泛洪大量伪造的 DHCP Discover，来使 DHCP Server 资源耗尽，从而使局域网中的合法客户端无法联网</li>
+<li>攻击者伪造 DHCP Server，给局域网的机器发送伪造的配置信息，从而向客户端发起其他攻击</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/10/SQL注入总结/" rel="next" title="SQL 注入">
+                <i class="fa fa-chevron-left"></i> SQL 注入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/14/漏洞总结/" rel="prev" title="常见漏洞总结">
+                常见漏洞总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">待我尝尽世间甘苦，便喂你一勺甜。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前导篇"><span class="nav-number">1.</span> <span class="nav-text">前导篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#以太网和以太网帧"><span class="nav-number">1.1.</span> <span class="nav-text">以太网和以太网帧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI-模型"><span class="nav-number">1.1.1.</span> <span class="nav-text">OSI 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以太网"><span class="nav-number">1.1.2.</span> <span class="nav-text">以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以太网帧"><span class="nav-number">1.1.3.</span> <span class="nav-text">以太网帧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二层交换机转发原理"><span class="nav-number">1.2.</span> <span class="nav-text">二层交换机转发原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转发原理"><span class="nav-number">1.2.1.</span> <span class="nav-text">转发原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAM-表"><span class="nav-number">1.2.2.</span> <span class="nav-text">CAM 表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">1.2.3.</span> <span class="nav-text">漏洞分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成树协议"><span class="nav-number">1.3.</span> <span class="nav-text">生成树协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成树协议的产生"><span class="nav-number">1.3.1.</span> <span class="nav-text">生成树协议的产生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成树协议的过程"><span class="nav-number">1.3.2.</span> <span class="nav-text">生成树协议的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">漏洞分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DHCP-协议"><span class="nav-number">1.4.</span> <span class="nav-text">DHCP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DHCP-工作过程"><span class="nav-number">1.4.1.</span> <span class="nav-text">DHCP 工作过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">漏洞分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#针对二层交换的攻击"><span class="nav-number">2.</span> <span class="nav-text">针对二层交换的攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#交换机毒化"><span class="nav-number">2.1.</span> <span class="nav-text">交换机毒化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC-地址欺骗"><span class="nav-number">2.2.</span> <span class="nav-text">MAC 地址欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP-欺骗"><span class="nav-number">2.3.</span> <span class="nav-text">ARP 欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VLAN-跳转攻击"><span class="nav-number">2.4.</span> <span class="nav-text">VLAN 跳转攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STP-协议攻击"><span class="nav-number">2.5.</span> <span class="nav-text">STP 协议攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DHCP-欺骗与耗尽"><span class="nav-number">2.6.</span> <span class="nav-text">DHCP 欺骗与耗尽</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
