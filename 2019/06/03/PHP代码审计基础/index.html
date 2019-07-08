@@ -89,17 +89,17 @@
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png?Expires=1562562475&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=04FEpTxoA3XhlRKuUsZG0Vv3TLM%3D">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/in_array.png?Expires=1562562489&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=GnoJI33eIVK25lmvwwixWsjnL64%3D">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/array_search.png?Expires=1562562505&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=ynsxiAwPluEKCjekaEmLR%2FlviTk%3D">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png?Expires=1562562519&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=Wttm2LihsYLEuf%2FeJDMy%2FcG5%2BvM%3D">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png?Expires=1562562576&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=C4k94P6KmGOMCQ2wNFliXGDjuac%3D">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png?Expires=1562562581&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=gpDD4VHawZubUvnUQqdLElo2Z9g%3D">
-<meta property="og:updated_time" content="2019-07-08T04:09:50.567Z">
+<meta property="og:updated_time" content="2019-07-08T04:40:32.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP代码审计(一)">
 <meta name="twitter:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
-<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png?Expires=1562562475&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=04FEpTxoA3XhlRKuUsZG0Vv3TLM%3D">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 
 
 
@@ -615,7 +615,7 @@
 <li>call() : 当要调用的方法不存在或权限不足时自动调用</li>
 <li>get() : 这个方法用来获取私有成员属性值的,有一个参数，参数传入你要获取的成员属性的名称，返回获取的属性值</li>
 </ul>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png?Expires=1562562475&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=04FEpTxoA3XhlRKuUsZG0Vv3TLM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png" alt></p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>CVE-2016-7124</p>
 <h1 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><ul>
 <li>标准类型：布尔，整型，浮点，字符</li>

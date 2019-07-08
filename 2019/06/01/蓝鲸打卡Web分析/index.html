@@ -89,14 +89,14 @@
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="蓝鲸文件管理系统源代码地址：http://www.whaledu.com/course/290/task/2848/show 首先在设置文件里把所有的输入都采用 addslashes() 函数进行转义 upload.php关键代码将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension] 然后进行后缀名检查，拼接后进行addslashes">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG?Expires=1562562997&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=TnnBGdjcgZkiE6%2FsPKR09oha4J8%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG?Expires=1562563006&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=PNX5Cw3Wo2Wx%2FmuhzFwofdalzwM%3D">
-<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG?Expires=1562563014&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=aKhauFoqIshz4BG7RjhGE2DLR40%3D">
-<meta property="og:updated_time" content="2019-07-08T04:20:01.201Z">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG">
+<meta property="og:updated_time" content="2019-07-08T04:42:44.002Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="蓝鲸安全打卡Web分析">
 <meta name="twitter:description" content="蓝鲸文件管理系统源代码地址：http://www.whaledu.com/course/290/task/2848/show 首先在设置文件里把所有的输入都采用 addslashes() 函数进行转义 upload.php关键代码将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension] 然后进行后缀名检查，拼接后进行addslashes">
-<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG?Expires=1562562997&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=TnnBGdjcgZkiE6%2FsPKR09oha4J8%3D">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG">
 
 
 
@@ -393,17 +393,17 @@
 <p>构造文件 ‘,extension=’’,filename=’1.jpg.jpg，上传，进行rename为 1.php，发现结果为 1.php.jpg</p>
 <p><strong>解释：</strong></p>
 <p>文件 ‘,extension=’’,filename=’1.jpg.jpg 上传后的数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG?Expires=1562562997&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=TnnBGdjcgZkiE6%2FsPKR09oha4J8%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG" alt></p>
 <p>注意，rename过程中进行查询时，查询的结果 result[‘fid’] = 1，result[‘extension’] = ‘jpg’</p>
 <p>然后进行update，这时执行了构造的SQL语句，数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG?Expires=1562563006&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=PNX5Cw3Wo2Wx%2FmuhzFwofdalzwM%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG" alt></p>
 <p>注意这两行代码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$oldname = ROOT.UPLOAD_DIR . $result[<span class="string">"filename"</span>].$result[<span class="string">"extension"</span>];</span><br><span class="line">$newname = ROOT.UPLOAD_DIR . $req[<span class="string">"newname"</span>].$result[<span class="string">"extension"</span>];</span><br></pre></td></tr></table></figure>
 
 <p>在这个过程中，oldname=’,extension=’’,filename=’1.jpg.jpg，newname=1.php.jpg，由于oldname存在，所以最后变成1.php.jpg</p>
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>构造文件 ‘,extension=’’,filename=’1.jpg.jpg，上传，进行rename为 1.jpg，结果为 <strong>1.jpg.jpg</strong></p>
 <p>构造另外一个一句话木马文件1.jpg，上传，数据库如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG?Expires=1562563014&OSSAccessKeyId=TMP.hXQMERydCTiaSvmwYhquu78sn4oKBL3JdPxPSRuw64JqYj7VUagP7PoPDEyjDx8yyVWmArvb9aeLo6USa6vM7PqZ6HSZxrtJbnuzr64vFeBRi8FXMi6P78zfBu7c1Q.tmp&Signature=aKhauFoqIshz4BG7RjhGE2DLR40%3D" alt></p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG" alt></p>
 <p>再进行rename，传入的oldname为 1.jpg，newname为 1.php</p>
 <p>进行查询的结果为 result[‘fid’] = 1，result[‘extension’] = ‘’</p>
 <p>在最后的过程中，oldname = 1.jpg，newname = 1.php，这样就把上传的 1.jpg 变成了 1.php</p>
