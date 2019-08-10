@@ -84,7 +84,7 @@
 <meta name="description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta name="keywords" content="PHP,代码审计">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP代码审计(一)">
+<meta property="og:title" content="PHP代码审计基础">
 <meta property="og:url" content="http://yoursite.com/2019/06/03/PHP代码审计基础/index.html">
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
@@ -95,9 +95,9 @@
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/filter.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_1.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/session_2.png">
-<meta property="og:updated_time" content="2019-07-22T16:15:37.893Z">
+<meta property="og:updated_time" content="2019-07-28T06:32:11.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP代码审计(一)">
+<meta name="twitter:title" content="PHP代码审计基础">
 <meta name="twitter:description" content="常见 PHP 框架 ThinkPHP Yaf Laravel Kohana Codelgniter Yii Smyfony doitphp   先看用户手册  处理流程获取请求 =》全局过滤 =》模块文件 =》C函数内容 =》M函数内容 =》V显示 网站目录结构 主目录  模块目录  插件目录  上层目录  模板目录  数据目录  配置目录  配置文件  公共函数文件  安全过滤文件  数据库结构">
 <meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png">
 
@@ -135,7 +135,7 @@
 
 
 
-  <title>PHP代码审计(一) | peri0d的博客</title>
+  <title>PHP代码审计基础 | peri0d的博客</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP代码审计(一)</h1>
+          <h1 class="post-title" itemprop="name headline">PHP代码审计基础</h1>
         
 
         <div class="post-meta">
@@ -595,6 +595,7 @@
 <li>sleep() : 当调用serialize()函数时自动调用</li>
 <li>call() : 当要调用的方法不存在或权限不足时自动调用</li>
 <li>get() : 这个方法用来获取私有成员属性值的,有一个参数，参数传入你要获取的成员属性的名称，返回获取的属性值</li>
+<li>set() : 将数据写入不可访问属性</li>
 </ul>
 <p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/php/magic_method.png" alt></p>
 <h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>CVE-2016-7124</p>
@@ -794,7 +795,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -816,7 +817,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

