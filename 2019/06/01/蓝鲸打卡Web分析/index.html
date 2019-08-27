@@ -81,21 +81,21 @@
 
 
 
-<meta name="description" content="蓝鲸文件管理系统源代码地址：http://www.whaledu.com/course/290/task/2848/show 首先在设置文件里把所有的输入都采用 addslashes() 函数进行转义 upload.php关键代码将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension] 然后进行后缀名检查，拼接后进行addslashes">
+<meta name="description" content="蓝鲸打卡的一个 web 文件上传引发二次注入的题解和思考">
 <meta name="keywords" content="wp,whale CTF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="蓝鲸安全打卡Web分析">
 <meta property="og:url" content="http://yoursite.com/2019/06/01/蓝鲸打卡Web分析/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="蓝鲸文件管理系统源代码地址：http://www.whaledu.com/course/290/task/2848/show 首先在设置文件里把所有的输入都采用 addslashes() 函数进行转义 upload.php关键代码将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension] 然后进行后缀名检查，拼接后进行addslashes">
+<meta property="og:description" content="蓝鲸打卡的一个 web 文件上传引发二次注入的题解和思考">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_2.PNG">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_3.PNG">
-<meta property="og:updated_time" content="2019-07-08T04:42:44.002Z">
+<meta property="og:updated_time" content="2019-08-27T15:35:19.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="蓝鲸安全打卡Web分析">
-<meta name="twitter:description" content="蓝鲸文件管理系统源代码地址：http://www.whaledu.com/course/290/task/2848/show 首先在设置文件里把所有的输入都采用 addslashes() 函数进行转义 upload.php关键代码将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension] 然后进行后缀名检查，拼接后进行addslashes">
+<meta name="twitter:description" content="蓝鲸打卡的一个 web 文件上传引发二次注入的题解和思考">
 <meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/bluewhale/whalectf_web1_1.PNG">
 
 
@@ -401,7 +401,10 @@
       
 
       
-        <h2 id="蓝鲸文件管理系统"><a href="#蓝鲸文件管理系统" class="headerlink" title="蓝鲸文件管理系统"></a>蓝鲸文件管理系统</h2><p>源代码地址：<a href="http://www.whaledu.com/course/290/task/2848/show" target="_blank" rel="noopener">http://www.whaledu.com/course/290/task/2848/show</a></p>
+        <p>蓝鲸打卡的一个 web 文件上传引发二次注入的题解和思考</p>
+<a id="more"></a>
+
+<h2 id="蓝鲸文件管理系统"><a href="#蓝鲸文件管理系统" class="headerlink" title="蓝鲸文件管理系统"></a>蓝鲸文件管理系统</h2><p>源代码地址：<a href="http://www.whaledu.com/course/290/task/2848/show" target="_blank" rel="noopener">http://www.whaledu.com/course/290/task/2848/show</a></p>
 <p>首先在设置文件里把所有的输入都采用 <strong>addslashes()</strong> 函数进行转义</p>
 <h3 id="upload-php关键代码"><a href="#upload-php关键代码" class="headerlink" title="upload.php关键代码"></a>upload.php关键代码</h3><p>将上传的文件通过pathinfo()函数分成三个部分，[dirname] [filename] [extension]</p>
 <p>然后进行后缀名检查，拼接后进行addslashes转义，查询是否存在这个文件</p>
