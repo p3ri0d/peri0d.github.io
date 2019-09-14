@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="原型污染,原型链,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="最近遇到好多原型污染的题目，又没有学过，做一个总结。 原文 : Node.js原型污染攻击的分析与利用 and 深入理解JavaScript Prototype污染攻击">
+<meta name="keywords" content="原型污染,原型链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 原型污染">
+<meta property="og:url" content="http://yoursite.com/2019/09/14/JS 原型污染/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="最近遇到好多原型污染的题目，又没有学过，做一个总结。 原文 : Node.js原型污染攻击的分析与利用 and 深入理解JavaScript Prototype污染攻击">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_2.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_3.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_4.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_7.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_6.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_8.png">
+<meta property="og:updated_time" content="2019-09-14T08:42:28.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS 原型污染">
+<meta name="twitter:description" content="最近遇到好多原型污染的题目，又没有学过，做一个总结。 原文 : Node.js原型污染攻击的分析与利用 and 深入理解JavaScript Prototype污染攻击">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/14/JS 原型污染/">
+
+
+
+
+
+  <title>JS 原型污染 | peri0d的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?351c3c63a2d13254dc54096c79858649";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我是一只小兔子</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/14/JS 原型污染/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS 原型污染</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-14T16:43:10+08:00">
+                2019-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/14/JS 原型污染/" class="leancloud_visitors" data-flag-title="JS 原型污染">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近遇到好多原型污染的题目，又没有学过，做一个总结。</p>
+<p>原文 : <a href="https://bbs.pediy.com/thread-249643.htm" target="_blank" rel="noopener">Node.js原型污染攻击的分析与利用</a> and <a href="https://www.freebuf.com/articles/web/200406.html" target="_blank" rel="noopener">深入理解JavaScript Prototype污染攻击</a></p>
+<a id="more"></a>
+
+<h1 id="JavaScript-中的对象"><a href="#JavaScript-中的对象" class="headerlink" title="JavaScript 中的对象"></a>JavaScript 中的对象</h1><ul>
+<li><p>JavaScript 中的对象就是 key 和 value 的映射关系，就相当于 python 中的 <code>dict</code> ，比如有如下代码 : </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = &#123;<span class="attr">name</span>:<span class="string">"peri0d"</span>, <span class="attr">age</span>:<span class="string">"19"</span>&#125;;</span><br><span class="line">s.name;     <span class="comment">// print "peri0d"</span></span><br><span class="line">s.age;	    <span class="comment">// print "19"</span></span><br><span class="line"><span class="keyword">typeof</span>(s);  <span class="comment">// print "object"</span></span><br><span class="line"><span class="built_in">console</span>.log(s);</span><br><span class="line"><span class="comment">// print Object &#123; name: "peri0d", age: "19" &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(s.prototype);</span><br><span class="line"><span class="comment">// print undefined</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果执行 <code>console.log(s)</code> 将会返回如下信息，可以看到很多属性和方法都包含在 <code>prototype</code> 中，这些多余的信息全部来自于 JavaScript 中的 <code>Object</code> 对象，这和 python 中 <code>Object</code> 是所有类的父类一个道理</p>
+<p>  <img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_1.png" alt></p>
+</li>
+<li><p>JavaScript 中的所有对象都是通过 <code>Object</code> 对象建立的。它的构造函数为给定值创建一个对象包装器。如果给定值是 <code>null</code> 或 <code>undefined</code>，将会创建并返回一个空对象，否则，将返回一个与给定值对应类型的对象。当以非构造函数形式被调用时，<code>Object</code> 等同于 <code>new Object()</code> 。以如下代码为例来说明</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">test = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"><span class="comment">// print an empty object </span></span><br><span class="line"><span class="keyword">typeof</span>(test);</span><br><span class="line"><span class="comment">// print "object"</span></span><br><span class="line"><span class="built_in">console</span>.log(test.prototype);</span><br><span class="line"><span class="comment">// print undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(test);</span><br><span class="line"><span class="comment">// print the whole object and all its attributes</span></span><br><span class="line"><span class="comment">// print Object &#123;  &#125;</span></span><br><span class="line"></span><br><span class="line">test2 = <span class="built_in">Object</span>.create(<span class="built_in">String</span>);</span><br><span class="line"><span class="keyword">typeof</span>(test2);</span><br><span class="line"><span class="comment">// print "object"</span></span><br><span class="line"><span class="built_in">console</span>.log(test2..prototype);</span><br><span class="line"><span class="comment">// print String &#123; "" &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(test2);</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_2.png" alt></p>
+</li>
+<li><p>JavaScript 中没有绝对的函数和类的概念，函数本身作为类的构造函数</p>
+<ol>
+<li><p>在函数被创建的时候，它被添加了一个 <code>prototype</code> 属性，而普通的数据类型则没有。这个属性是一个对象(原型对象)且默认有一个 <code>constructor</code> 属性，该属性指向一个函数，在这个函数中，原型对象也是一个属性。</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_3.png" alt></p>
+</li>
+<li><p>在对象被创建的时候，它被添加了一个 <code>__proto__</code> 属性到新创建的对象中，这一属性指向构造函数的原型对象</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_4.png" alt></p>
+</li>
+<li><p><code>object.__proto__</code> 指向 <code>function.prototype</code> </p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">function <span class="title">person</span><span class="params">(fullName, age)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.fullName = fullName;</span><br><span class="line">    <span class="keyword">this</span>.details = function()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.fullName+<span class="string">" has age: "</span>+<span class="keyword">this</span>.age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(person.prototype);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;constructor: ƒ&#125;</span></span><br><span class="line"><span class="comment">	constructor: ƒ person(fullName, age)</span></span><br><span class="line"><span class="comment">	__proto__: Object</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Alice"</span>, <span class="number">22</span>);</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Bob"</span>, <span class="number">20</span>);</span><br><span class="line">console.log(person1);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">person &#123;age: 20, fullName: "Bob", details: ƒ&#125;</span></span><br><span class="line"><span class="comment">    age: 20</span></span><br><span class="line"><span class="comment">    details: ƒ ()</span></span><br><span class="line"><span class="comment">    fullName: "Bob"</span></span><br><span class="line"><span class="comment">    __proto__:</span></span><br><span class="line"><span class="comment">    	constructor: ƒ person(fullName, age)</span></span><br><span class="line"><span class="comment">    		arguments: null</span></span><br><span class="line"><span class="comment">    		caller: null</span></span><br><span class="line"><span class="comment">    		length: 2</span></span><br><span class="line"><span class="comment">    		name: "person"</span></span><br><span class="line"><span class="comment">    		prototype: &#123;constructor: ƒ&#125;</span></span><br><span class="line"><span class="comment">    		__proto__: ƒ ()</span></span><br><span class="line"><span class="comment">    		[[FunctionLocation]]: VM672:1</span></span><br><span class="line"><span class="comment">    		[[Scopes]]: Scopes[1]</span></span><br><span class="line"><span class="comment">    	__proto__: Object</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">person1.details();</span><br><span class="line"><span class="comment">// print "Bob has age: 20"</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="prototype-属性与-proto-属性"><a href="#prototype-属性与-proto-属性" class="headerlink" title="prototype 属性与 __proto__ 属性"></a>prototype 属性与 __proto__ 属性</h1><ul>
+<li><p>原型 <code>prototype</code> 是类的一个属性，而所有类实例化的对象，都将拥有这个属性中的所有内容，包括变量和方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"peri0d"</span>;</span><br><span class="line">&#125;</span><br><span class="line">test.prototype.show = <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test1 = <span class="keyword">new</span> test();</span><br><span class="line">test1.show();</span><br><span class="line"><span class="comment">// print "peri0d"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个类实例化出的属性可以通过 <code>__proto__</code> 来访问类的原型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test1.__proto__ == test.prototype</span><br><span class="line"><span class="comment">// print true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="constructor-属性"><a href="#constructor-属性" class="headerlink" title="constructor 属性"></a>constructor 属性</h1><ul>
+<li><p>它返回创建实例对象的 <code>Object</code> 构造函数的引用，即返回用于创建这个对象的函数。注意，此属性的值是对函数本身的引用，而不是一个包含函数名称的字符串</p>
+</li>
+<li><p>举个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.color = <span class="string">"yellow"</span>;</span><br><span class="line">    <span class="keyword">this</span>.showColor = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.color;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Person.prototype.constructor: "</span>+Person.prototype.constructor); </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Person.prototype.constructor: function Person() &#123;</span></span><br><span class="line"><span class="comment">    this.color = "yellow";</span></span><br><span class="line"><span class="comment">    this.showColor = function () &#123;</span></span><br><span class="line"><span class="comment">        return this.color;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(); </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"person1.constructor: "</span>+person1.constructor); </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">person1.constructor: function Person() &#123;</span></span><br><span class="line"><span class="comment">    this.color = "yellow";</span></span><br><span class="line"><span class="comment">    this.showColor = function () &#123;</span></span><br><span class="line"><span class="comment">        return this.color;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// person1 实例通过 __proto__ 指向了 Person 的原型(Person.prototype)，所以可以访问到 constructor</span></span><br><span class="line"></span><br><span class="line">Person.prototype = &#123;&#125;; </span><br><span class="line"><span class="comment">// 修改 Person 的原型为 &#123;&#125;，这里也可以看处 prototype 可以在运行时修改</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person(); <span class="built_in">console</span>.log(<span class="string">"person2.constructor: "</span>+person2.constructor);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">person2.constructor: function Object() &#123; [native code] &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// person2 实例通过 __proto__ 指向了 Person 的原型(Person.prototype)，即这个空对象，所以它访问到 constructor 为 Object</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面说到，原型对象有一个 <code>constructor</code> ，它指向函数本身而且 <code>constructor</code> 的 <code>constructor</code> 是一个全局函数 <code>constructor</code> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(person2.constructor.constructor);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Global Function constructor</span></span><br><span class="line"><span class="comment">print ƒ Function() &#123; [native code] &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">person2.constructor.constructor(<span class="string">"return 1"</span>);</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">ƒ anonymous(</span></span><br><span class="line"><span class="comment">) &#123;</span></span><br><span class="line"><span class="comment">return 1</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">person2.constructor.constructor(<span class="string">"return 1"</span>)();</span><br><span class="line"><span class="comment">// call this Global Function</span></span><br><span class="line"><span class="comment">// print 1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结一下</p>
+<ol>
+<li>定义一个 <code>function</code> 时，会加上 <code>prototype</code> 属性，表示它的原型对象，内含 <code>constructor</code> ，返回这个 <code>function</code> 的构造函数的引用，即函数本身。而这个 <code>constructor</code> 的 <code>constructor</code> 是一个全局函数 <code>constructor</code> </li>
+<li>定义一个实例化对象时，会加上 <code>__proto__</code> 属性，它等于 <code>function.prototype</code> ，这个对象的 <code>constructor</code> 就等于 <code>object.__proto__.constructor</code> ，但是这两个 <code>constructor</code> 代表的含义不同</li>
+</ol>
+</li>
+</ul>
+<h1 id="JavaScript-中的原型"><a href="#JavaScript-中的原型" class="headerlink" title="JavaScript 中的原型"></a>JavaScript 中的原型</h1><ul>
+<li><p>函数的 <code>prototype</code> 可以在运行时修改</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">fullName, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.fullName = fullName;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(person.prototype);</span><br><span class="line"><span class="comment">// &#123;details: ƒ, constructor: ƒ&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Anirudh"</span>, <span class="number">25</span>);</span><br><span class="line"> </span><br><span class="line">person.prototype.details = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.fullName + <span class="string">" has age: "</span> + <span class="keyword">this</span>.age;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.key=<span class="string">"peri0d"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype);</span><br><span class="line"><span class="comment">// print &#123;details: ƒ, key: "peri0d", constructor: ƒ&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.details()); </span><br><span class="line"><span class="comment">// print "Anirudh has age: 25"</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.key); </span><br><span class="line"><span class="comment">// print "peri0d"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在上面这段代码中我们通过添加一个新方法和属性的方式修改了函数的<code>prototype</code>，使用对象我们也可以达到同样的效果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">fullName, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.fullName = fullName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Anirudh"</span>, <span class="number">25</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Anand"</span>, <span class="number">45</span>);</span><br><span class="line"></span><br><span class="line">person1.constructor.prototype.details = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.fullName + <span class="string">" has age: "</span> + <span class="keyword">this</span>.age;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 上下两个相同</span></span><br><span class="line">person1.__proto__.constructor.prototype.details = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.fullName + <span class="string">" has age: "</span> + <span class="keyword">this</span>.age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.details()); </span><br><span class="line"><span class="comment">// print "Anirudh has age: 25"</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">console</span>.log(person2.details()); </span><br><span class="line"><span class="comment">// print "Anand has age: 45"</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li>个人认为，可以将函数看为类的构造函数，原型看为类</li>
+</ul>
+<h1 id="JavaScript-原型链继承"><a href="#JavaScript-原型链继承" class="headerlink" title="JavaScript 原型链继承"></a>JavaScript 原型链继承</h1><ul>
+<li><p>所有类对象在实例化的时候将会拥有 <code>prototype</code> 中的属性和方法，这个特性被用来实现 <code>JavaScript</code> 中的继承机制</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.first_name = <span class="string">'Donald'</span></span><br><span class="line">    <span class="keyword">this</span>.last_name = <span class="string">'Trump'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.first_name = <span class="string">'Melania'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> son = <span class="keyword">new</span> Son()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`Name: <span class="subst">$&#123;son.first_name&#125;</span> <span class="subst">$&#123;son.last_name&#125;</span>`</span>)</span><br><span class="line"><span class="comment">// print "Name: Melania Trump"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1.在对象 son 中寻找 last_name<br>2.如果找不到，则在 son.__proto__中寻找 last_name<br>3.如果仍然找不到，则继续在 son.__proto__.__proto__中寻找 last_name<br>4.依次寻找，直到找到 null 结束。比如，Object.prototype 的  __proto__ 就是 null</p>
+</blockquote>
+</li>
+<li><p>这里为什么没有 <code>Son.prototype = Father.prototype</code> ，个人认为 <code>Father.prototype</code> 指向的是一个类对象，并没有对属性进行实例化，所以 <code>Son</code> 相当于没有继承 <code>Father</code> </p>
+</li>
+<li><p>每个构造函数( <code>constructor</code> )都有一个原型对象( <code>prototype</code> )</p>
+</li>
+<li><p><code>object.__proto__</code> 指向 <code>function.prototype</code> </p>
+</li>
+<li><p>JavaScript 使用 <code>prototype</code> 链实现继承机制</p>
+</li>
+</ul>
+<h1 id="原型链污染"><a href="#原型链污染" class="headerlink" title="原型链污染"></a>原型链污染</h1><ul>
+<li><p>举个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">person = &#123;<span class="attr">name</span> : <span class="string">"Jack"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.name);</span><br><span class="line"><span class="comment">// print "Jack"</span></span><br><span class="line"></span><br><span class="line">person.__proto__.name = <span class="string">'peri0d'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.name);</span><br><span class="line"><span class="comment">// print "Jack"</span></span><br><span class="line"></span><br><span class="line">person2 = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person2.name);</span><br><span class="line"><span class="comment">// print "peri0d"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>person</code> 这个实例化对象中寻找 <code>name</code> 属性，找到后输出。</p>
+</li>
+<li><p>将 <code>Object</code> 类的 <code>name</code> 属性赋值为 <code>peri0d</code> 然后实例化 <code>person2</code> 对象，在这个对象中没有找到 <code>name</code> 属性，进而到 <code>__proto__</code> 中去寻找，找到后输出。这实际上是修改了 <code>Object</code> 类</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_7.png" alt></p>
+</li>
+<li><p>在一个应用中，如果攻击者控制并修改了一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象</p>
+</li>
+<li><p>可存在于对象合并和对象克隆中，找可以控制对象的属性的操作</p>
+</li>
+</ul>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><ul>
+<li><p>以 <code>merge</code> 函数为例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">target, source</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (key <span class="keyword">in</span> source &amp;&amp; key <span class="keyword">in</span> target) &#123;</span><br><span class="line">            merge(target[key], source[key])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            target[key] = source[key]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>考虑如下代码，可以看到，<code>merge</code> 并没有修改 <code>__proto__</code> 下 <code>Object</code> 的内容，而是将 <code>b</code> 作为其属性添加，这样再生成新对象的时候还是原来的 <code>Object</code> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">o1 = &#123;&#125;;</span><br><span class="line">o2 = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="string">"__proto__"</span>: &#123;<span class="attr">b</span>: <span class="number">2</span>&#125;&#125;;</span><br><span class="line">merge(o1, o2);</span><br><span class="line"><span class="built_in">console</span>.log(o1);</span><br><span class="line"><span class="comment">// print &#123;a: 1, b: 2&#125;</span></span><br><span class="line"></span><br><span class="line">o3 = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o3.b);</span><br><span class="line"><span class="comment">// print undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> o2)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// print a	b</span></span><br></pre></td></tr></table></figure>
+
+<p>​        <img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_6.png" alt></p>
+</li>
+<li><p>将代码修改一下，这时 <code>Object</code> 已被污染</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">o1 = &#123;&#125;;</span><br><span class="line">o2 = <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"a": 1, "__proto__": &#123;"b": 2&#125;&#125;'</span>);</span><br><span class="line">merge(o1, o2);</span><br><span class="line"><span class="built_in">console</span>.log(o1.a, o1.b);</span><br><span class="line"><span class="comment">// print 1 2</span></span><br><span class="line"></span><br><span class="line">o3 = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o3.b);</span><br><span class="line"><span class="comment">// print 2</span></span><br></pre></td></tr></table></figure>
+
+<p>​        <img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/JavaScript/js_8.png" alt></p>
+</li>
+<li><p>JSON 解析的情况下，__proto__ 会被认为是一个真正的“键名”，而不代表“原型”，所以在遍历 o2 的时候会存在这个键。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原型污染/" rel="tag"><i class="fa fa-tag"></i> 原型污染</a>
+          
+            <a href="/tags/原型链/" rel="tag"><i class="fa fa-tag"></i> 原型链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/12/code-breaking picklecode中对signed_cookies引擎分析/" rel="next" title="code-breaking picklecode中对signed_cookies引擎分析">
+                <i class="fa fa-chevron-left"></i> code-breaking picklecode中对signed_cookies引擎分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/14/代码审计/" rel="prev" title="CodeBreaking 代码审计">
+                CodeBreaking 代码审计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NjMzNS8yMjg0Ng=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">须知少时凌云志，曾许人间第一流。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-中的对象"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 中的对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#prototype-属性与-proto-属性"><span class="nav-number">2.</span> <span class="nav-text">prototype 属性与 __proto__ 属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#constructor-属性"><span class="nav-number">3.</span> <span class="nav-text">constructor 属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-中的原型"><span class="nav-number">4.</span> <span class="nav-text">JavaScript 中的原型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-原型链继承"><span class="nav-number">5.</span> <span class="nav-text">JavaScript 原型链继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原型链污染"><span class="nav-number">6.</span> <span class="nav-text">原型链污染</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子"><span class="nav-number">7.</span> <span class="nav-text">例子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JWhbFv0yrTCtI3vudAvJ8lAl-gzGzoHsz", "kmmUrzx5ONjNcOwBP2lF6tun");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+</body>
+</html>
