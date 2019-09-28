@@ -84,7 +84,7 @@
 <meta name="description" content="须知少时凌云志，曾许人间第一流。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="peri0d的博客">
-<meta property="og:url" content="http://yoursite.com/tags/php/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/buuoj/index.html">
 <meta property="og:site_name" content="peri0d的博客">
 <meta property="og:description" content="须知少时凌云志，曾许人间第一流。">
 <meta property="og:locale" content="zh-Hans">
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/php/">
+  <link rel="canonical" href="http://yoursite.com/tags/buuoj/">
 
 
 
 
 
-  <title>标签: php | peri0d的博客</title>
+  <title>标签: buuoj | peri0d的博客</title>
   
 
 
@@ -288,7 +288,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>php<small>标签</small>
+        <h1>buuoj<small>标签</small>
         </h1>
       </div>
 
@@ -300,17 +300,17 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/08/14/Laravel 5.8 RCE/" itemprop="url">
+            <a class="post-title-link" href="/2019/09/28/buu SQL注入/" itemprop="url">
               
-                <span itemprop="name">Laravel 5.8 RCE 分析</span>
+                <span itemprop="name">buuoj的几个SQL注入</span>
               
             </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-14T17:08:14+08:00" content="2019-08-14">
-          08-14
+        <time class="post-time" itemprop="dateCreated" datetime="2019-09-28T17:47:19+08:00" content="2019-09-28">
+          09-28
         </time>
       </div>
 
@@ -994,76 +994,6 @@
       query.find({
         success: function(results) {
           if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/clicklove.js"></script>
-</body>
-</html>
-      if (results.length > 0) {
             var counter = results[0];
             counter.fetchWhenSave(true);
             counter.increment("time");
