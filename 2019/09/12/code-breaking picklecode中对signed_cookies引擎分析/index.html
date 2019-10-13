@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="code-breaking,代码审计,Django signed_cookies,">
+  <meta name="keywords" content="代码审计,code-breaking,Django signed_cookies,">
 
 
 
@@ -81,13 +81,13 @@
 
 
 
-<meta name="description" content="原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
-<meta name="keywords" content="code-breaking,代码审计,Django signed_cookies">
+<meta name="description" content="先知原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
+<meta name="keywords" content="代码审计,code-breaking,Django signed_cookies">
 <meta property="og:type" content="article">
 <meta property="og:title" content="code-breaking picklecode中对signed_cookies引擎分析">
 <meta property="og:url" content="http://yoursite.com/2019/09/12/code-breaking picklecode中对signed_cookies引擎分析/index.html">
 <meta property="og:site_name" content="peri0d的博客">
-<meta property="og:description" content="原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
+<meta property="og:description" content="先知原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_8.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_9.png">
@@ -113,10 +113,10 @@
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_28.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_30.png">
 <meta property="og:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_29.png">
-<meta property="og:updated_time" content="2019-09-12T08:05:43.081Z">
+<meta property="og:updated_time" content="2019-10-13T16:09:01.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="code-breaking picklecode中对signed_cookies引擎分析">
-<meta name="twitter:description" content="原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
+<meta name="twitter:description" content="先知原帖 : https://xz.aliyun.com/t/6265 最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧">
 <meta name="twitter:image" content="https://wcgimages.oss-cn-shenzhen.aliyuncs.com/code_breaking/pickle_8.png">
 
 
@@ -422,7 +422,7 @@
       
 
       
-        <p>原帖 : <a href="https://xz.aliyun.com/t/6265" target="_blank" rel="noopener">https://xz.aliyun.com/t/6265</a></p>
+        <p>先知原帖 : <a href="https://xz.aliyun.com/t/6265" target="_blank" rel="noopener">https://xz.aliyun.com/t/6265</a></p>
 <p>最近做了 ph 牛的 code-breaking，在做 picklecode 这一题时，没有搞懂那个 django 的 signed_cookies 引擎对 session 的操作，就 debug 了一下，做个总结，算是做了个代码审计吧</p>
 <a id="more"></a>
 
@@ -529,9 +529,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/code-breaking/" rel="tag"><i class="fa fa-tag"></i> code-breaking</a>
-          
             <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+          
+            <a href="/tags/code-breaking/" rel="tag"><i class="fa fa-tag"></i> code-breaking</a>
           
             <a href="/tags/Django-signed-cookies/" rel="tag"><i class="fa fa-tag"></i> Django signed_cookies</a>
           
@@ -642,7 +642,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -653,7 +653,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -664,7 +664,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
